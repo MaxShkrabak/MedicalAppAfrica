@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "562077421923",
+    "project_id": "africamedapp",
+    "storage_bucket": "africamedapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562077421923:android:0e67b462616da3b4490356",
+        "android_client_info": {
+          "package_name": "com.example.africa_med_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIpexzkgW9w24wIMk14GdGWKa13yAe9uE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
