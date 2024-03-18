@@ -7,26 +7,35 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 160, 159, 159),
+        backgroundColor: Color.fromARGB(156, 102, 133, 161),
         body: SafeArea(
           child: Center(
             child: Column(children: [
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               //logo
               Container(
-                height: 150,
-                child: Image.asset('assets/logo.png'),
+                height: 234,
+                child: Image.asset(
+                  'assets/logo.png',
+                ),
+              ),
+              const Text(
+                "Welcome Back!",
+                style: TextStyle(
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    fontSize: 36.0,
+                    fontWeight: FontWeight.bold),
               ),
 
-              SizedBox(height: 60),
+              const SizedBox(height: 30),
 
               //email
-              MyTextField(),
+              const MyEmailField(),
 
-              SizedBox(height: 30),
+              const SizedBox(height: 12),
               //password
-              MyTextField(),
+              const MyPassField(),
 
               //login button
 
