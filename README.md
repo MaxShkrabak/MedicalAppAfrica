@@ -1,6 +1,6 @@
 # africa_med_app
 
-A new Flutter project.
+A github repo for the medical app that we are working on
 
 ## Getting Started
 
