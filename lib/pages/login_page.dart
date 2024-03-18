@@ -6,7 +6,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
         backgroundColor: Color.fromARGB(255, 160, 159, 159),
         body: SafeArea(
           child: Center(
@@ -14,9 +14,9 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: 20),
 
               //logo
-              Icon(
-                Icons.heat_pump_rounded,
-                size: 100,
+              Container(
+                height: 150,
+                child: Image.asset('assets/logo.png'),
               ),
 
               SizedBox(height: 60),
