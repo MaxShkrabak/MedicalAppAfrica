@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 
-class SignInButton extends StatelessWidget {
-  const SignInButton({super.key});
+class MyButton extends StatelessWidget {
+  final Function()? onTap;
+
+  const MyButton({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: RawMaterialButton(
-          padding: EdgeInsets.symmetric(horizontal: 70, vertical: 15),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(35.0),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(35),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 15),
+          decoration: BoxDecoration(
+            color: const Color.fromRGBO(8, 13, 17, 100),
+            borderRadius: BorderRadius.circular(35),
           ),
-          elevation: 1.0,
-          fillColor: const Color.fromRGBO(8, 13, 17, 100),
-          onPressed: () {},
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,

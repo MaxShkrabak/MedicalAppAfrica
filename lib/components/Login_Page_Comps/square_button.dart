@@ -16,11 +16,11 @@ class SquareBoxButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0),
           ),
           elevation: 1.0,
-          fillColor: Color.fromARGB(255, 235, 232, 232),
+          fillColor: const Color.fromARGB(255, 235, 232, 232),
           onPressed: () {},
-          child: Container(
-            child: Image.asset(image),
+          child: SizedBox(
             height: 50,
+            child: Image.asset(image),
           ),
         ),
       ),

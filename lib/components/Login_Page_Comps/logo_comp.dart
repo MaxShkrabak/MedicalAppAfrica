@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class LogoComponent extends StatelessWidget {
-  const LogoComponent({Key? key}) : super(key: key);
+  const LogoComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
+        SizedBox(
           height: 145,
           child: Image.asset('assets/logo.png'),
         ),
