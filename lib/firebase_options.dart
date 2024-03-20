@@ -25,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -70,6 +67,19 @@ class DefaultFirebaseOptions {
     messagingSenderId: '562077421923',
     projectId: 'africamedapp',
     storageBucket: 'africamedapp.appspot.com',
+    androidClientId: '562077421923-f6mbd6gaafc8f6fq7cia6epbhbu56uqk.apps.googleusercontent.com',
+    iosClientId: '562077421923-kr84a172bfjqgr8bd2t32khfmkiimlon.apps.googleusercontent.com',
     iosBundleId: 'com.example.africaMedApp',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyCkL_-0CJ5l8wW3gbHJJkyDGGk6pmk-GQ0',
+    appId: '1:562077421923:ios:898eb7a33024ed69490356',
+    messagingSenderId: '562077421923',
+    projectId: 'africamedapp',
+    storageBucket: 'africamedapp.appspot.com',
+    androidClientId: '562077421923-f6mbd6gaafc8f6fq7cia6epbhbu56uqk.apps.googleusercontent.com',
+    iosClientId: '562077421923-0ftmo8lbak3rfl9miu0u1jipviv60j1n.apps.googleusercontent.com',
+    iosBundleId: 'com.example.africaMedApp.RunnerTests',
   );
 }

@@ -5,6 +5,7 @@ class MyTextField extends StatefulWidget {
   final String hintText;
   final bool obscureText;
   final bool showPassIcon;
+  final IconData? prefix;
 
   const MyTextField({
     Key? key,
@@ -12,6 +13,7 @@ class MyTextField extends StatefulWidget {
     required this.hintText,
     required this.obscureText,
     this.showPassIcon = false,
+    this.prefix,
   }) : super(key: key);
 
   @override
@@ -45,6 +47,10 @@ class _MyTextFieldState extends State<MyTextField> {
           fillColor: const Color.fromRGBO(127, 162, 193, 100),
           filled: true,
           hintText: widget.hintText,
+          prefixIcon: Icon(
+            widget.prefix,
+            color: Colors.grey,
+          ),
           suffixIcon: widget.obscureText && widget.showPassIcon
               ? IconButton(
                   icon: Icon(
