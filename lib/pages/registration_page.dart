@@ -2,7 +2,6 @@ import 'package:africa_med_app/components/Login_Page_Comps/my_textfield.dart';
 import 'package:africa_med_app/components/Registration_Comps/NameTextFields.dart';
 import 'package:africa_med_app/components/Registration_Comps/PhoneNumField.dart';
 import 'package:africa_med_app/components/Registration_Comps/create_account_button.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 

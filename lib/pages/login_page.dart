@@ -8,11 +8,15 @@ import '../components/Login_Page_Comps/my_divider.dart';
 import '../components/Login_Page_Comps/signin_button.dart';
 import '../components/Login_Page_Comps/my_textfield.dart';
 import '../components/Login_Page_Comps/square_button.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+import '../components/Login_Page_Comps/wrong_credentials.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _LoginPageState createState() => _LoginPageState();
 }
 
@@ -20,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   void signUserIn() async {
     showDialog(
@@ -35,74 +40,33 @@ class _LoginPageState extends State<LoginPage> {
         email: emailController.text,
         password: passwordController.text,
       );
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
       // Successfully signed in
     } on FirebaseAuthException catch (e) {
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
-      wrongCredentialsMessage();
+      // ignore: use_build_context_synchronously
+      wrongCredentialsMessage(context);
     }
-  }
-
-  void wrongCredentialsMessage() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          insetPadding: EdgeInsets.symmetric(vertical: 200.0, horizontal: 80.0),
-          backgroundColor: Color.fromARGB(255, 192, 191, 191),
-          title: Column(
-            children: [
-              const Text(
-                'The email or password you entered is incorrect. Please try again.',
-                style: TextStyle(color: Colors.black, fontSize: 14.0),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 15.0),
-              const Divider(
-                color: Colors.black,
-                height: 12,
-                thickness: 1,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    passwordController.clear();
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Color.fromARGB(255, 14, 101, 182)),
-                  ),
-                  child: const Text(
-                    'OK',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 255, 255, 255),
-                      fontSize: 16.0,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(156, 102, 133, 161),
+      backgroundColor: const Color.fromARGB(156, 102, 133, 161),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                //logo
+
+                //logo image
                 const LogoComponent(),
                 const SizedBox(height: 15),
-                //email
+
+                //email text
                 MyTextField(
                     controller: emailController,
                     hintText: 'Email',
@@ -110,26 +74,32 @@ class _LoginPageState extends State<LoginPage> {
                     showPassIcon: false,
                     prefix: Icons.person_outline),
                 const SizedBox(height: 12),
-                //password
+
+                //password text
                 MyTextField(
                     controller: passwordController,
                     hintText: 'Password',
                     obscureText: true,
                     showPassIcon: true,
                     prefix: Icons.lock_outline),
-                //forgot pass
+
+                //forgot pass text
                 const SizedBox(height: 7),
                 ForgotPassword(),
                 const SizedBox(height: 25),
+
                 //login button
                 MyButton(onTap: signUserIn),
                 const SizedBox(height: 30),
+
                 //divider
                 const MyDivider(),
-                //Google and Apple sign in
+
+                //Google and Apple sign in buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    //google
                     SquareBoxButton(
                       image: 'assets/google logo.png',
                       onPressed: _handleGoogleSignIn,
@@ -138,6 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: 120,
                       width: 26,
                     ),
+
                     //apple
                     SquareBoxButton(
                       image: 'assets/Apple_logo_black.png',
@@ -148,6 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 12,
                 ),
+
                 //create acc
                 const RegisterButton(),
               ],
@@ -161,10 +133,24 @@ class _LoginPageState extends State<LoginPage> {
   // Function to handle Google Sign In
   void _handleGoogleSignIn() async {
     try {
-      final GoogleAuthProvider googleProvider = GoogleAuthProvider();
-      final UserCredential userCredential =
-          await _auth.signInWithProvider(googleProvider);
-      // Handle signed in user
+      final GoogleSignInAccount? googleSignInAccount =
+          await _googleSignIn.signIn();
+
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleAuth =
+            await googleSignInAccount.authentication;
+
+        final OAuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        final UserCredential userCredential =
+            await _auth.signInWithCredential(credential);
+        // Handle signed in user
+      } else {
+        // User canceled Google Sign In
+      }
     } catch (error) {
       print(error);
     }

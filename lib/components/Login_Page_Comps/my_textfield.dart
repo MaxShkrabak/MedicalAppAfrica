@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 
 class MyTextField extends StatefulWidget {
   final TextEditingController controller;
-  final String hintText;
-  final bool obscureText;
-  final bool showPassIcon;
+  final String hintText; //hint text that appears when text field is empty
+  final bool obscureText; //determines if text should be visible or not
+  final bool showPassIcon; //determines if show icon for password is visible
   final IconData? prefix;
 
+  //constructor
   const MyTextField({
-    Key? key,
+    super.key,
     required this.controller,
     required this.hintText,
     required this.obscureText,
     this.showPassIcon = false,
     this.prefix,
-  }) : super(key: key);
+  });
 
   @override
   _MyTextFieldState createState() => _MyTextFieldState();
@@ -29,7 +30,7 @@ class _MyTextFieldState extends State<MyTextField> {
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: TextField(
         controller: widget.controller,
-        obscureText: widget.obscureText,
+        obscureText: widget.obscureText && _obscureText,
         decoration: InputDecoration(
           contentPadding:
               const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
@@ -49,7 +50,7 @@ class _MyTextFieldState extends State<MyTextField> {
           hintText: widget.hintText,
           labelText: widget.hintText,
           labelStyle:
-              TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+              const TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
           prefixIcon: Icon(
             widget.prefix,
             color: Colors.grey,
