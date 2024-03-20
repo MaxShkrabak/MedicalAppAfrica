@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class NameTextFields extends StatefulWidget {
   final TextEditingController controller;
@@ -15,30 +16,31 @@ class NameTextFields extends StatefulWidget {
 }
 
 class _NameTextFieldsState extends State<NameTextFields> {
-  bool _obscureText = true;
-
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 130),
-        child: TextField(
-            controller: widget.controller,
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.all(15),
-              enabledBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(35.0)),
-                borderSide: BorderSide(color: Color.fromARGB(255, 66, 66, 66)),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(35.0)),
-                borderSide: BorderSide(
-                  color: Color.fromARGB(255, 183, 185, 183),
-                  width: 2.0,
-                ),
-              ),
-              fillColor: const Color.fromRGBO(127, 162, 193, 100),
-              filled: true,
-              hintText: widget.hintText,
-            )));
+    return TextField(
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]"))],
+      controller: widget.controller,
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.only(left: 12, top: 20),
+        hintText: widget.hintText,
+        labelText: widget.hintText,
+        labelStyle:
+            const TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+        fillColor: Color.fromRGBO(127, 162, 193, 90),
+        filled: true,
+        enabledBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(35.0)),
+          borderSide: BorderSide(color: Color.fromARGB(255, 66, 66, 66)),
+        ),
+        focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(35.0)),
+          borderSide: BorderSide(
+            color: Color.fromARGB(255, 0, 0, 0),
+            width: 2.0,
+          ),
+        ),
+      ),
+    );
   }
 }

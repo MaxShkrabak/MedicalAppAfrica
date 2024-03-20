@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 
-class MyButton extends StatelessWidget {
+class CreateButton extends StatelessWidget {
   final Function()? onTap;
 
-  const MyButton({
-    super.key,
-    required this.onTap,
-  });
+  const CreateButton({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +15,7 @@ class MyButton extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 15),
           decoration: BoxDecoration(
-            color: const Color.fromRGBO(8, 13, 17, 100),
+            color: Color.fromARGB(218, 11, 146, 40),
             borderRadius: BorderRadius.circular(35),
           ),
           child: const Row(
@@ -26,13 +23,13 @@ class MyButton extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
-                Icons.lock,
+                Icons.check_box_outlined,
                 color: Color.fromARGB(255, 141, 141, 141),
                 size: 22.0,
               ),
               SizedBox(width: 8),
               Text(
-                "Login",
+                "Create Account",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24.0,

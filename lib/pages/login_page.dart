@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
     showDialog(
       context: context,
       builder: (context) {
-        return Center(
+        return const Center(
           child: CircularProgressIndicator(),
         );
       },
@@ -51,13 +51,13 @@ class _LoginPageState extends State<LoginPage> {
           backgroundColor: Color.fromARGB(255, 192, 191, 191),
           title: Column(
             children: [
-              Text(
+              const Text(
                 'The email or password you entered is incorrect. Please try again.',
                 style: TextStyle(color: Colors.black, fontSize: 14.0),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 15.0),
-              Divider(
+              const SizedBox(height: 15.0),
+              const Divider(
                 color: Colors.black,
                 height: 12,
                 thickness: 1,
@@ -67,12 +67,13 @@ class _LoginPageState extends State<LoginPage> {
                 child: TextButton(
                   onPressed: () {
                     Navigator.pop(context);
+                    passwordController.clear();
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
                         Color.fromARGB(255, 14, 101, 182)),
                   ),
-                  child: Text(
+                  child: const Text(
                     'OK',
                     style: TextStyle(
                       color: Color.fromARGB(255, 255, 255, 255),
@@ -97,10 +98,10 @@ class _LoginPageState extends State<LoginPage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 //logo
-                LogoComponent(),
-                SizedBox(height: 15),
+                const LogoComponent(),
+                const SizedBox(height: 15),
                 //email
                 MyTextField(
                     controller: emailController,
@@ -108,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                     obscureText: false,
                     showPassIcon: false,
                     prefix: Icons.person_outline),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 //password
                 MyTextField(
                     controller: passwordController,
@@ -117,14 +118,14 @@ class _LoginPageState extends State<LoginPage> {
                     showPassIcon: true,
                     prefix: Icons.lock_outline),
                 //forgot pass
-                SizedBox(height: 7),
+                const SizedBox(height: 7),
                 ForgotPassword(),
-                SizedBox(height: 25),
+                const SizedBox(height: 25),
                 //login button
                 MyButton(onTap: signUserIn),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 //divider
-                MyDivider(),
+                const MyDivider(),
                 //Google and Apple sign in
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -133,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                       image: 'assets/google logo.png',
                       onPressed: _handleGoogleSignIn,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 120,
                       width: 26,
                     ),
@@ -148,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 12,
                 ),
                 //create acc
-                RegisterButton(),
+                const RegisterButton(),
               ],
             ),
           ),

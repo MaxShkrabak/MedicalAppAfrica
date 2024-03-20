@@ -47,6 +47,9 @@ class _MyTextFieldState extends State<MyTextField> {
           fillColor: const Color.fromRGBO(127, 162, 193, 100),
           filled: true,
           hintText: widget.hintText,
+          labelText: widget.hintText,
+          labelStyle:
+              TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
           prefixIcon: Icon(
             widget.prefix,
             color: Colors.grey,
