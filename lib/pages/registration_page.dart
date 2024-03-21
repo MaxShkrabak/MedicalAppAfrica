@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class RegistrationPage extends StatefulWidget {
   RegistrationPage({super.key});
 
@@ -39,39 +38,49 @@ class _RegistrationPageState extends State<RegistrationPage> {
     if (passConfirmed()) {
       // First check if the user's provided access code exists as a doc in the 'access_codes' collection
       // Also set the user's access level based on the access code's "Level" field
-      
+
       // Sign in anonymously to use the Firebase services
 
       try {
-        UserCredential anonymousUserCredential = await FirebaseAuth.instance.signInAnonymously();
+        UserCredential anonymousUserCredential =
+            await FirebaseAuth.instance.signInAnonymously();
       } on FirebaseAuthException catch (e) {
         if (e.code == 'operation-not-allowed') {
-          onCreateErrorPopUp(context, "Anonymous sign in is not enabled! Please try again.");
+          onCreateErrorPopUp(
+              context, "Anonymous sign in is not enabled! Please try again.");
           Navigator.pop(context);
         } else {
-          onCreateErrorPopUp(context, "An error occurred while trying to sign in anonymously! Please try again.");
+          onCreateErrorPopUp(context,
+              "An error occurred while trying to sign in anonymously! Please try again.");
           Navigator.pop(context);
         }
       } catch (e) {
-        onCreateErrorPopUp(context, "An error occurred while trying to sign in anonymously! Please try again.");
+        onCreateErrorPopUp(context,
+            "An error occurred while trying to sign in anonymously! Please try again.");
         Navigator.pop(context);
       }
 
       try {
         String enteredAccessCode = accessController.text.trim();
-        DocumentSnapshot accessCodeDoc = await FirebaseFirestore.instance.collection('access_codes').doc(enteredAccessCode).get();
+        DocumentSnapshot accessCodeDoc = await FirebaseFirestore.instance
+            .collection('access_codes')
+            .doc(enteredAccessCode)
+            .get();
         if (!accessCodeDoc.exists) {
           print('The access code you entered is invalid! Please try again.');
-          throw Exception('The access code you entered is invalid! Please try again.');
+          throw Exception(
+              'The access code you entered is invalid! Please try again.');
         }
         String accessLevel = accessCodeDoc.get('Level');
-        await FirebaseAuth.instance.currentUser?.delete(); // Delete the anonymous user
-        UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        await FirebaseAuth.instance.currentUser
+            ?.delete(); // Delete the anonymous user
+        UserCredential userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passController.text.trim(),
         );
         // Create a new user in the firestore database, collection: accounts, document_id: user.uid, if the user is not null
-        if (userCredential.user != null) { 
+        if (userCredential.user != null) {
           await FirebaseFirestore.instance
               .collection('accounts')
               .doc(userCredential.user!.uid)
@@ -97,7 +106,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         Navigator.pop(context);
         print('Error: $e');
         onCreateErrorPopUp(context, e.toString());
-      } 
+      }
     } else {
       Navigator.pop(context);
       onCreateErrorPopUp(context, "The passwords don't match!");
@@ -133,7 +142,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           appBar: AppBar(
             title: GradientText(
               'Create an Account.',
-              style: const TextStyle(fontSize: 37, fontWeight: FontWeight.w800),
+              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
               colors: const [
                 Colors.blue,
                 Colors.black45,
@@ -147,32 +156,36 @@ class _RegistrationPageState extends State<RegistrationPage> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(height: 80),
+                    const SizedBox(
+                        height: 60,
+                        child: Icon(
+                          Icons.person_outlined,
+                          size: 60,
+                        )),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(width: 20),
+                        SizedBox(width: 30),
                         Flexible(
                             child: NameTextFields(
                                 controller: fNameController,
                                 hintText: "First Name")),
                         const SizedBox(
                           width: 60.0,
-                          child: Icon(Icons.person_outlined, size: 50),
                         ),
                         Flexible(
                           child: NameTextFields(
                               controller: lNameController,
                               hintText: "Last Name"),
                         ),
-                        const SizedBox(width: 20)
+                        const SizedBox(width: 30)
                       ],
                     ),
                     const SizedBox(
                       height: 13,
                     ),
                     PhoneNumField(controller: phoneController),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 13),
                     MyTextField(
                         controller: emailController,
                         hintText: "E-Mail",
@@ -181,9 +194,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     const SizedBox(
                       height: 13,
                     ),
-                    // Add text field for the registrant's *Access Code* that verifies their membership of the organization and 
+                    // Add text field for the registrant's *Access Code* that verifies their membership of the organization and
                     // determines the level of access they have to the app's features.
-                    MyTextField(controller: accessController,
+                    MyTextField(
+                        controller: accessController,
                         hintText: "Access Code",
                         obscureText: false,
                         prefix: Icons.lock_outline),
@@ -195,14 +209,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         hintText: "Password",
                         obscureText: false,
                         prefix: Icons.lock_outline),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 13),
                     MyTextField(
                         controller: confPassController,
                         hintText: "Confirm Password",
                         obscureText: false,
                         prefix: Icons.shield_outlined),
                     const SizedBox(
-                      height: 20,
+                      height: 13,
                     ),
                     AnimatedBuilder(
                       animation: passController,
@@ -220,7 +234,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       },
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     CreateButton(
                         onTap: _isStrong
@@ -229,10 +243,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               }
                             : null,
                         color: _isStrong
-                            ? const Color.fromARGB(218, 11, 146, 40)
-                                .withOpacity(1)
-                            : const Color.fromARGB(218, 11, 146, 40)
-                                .withOpacity(0.3))
+                            ? Color.fromARGB(218, 0, 0, 0).withOpacity(1)
+                            : Color.fromARGB(218, 0, 0, 0).withOpacity(0.3))
                   ],
                 ),
               ),

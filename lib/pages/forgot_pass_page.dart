@@ -83,10 +83,10 @@ class _ForgotPasswordState extends State<ForgotPasswordPage> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      const SizedBox(height: 20),
                       const Text(
                         'Enter the email address associated with your account and we'
                         'll send you a link to reset your password.',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,

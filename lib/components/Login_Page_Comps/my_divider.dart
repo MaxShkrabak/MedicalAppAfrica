@@ -12,7 +12,8 @@ class MyDivider extends StatelessWidget {
         children: [
           Expanded(
             child: Divider(
-              color: Color.fromRGBO(0, 0, 0, 0.45), // Corrected color opacity
+              color: Color.fromRGBO(0, 0, 0, 1),
+              thickness: 2, // Corrected color opacity
             ),
           ),
           Padding(
@@ -20,15 +21,16 @@ class MyDivider extends StatelessWidget {
             child: Text(
               "OR",
               style: TextStyle(
-                color: Color.fromARGB(255, 160, 159, 159),
+                color: Color.fromARGB(255, 50, 197, 255),
                 fontSize: 16.0,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
           Expanded(
             child: Divider(
-              color: Color.fromRGBO(0, 0, 0, 0.45), // Corrected color opacity
+              color: Color.fromRGBO(0, 0, 0, 1),
+              thickness: 2, // Corrected color opacity
             ),
           ),
         ],

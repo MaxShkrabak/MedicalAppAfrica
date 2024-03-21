@@ -54,76 +54,92 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(156, 102, 133, 161),
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-
-                //logo image
-                const LogoComponent(),
-                const SizedBox(height: 15),
-
-                //email text
-                MyTextField(
-                    controller: emailController,
-                    hintText: 'Email',
-                    obscureText: false,
-                    showPassIcon: false,
-                    prefix: Icons.person_outline),
-                const SizedBox(height: 12),
-
-                //password text
-                MyTextField(
-                    controller: passwordController,
-                    hintText: 'Password',
-                    obscureText: true,
-                    showPassIcon: true,
-                    prefix: Icons.lock_outline),
-
-                //forgot pass text
-                const SizedBox(height: 7),
-                ForgotPassword(),
-                const SizedBox(height: 25),
-
-                //login button
-                MyButton(onTap: signUserIn),
-                const SizedBox(height: 30),
-
-                //divider
-                const MyDivider(),
-
-                //Google and Apple sign in buttons
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/logo.png'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.black54, Colors.black87]),
+        ),
+        child: Scaffold(
+          backgroundColor: const Color.fromARGB(156, 102, 133, 161),
+          body: SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                child: Column(
                   children: [
-                    //google
-                    SquareBoxButton(
-                      image: 'assets/google logo.png',
-                      onPressed: _handleGoogleSignIn,
+                    const SizedBox(height: 20),
+
+                    //logo image
+                    const LogoComponent(),
+                    const SizedBox(height: 15),
+
+                    //email text
+                    MyTextField(
+                        controller: emailController,
+                        hintText: 'Email',
+                        obscureText: false,
+                        showPassIcon: false,
+                        prefix: Icons.person_outline),
+                    const SizedBox(height: 12),
+
+                    //password text
+                    MyTextField(
+                        controller: passwordController,
+                        hintText: 'Password',
+                        obscureText: true,
+                        showPassIcon: true,
+                        prefix: Icons.lock_outline),
+
+                    //forgot pass text
+                    const SizedBox(height: 7),
+                    ForgotPassword(),
+                    const SizedBox(height: 25),
+
+                    //login button
+                    MyButton(onTap: signUserIn),
+                    const SizedBox(height: 30),
+
+                    //divider
+                    const MyDivider(),
+
+                    //Google and Apple sign in buttons
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        //google
+                        SquareBoxButton(
+                          image: 'assets/google logo.png',
+                          onPressed: _handleGoogleSignIn,
+                        ),
+                        const SizedBox(
+                          height: 120,
+                          width: 26,
+                        ),
+
+                        //apple
+                        SquareBoxButton(
+                          image: 'assets/Apple_logo_black.png',
+                          onPressed: () {},
+                        ),
+                      ],
                     ),
                     const SizedBox(
-                      height: 120,
-                      width: 26,
+                      height: 12,
                     ),
 
-                    //apple
-                    SquareBoxButton(
-                      image: 'assets/Apple_logo_black.png',
-                      onPressed: () {},
-                    ),
+                    //create acc
+                    const RegisterButton(),
                   ],
                 ),
-                const SizedBox(
-                  height: 12,
-                ),
-
-                //create acc
-                const RegisterButton(),
-              ],
+              ),
             ),
           ),
         ),

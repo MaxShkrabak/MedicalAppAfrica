@@ -53,13 +53,13 @@ class _MyTextFieldState extends State<MyTextField> {
               const TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
           prefixIcon: Icon(
             widget.prefix,
-            color: Colors.grey,
+            color: Colors.black,
           ),
           suffixIcon: widget.obscureText && widget.showPassIcon
               ? IconButton(
                   icon: Icon(
                     _obscureText ? Icons.visibility_off : Icons.visibility,
-                    color: Colors.grey,
+                    color: Colors.black54,
                   ),
                   onPressed: () {
                     setState(() {
