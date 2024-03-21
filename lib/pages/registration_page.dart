@@ -7,6 +7,8 @@ import 'package:africa_med_app/components/Registration_Comps/passChecker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class RegistrationPage extends StatefulWidget {
   RegistrationPage({super.key});
@@ -21,6 +23,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
   final passController = TextEditingController();
+  final accessController = TextEditingController();
   final confPassController = TextEditingController();
   bool _isStrong = false;
 
@@ -34,20 +37,67 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
     );
     if (passConfirmed()) {
+      // First check if the user's provided access code exists as a doc in the 'access_codes' collection
+      // Also set the user's access level based on the access code's "Level" field
+      
+      // Sign in anonymously to use the Firebase services
+
       try {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        UserCredential anonymousUserCredential = await FirebaseAuth.instance.signInAnonymously();
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'operation-not-allowed') {
+          onCreateErrorPopUp(context, "Anonymous sign in is not enabled! Please try again.");
+          Navigator.pop(context);
+        } else {
+          onCreateErrorPopUp(context, "An error occurred while trying to sign in anonymously! Please try again.");
+          Navigator.pop(context);
+        }
+      } catch (e) {
+        onCreateErrorPopUp(context, "An error occurred while trying to sign in anonymously! Please try again.");
+        Navigator.pop(context);
+      }
+
+      try {
+        String enteredAccessCode = accessController.text.trim();
+        DocumentSnapshot accessCodeDoc = await FirebaseFirestore.instance.collection('access_codes').doc(enteredAccessCode).get();
+        if (!accessCodeDoc.exists) {
+          print('The access code you entered is invalid! Please try again.');
+          throw Exception('The access code you entered is invalid! Please try again.');
+        }
+        String accessLevel = accessCodeDoc.get('Level');
+        await FirebaseAuth.instance.currentUser?.delete(); // Delete the anonymous user
+        UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passController.text.trim(),
         );
-        Navigator.pop(context);
-        Navigator.pop(context);
+        // Create a new user in the firestore database, collection: accounts, document_id: user.uid, if the user is not null
+        if (userCredential.user != null) { 
+          await FirebaseFirestore.instance
+              .collection('accounts')
+              .doc(userCredential.user!.uid)
+              .set({
+            'first_name': fNameController.text.trim(),
+            'last_name': lNameController.text.trim(),
+            'phone_number': phoneController.text.trim(),
+            'access_level': accessLevel,
+            'email': emailController.text.trim(),
+            //'password': passController.text.trim(), // Do not store the password in the database
+          });
+        }
+
+        Navigator.pop(context); // Close the CircularProgressIndicator
+        Navigator.pop(context); // Close the Registration Page
       } on FirebaseAuthException catch (e) {
         Navigator.pop(context);
         if (e.code == 'invalid-email' || e.code == 'email-already-in-use') {
           onCreateErrorPopUp(context,
               'The email you entered is invalid or already in use! Please try again.');
         }
-      }
+      } catch (e) {
+        Navigator.pop(context);
+        print('Error: $e');
+        onCreateErrorPopUp(context, e.toString());
+      } 
     } else {
       Navigator.pop(context);
       onCreateErrorPopUp(context, "The passwords don't match!");
@@ -129,7 +179,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         obscureText: false,
                         prefix: Icons.mail_outlined),
                     const SizedBox(
-                      height: 40,
+                      height: 13,
+                    ),
+                    // Add text field for the registrant's *Access Code* that verifies their membership of the organization and 
+                    // determines the level of access they have to the app's features.
+                    MyTextField(controller: accessController,
+                        hintText: "Access Code",
+                        obscureText: false,
+                        prefix: Icons.lock_outline),
+                    const SizedBox(
+                      height: 13,
                     ),
                     MyTextField(
                         controller: passController,
