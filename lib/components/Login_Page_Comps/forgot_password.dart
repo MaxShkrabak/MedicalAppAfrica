@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:africa_med_app/pages/forgot_pass_page.dart';
 
 class ForgotPassword extends StatefulWidget {
+  const ForgotPassword({super.key});
+
   @override
   _ForgotPasswordState createState() => _ForgotPasswordState();
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
-  bool isPressed = false; // Variable to track button press state
+  bool _isPressed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -18,22 +21,23 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           GestureDetector(
             onTapDown: (_) {
               setState(() {
-                isPressed = true; // Indicate that the button is pressed
+                _isPressed = true;
               });
             },
             onTapUp: (_) {
               setState(() {
-                isPressed = false; // Indicate that the button is released
+                _isPressed = false;
               });
+              _navigateToForgotPasswordPage(context);
             },
             onTapCancel: () {
               setState(() {
-                isPressed = false; // Indicate that the tap is canceled
+                _isPressed = false;
               });
             },
             child: AnimatedOpacity(
-              duration: Duration(milliseconds: 200), // Animation duration
-              opacity: isPressed ? 0.3 : 1.0, // Lower opacity when pressed
+              duration: const Duration(milliseconds: 200),
+              opacity: _isPressed ? 0.3 : 1.0,
               child: const Text(
                 "Forgot Password?",
                 style: TextStyle(
@@ -46,6 +50,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           ),
         ],
       ),
+    );
+  }
+
+  void _navigateToForgotPasswordPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ForgotPasswordPage()),
     );
   }
 }
