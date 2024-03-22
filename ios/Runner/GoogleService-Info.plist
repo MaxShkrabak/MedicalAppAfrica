@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CLIENT_ID</key>
+	<string>562077421923-kr84a172bfjqgr8bd2t32khfmkiimlon.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.562077421923-kr84a172bfjqgr8bd2t32khfmkiimlon</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>562077421923-f6mbd6gaafc8f6fq7cia6epbhbu56uqk.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCkL_-0CJ5l8wW3gbHJJkyDGGk6pmk-GQ0</string>
 	<key>GCM_SENDER_ID</key>
@@ -26,5 +32,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:562077421923:ios:146e068587e655fe490356</string>
+	<key>DATABASE_URL</key>
+	<string>https://africamedapp-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
