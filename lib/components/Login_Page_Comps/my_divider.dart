@@ -21,7 +21,7 @@ class MyDivider extends StatelessWidget {
             child: Text(
               "OR",
               style: TextStyle(
-                color: Color.fromARGB(255, 50, 197, 255),
+                color: Color.fromARGB(255, 240, 240, 240),
                 fontSize: 16.0,
                 fontWeight: FontWeight.w600,
               ),

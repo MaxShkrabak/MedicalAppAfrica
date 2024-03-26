@@ -110,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                     //divider
                     const MyDivider(),
 
-                    //Google and Apple sign in buttons
+                    //Google and Facebook sign in buttons
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -124,9 +124,9 @@ class _LoginPageState extends State<LoginPage> {
                           width: 26,
                         ),
 
-                        //apple
+                        //facebook
                         SquareBoxButton(
-                          image: 'assets/Apple_logo_black.png',
+                          image: 'assets/facebook_logo.png',
                           onPressed: () {},
                         ),
                       ],
