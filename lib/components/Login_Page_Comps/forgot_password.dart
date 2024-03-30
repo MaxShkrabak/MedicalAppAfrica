@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:africa_med_app/pages/forgot_pass_page.dart';
+import 'package:africa_med_app/pages/all_login_pages/forgot_pass_page.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});

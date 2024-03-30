@@ -90,6 +90,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             'phone_number': phoneController.text.trim(),
             'access_level': accessLevel,
             'email': emailController.text.trim(),
+            'imageURL': '',
             //'password': passController.text.trim(), // Do not store the password in the database
           });
         }
@@ -141,7 +142,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         child: Scaffold(
           appBar: AppBar(
             title: GradientText(
-              'Create an Account.',
+              'Create an Account',
               style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
               colors: const [
                 Colors.blue,
@@ -165,7 +166,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(width: 30),
+                        const SizedBox(width: 30),
                         Flexible(
                             child: NameTextFields(
                                 controller: fNameController,

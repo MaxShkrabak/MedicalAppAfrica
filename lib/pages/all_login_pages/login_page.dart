@@ -2,15 +2,15 @@ import 'package:africa_med_app/components/Login_Page_Comps/register_now.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../components/Login_Page_Comps/forgot_password.dart';
-import '../components/Login_Page_Comps/logo_comp.dart';
-import '../components/Login_Page_Comps/my_divider.dart';
-import '../components/Login_Page_Comps/signin_button.dart';
-import '../components/Login_Page_Comps/my_textfield.dart';
-import '../components/Login_Page_Comps/square_button.dart';
+import '../../components/Login_Page_Comps/forgot_password.dart';
+import '../../components/Login_Page_Comps/logo_comp.dart';
+import '../../components/Login_Page_Comps/my_divider.dart';
+import '../../components/Login_Page_Comps/signin_button.dart';
+import '../../components/Login_Page_Comps/my_textfield.dart';
+import '../../components/Login_Page_Comps/square_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../components/Login_Page_Comps/wrong_credentials.dart';
+import '../../components/Login_Page_Comps/wrong_credentials.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -66,7 +66,10 @@ class _LoginPageState extends State<LoginPage> {
           gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Colors.black54, Colors.black87]),
+              colors: [
+                Color.fromARGB(133, 0, 225, 255),
+                Color.fromARGB(221, 44, 25, 148)
+              ]),
         ),
         child: Scaffold(
           backgroundColor: const Color.fromARGB(156, 102, 133, 161),
