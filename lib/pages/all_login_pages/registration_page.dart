@@ -25,6 +25,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final accessController = TextEditingController();
   final confPassController = TextEditingController();
   bool _isStrong = false;
+  bool _isValidPhone = false;
 
   Future signUp() async {
     showDialog(
@@ -185,7 +186,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     const SizedBox(
                       height: 13,
                     ),
-                    PhoneNumField(controller: phoneController),
+                    PhoneNumField(
+                      controller: phoneController,
+                      onValidated: (isValid) {
+                        //
+                        WidgetsBinding.instance!.addPostFrameCallback((_) {
+                          setState(() {
+                            _isValidPhone = isValid;
+                          });
+                        });
+                      },
+                    ),
                     const SizedBox(height: 13),
                     MyTextField(
                         controller: emailController,
@@ -238,12 +249,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       height: 10,
                     ),
                     CreateButton(
-                        onTap: _isStrong
+                        onTap: _isStrong && _isValidPhone
                             ? () {
                                 signUp();
                               }
                             : null,
-                        color: _isStrong
+                        color: _isStrong && _isValidPhone
                             ? Color.fromARGB(218, 0, 0, 0).withOpacity(1)
                             : Color.fromARGB(218, 0, 0, 0).withOpacity(0.3))
                   ],

@@ -4,10 +4,12 @@ import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 
 class PhoneNumField extends StatefulWidget {
   final TextEditingController controller;
+  final Function(bool isValid) onValidated;
 
   const PhoneNumField({
     Key? key,
     required this.controller,
+    required this.onValidated,
   }) : super(key: key);
 
   @override
@@ -21,11 +23,21 @@ class _PhoneNumFieldState extends State<PhoneNumField> {
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: TextFormField(
           controller: widget.controller,
+          // Include validator that the phone number contains 10 digits 
+          validator: (value) {
+            bool isValid = RegExp(r'^\(\d{3}\) \d{3}-\d{4}$').hasMatch(value!);
+            widget.onValidated(isValid);
+            if (!isValid) {
+              return 'Phone number must be in the format (XXX) XXX-XXXX';
+            }
+            return null;
+          },
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
             MaskedInputFormatter('(###) ###-####',
                 allowedCharMatcher: RegExp(r'[0-9]')),
           ],
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           decoration: const InputDecoration(
             fillColor: const Color.fromRGBO(127, 162, 193, 100),
             filled: true,
@@ -48,6 +60,14 @@ class _PhoneNumFieldState extends State<PhoneNumField> {
                 color: Color.fromARGB(255, 0, 0, 0),
                 width: 2.0,
               ),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(35.0)),
+              borderSide: BorderSide(color: Colors.red), // change this color as needed
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(35.0)),
+              borderSide: BorderSide(color: Colors.red), // change this color as needed
             ),
           )),
     );
