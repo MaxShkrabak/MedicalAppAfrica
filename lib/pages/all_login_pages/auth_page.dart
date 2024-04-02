@@ -6,7 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AuthPage extends StatelessWidget {
-  const AuthPage({super.key});
+  AuthPage({super.key});
+  bool isRegistrationPagePushed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +17,11 @@ class AuthPage extends StatelessWidget {
         if (!snapshot.hasData) {
           return const LoginPage();
         } else {
-          return StreamBuilder<DocumentSnapshot>(
-            stream: FirebaseFirestore.instance
+          return FutureBuilder<DocumentSnapshot>(
+            future: FirebaseFirestore.instance
                 .collection('accounts')
                 .doc(snapshot.data?.uid)
-                .snapshots(),
+                .get(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
@@ -30,13 +31,20 @@ class AuthPage extends StatelessWidget {
                 if (snapshot.data?.exists ?? false) {
                   return const DashBoard();
                 } else {
-                  WidgetsBinding.instance?.addPostFrameCallback((_) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => RegistrationPage()),
-                    );
-                  });
-                  return const LoginPage();
+                  if (snapshot.data?.exists ?? false) {
+                    return const DashBoard();
+                  } else {
+                    if (!isRegistrationPagePushed) {
+                      WidgetsBinding.instance?.addPostFrameCallback((_) {
+                        isRegistrationPagePushed = true;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => RegistrationPage()),
+                        ).then((_) => isRegistrationPagePushed = false);
+                      });
+                    }
+                    return const LoginPage();
+                  }
                 }
               }
             },

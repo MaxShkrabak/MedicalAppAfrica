@@ -29,12 +29,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
     super.initState();
     user = FirebaseAuth.instance.currentUser;
     emailController = TextEditingController(text: user?.email ?? '');
-
+    _isValidEmail = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(emailController.text);
     List<String>? name = user?.displayName?.split(' ');
     fNameController = TextEditingController(text: name?.first ?? '');
     lNameController = TextEditingController(text: name?.last ?? '');
-   
   }
+
   final phoneController = TextEditingController();
   final passController = TextEditingController();
   final accessController = TextEditingController();
