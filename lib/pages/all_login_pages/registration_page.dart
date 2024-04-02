@@ -29,7 +29,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
     super.initState();
     user = FirebaseAuth.instance.currentUser;
     emailController = TextEditingController(text: user?.email ?? '');
-    _isValidEmail = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(emailController.text);
+    _isValidEmail = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+        .hasMatch(emailController.text);
     List<String>? name = user?.displayName?.split(' ');
     fNameController = TextEditingController(text: name?.first ?? '');
     lNameController = TextEditingController(text: name?.last ?? '');
@@ -39,7 +40,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final passController = TextEditingController();
   final accessController = TextEditingController();
   final confPassController = TextEditingController();
-
 
   bool _isStrong = false;
   bool _isValidPhone = false;
@@ -117,6 +117,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
         Navigator.pop(context); // Close the CircularProgressIndicator
         Navigator.pop(context); // Close the Registration Page
+        Navigator.pop(context);
       } on FirebaseAuthException catch (e) {
         Navigator.pop(context);
         if (e.code == 'invalid-email' || e.code == 'email-already-in-use') {
@@ -161,7 +162,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
         child: Scaffold(
           appBar: AppBar(
             leading: BackButton(
-              color: Colors.black, // Change this color to match your app's color scheme
+              color: Colors
+                  .black, // Change this color to match your app's color scheme
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -238,15 +240,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     // Add text field for the registrant's *Access Code* that verifies their membership of the organization and
                     // determines the level of access they have to the app's features.
                     MyTextField(
-                        controller: accessController,
-                        obscureText: false,
-                        hintText: 'Access Code',
-                        prefix: Icons.lock_outline,
-                        onChanged: (value) {
-                          setState(() {
-                            _isValidAccessCode = RegExp(r'^[0-9]{6}$').hasMatch(value);
-                          });
-                        },
+                      controller: accessController,
+                      obscureText: false,
+                      hintText: 'Access Code',
+                      prefix: Icons.lock_outline,
+                      onChanged: (value) {
+                        setState(() {
+                          _isValidAccessCode =
+                              RegExp(r'^[0-9]{6}$').hasMatch(value);
+                        });
+                      },
                     ),
                     const SizedBox(
                       height: 13,
@@ -284,12 +287,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       height: 10,
                     ),
                     CreateButton(
-                        onTap: _isStrong && _isValidPhone && _isValidEmail && _isValidAccessCode
+                        onTap: _isStrong &&
+                                _isValidPhone &&
+                                _isValidEmail &&
+                                _isValidAccessCode
                             ? () {
                                 signUp();
                               }
                             : null,
-                        color: _isStrong && _isValidPhone && _isValidEmail && _isValidAccessCode
+                        color: _isStrong &&
+                                _isValidPhone &&
+                                _isValidEmail &&
+                                _isValidAccessCode
                             ? Color.fromARGB(218, 0, 0, 0).withOpacity(1)
                             : Color.fromARGB(218, 0, 0, 0).withOpacity(0.3))
                   ],
