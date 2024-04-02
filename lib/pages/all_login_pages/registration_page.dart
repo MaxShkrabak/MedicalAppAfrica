@@ -1,4 +1,5 @@
 import 'package:africa_med_app/components/Login_Page_Comps/my_textfield.dart';
+import 'package:africa_med_app/components/Registration_Comps/EmailTextField.dart';
 import 'package:africa_med_app/components/Registration_Comps/NameTextFields.dart';
 import 'package:africa_med_app/components/Registration_Comps/PhoneNumField.dart';
 import 'package:africa_med_app/components/Registration_Comps/create_account_button.dart';
@@ -17,15 +18,33 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
-  final fNameController = TextEditingController();
-  final lNameController = TextEditingController();
+  User? user;
+  late TextEditingController emailController;
+  late TextEditingController fNameController;
+  late TextEditingController lNameController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    user = FirebaseAuth.instance.currentUser;
+    emailController = TextEditingController(text: user?.email ?? '');
+
+    List<String>? name = user?.displayName?.split(' ');
+    fNameController = TextEditingController(text: name?.first ?? '');
+    lNameController = TextEditingController(text: name?.last ?? '');
+   
+  }
   final phoneController = TextEditingController();
-  final emailController = TextEditingController();
   final passController = TextEditingController();
   final accessController = TextEditingController();
   final confPassController = TextEditingController();
+
+
   bool _isStrong = false;
   bool _isValidPhone = false;
+  bool _isValidAccessCode = false;
+  bool _isValidEmail = false;
 
   Future signUp() async {
     showDialog(
@@ -105,7 +124,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
               'The email you entered is invalid or already in use! Please try again.');
         }
       } catch (e) {
-        Navigator.pop(context);
         print('Error: $e');
         onCreateErrorPopUp(context, e.toString());
       }
@@ -142,6 +160,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ),
         child: Scaffold(
           appBar: AppBar(
+            leading: BackButton(
+              color: Colors.black, // Change this color to match your app's color scheme
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
             title: GradientText(
               'Create an Account',
               style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
@@ -198,11 +222,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       },
                     ),
                     const SizedBox(height: 13),
-                    MyTextField(
-                        controller: emailController,
-                        hintText: "E-Mail",
-                        obscureText: false,
-                        prefix: Icons.mail_outlined),
+                    EmailTextField(
+                      controller: emailController,
+                      onValidated: (isValid) {
+                        WidgetsBinding.instance!.addPostFrameCallback((_) {
+                          setState(() {
+                            _isValidEmail = isValid;
+                          });
+                        });
+                      },
+                    ),
                     const SizedBox(
                       height: 13,
                     ),
@@ -210,9 +239,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     // determines the level of access they have to the app's features.
                     MyTextField(
                         controller: accessController,
-                        hintText: "Access Code",
                         obscureText: false,
-                        prefix: Icons.lock_outline),
+                        hintText: 'Access Code',
+                        prefix: Icons.lock_outline,
+                        onChanged: (value) {
+                          setState(() {
+                            _isValidAccessCode = RegExp(r'^[0-9]{6}$').hasMatch(value);
+                          });
+                        },
+                    ),
                     const SizedBox(
                       height: 13,
                     ),
@@ -249,12 +284,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       height: 10,
                     ),
                     CreateButton(
-                        onTap: _isStrong && _isValidPhone
+                        onTap: _isStrong && _isValidPhone && _isValidEmail && _isValidAccessCode
                             ? () {
                                 signUp();
                               }
                             : null,
-                        color: _isStrong && _isValidPhone
+                        color: _isStrong && _isValidPhone && _isValidEmail && _isValidAccessCode
                             ? Color.fromARGB(218, 0, 0, 0).withOpacity(1)
                             : Color.fromARGB(218, 0, 0, 0).withOpacity(0.3))
                   ],

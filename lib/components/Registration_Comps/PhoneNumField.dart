@@ -28,7 +28,7 @@ class _PhoneNumFieldState extends State<PhoneNumField> {
             bool isValid = RegExp(r'^\(\d{3}\) \d{3}-\d{4}$').hasMatch(value!);
             widget.onValidated(isValid);
             if (!isValid) {
-              return 'Phone number must be in the format (XXX) XXX-XXXX';
+              return 'Phone number must have 10 digits';
             }
             return null;
           },

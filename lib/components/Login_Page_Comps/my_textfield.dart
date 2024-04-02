@@ -6,6 +6,7 @@ class MyTextField extends StatefulWidget {
   final bool obscureText; //determines if text should be visible or not
   final bool showPassIcon; //determines if show icon for password is visible
   final IconData? prefix;
+  final ValueChanged<String>? onChanged;
 
   //constructor
   const MyTextField({
@@ -15,6 +16,7 @@ class MyTextField extends StatefulWidget {
     required this.obscureText,
     this.showPassIcon = false,
     this.prefix,
+    this.onChanged,
   });
 
   @override
@@ -31,6 +33,7 @@ class _MyTextFieldState extends State<MyTextField> {
       child: TextField(
         controller: widget.controller,
         obscureText: widget.obscureText && _obscureText,
+        onChanged: widget.onChanged,
         decoration: InputDecoration(
           contentPadding:
               const EdgeInsets.symmetric(vertical: 15, horizontal: 20),

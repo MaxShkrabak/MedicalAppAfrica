@@ -1,5 +1,6 @@
 import 'package:africa_med_app/pages/all_dashboard_pages/dashboard.dart';
 import 'package:africa_med_app/pages/all_login_pages/login_page.dart';
+import 'package:africa_med_app/pages/all_login_pages/registration_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +15,33 @@ class AuthPage extends StatelessWidget {
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return const LoginPage();
+        } else {
+          return StreamBuilder<DocumentSnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection('accounts')
+                .doc(snapshot.data?.uid)
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                if (snapshot.data?.exists ?? false) {
+                  return const DashBoard();
+                } else {
+                  WidgetsBinding.instance?.addPostFrameCallback((_) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegistrationPage()),
+                    );
+                  });
+                  return const LoginPage();
+                }
+              }
+            },
+          );
         }
-        return const DashBoard();
       },
     );
   }

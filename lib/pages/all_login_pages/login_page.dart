@@ -1,6 +1,8 @@
 import 'package:africa_med_app/components/Login_Page_Comps/register_now.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 import '../../components/Login_Page_Comps/forgot_password.dart';
 import '../../components/Login_Page_Comps/logo_comp.dart';
@@ -9,8 +11,10 @@ import '../../components/Login_Page_Comps/signin_button.dart';
 import '../../components/Login_Page_Comps/my_textfield.dart';
 import '../../components/Login_Page_Comps/square_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 import '../../components/Login_Page_Comps/wrong_credentials.dart';
+import 'registration_page.dart';
+
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -167,7 +171,16 @@ class _LoginPageState extends State<LoginPage> {
 
         final UserCredential userCredential =
             await _auth.signInWithCredential(credential);
-        // Handle signed in user
+        // Check if user exists in 'accounts' collection
+        final DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('accounts').doc(userCredential.user?.uid).get();
+
+        if (!userDoc.exists) {
+          // If user doesn't exist in 'accounts' collection, navigate to RegistrationPage
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => RegistrationPage()),
+          );
+        }
       } else {
         // User canceled Google Sign In
       }
