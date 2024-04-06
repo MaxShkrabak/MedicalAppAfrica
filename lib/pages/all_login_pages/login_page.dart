@@ -1,7 +1,6 @@
 import 'package:africa_med_app/components/Login_Page_Comps/register_now.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 import '../../components/Login_Page_Comps/forgot_password.dart';
@@ -12,7 +11,7 @@ import '../../components/Login_Page_Comps/my_textfield.dart';
 import '../../components/Login_Page_Comps/square_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../../components/Login_Page_Comps/wrong_credentials.dart';
-import 'registration_page.dart';
+import 'google_registration_page.dart';
 
 
 
@@ -48,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pop(context);
       }
       // Successfully signed in
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException {
       if (mounted) {
         Navigator.pop(context);
         wrongCredentialsMessage(context);
@@ -107,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
 
                     //forgot pass text
                     const SizedBox(height: 7),
-                    ForgotPassword(),
+                    const ForgotPassword(),
                     const SizedBox(height: 25),
 
                     //login button
@@ -169,18 +168,18 @@ class _LoginPageState extends State<LoginPage> {
           idToken: googleAuth.idToken,
         );
 
-        final UserCredential userCredential =
-            await _auth.signInWithCredential(credential);
-        // Check if user exists in 'accounts' collection
-        final DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('accounts').doc(userCredential.user?.uid).get();
+        //Finish the auth process by signing in with credential
+        await _auth.signInWithCredential(credential);
+        
 
-        if (!userDoc.exists) {
-          // If user doesn't exist in 'accounts' collection, navigate to RegistrationPage
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => RegistrationPage()),
-          );
-        }
+        // Navigate to the Google Registration Page
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const GoogleRegistrationPage(),
+          ),
+        );
+
       } else {
         // User canceled Google Sign In
       }
