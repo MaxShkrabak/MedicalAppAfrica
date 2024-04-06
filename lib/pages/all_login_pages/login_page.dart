@@ -1,5 +1,7 @@
 import 'package:africa_med_app/components/Login_Page_Comps/register_now.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 
@@ -169,17 +171,29 @@ class _LoginPageState extends State<LoginPage> {
         );
 
         //Finish the auth process by signing in with credential
-        await _auth.signInWithCredential(credential);
-        
+        final UserCredential userCredential =
+            await _auth.signInWithCredential(credential);
 
-        // Navigate to the Google Registration Page
-        await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const GoogleRegistrationPage(),
-          ),
-        );
 
+        // Navigate to the Google Registration Page *if* the user is not already in the accounts collection in the firestore with the uid being their name
+        String uid = userCredential.user!.uid;
+        await FirebaseFirestore.instance
+            .collection('accounts')
+            .doc(uid)
+            .get()
+            .then((DocumentSnapshot documentSnapshot) {
+          if (documentSnapshot.exists) {
+            // User already exists in the accounts collection
+          } else {
+            // User does not exist in the accounts collection
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const GoogleRegistrationPage(),
+              ),
+            );
+          }
+        });
       } else {
         // User canceled Google Sign In
       }

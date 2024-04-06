@@ -94,11 +94,17 @@ class _GoogleRegistrationPageState extends State<GoogleRegistrationPage> {
           });
   }
 
+  // When popping, unauth the user so you go to the login page not the dashboard
+  Future<void> _onWillPop() async {
+    await FirebaseAuth.instance.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: false,
+      onPopInvoked: (bool isPopInvoked) async {
+        await _onWillPop();
+      },
       child: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -116,7 +122,11 @@ class _GoogleRegistrationPageState extends State<GoogleRegistrationPage> {
           ),
           child: Scaffold(
             appBar: AppBar(
-              leading: Container(),
+              leading: BackButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
               title: GradientText(
                 'Google Registration',
                 style: const TextStyle(
