@@ -1,3 +1,4 @@
+import 'package:africa_med_app/pages/all_dashboard_pages/patients_page.dart';
 import 'package:flutter/material.dart';
 import 'package:africa_med_app/components/Dashboard_Comps/Tiles.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,24 +16,47 @@ class OrderingSystem extends StatefulWidget {
 class _OrderingSystemState extends State<OrderingSystem> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(156, 102, 134, 161),
-        title: const Text('Orders'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/logo.png'),
+          fit: BoxFit.cover,
         ),
       ),
-      body: SafeArea(
-            minimum: const EdgeInsets.symmetric(horizontal: 15),
+      child: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(133, 23, 6, 87),
+              Color.fromARGB(221, 52, 4, 85),
+            ],
+          ),
+        ),
+        child: Scaffold(
+          appBar: AppBar(
+             backgroundColor: Color.fromARGB(156, 102, 134, 161),
+             title: const Text('Orders'),
+             leading: IconButton(
+             icon: const Icon(Icons.arrow_back),
+             onPressed: () {
+               Navigator.pop(context);
+              },
+            ),
+          ),
+          backgroundColor: Color.fromARGB(156, 102, 133, 161),
+          body: SafeArea(
+            minimum: const EdgeInsets.symmetric(horizontal: 10),
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const SizedBox(height: 30),
-
+                  
+                  const Divider(
+                    color: Color.fromRGBO(0, 0, 0, 1),
+                    thickness: 2,
+                  ),
+                  const SizedBox(height: 12),
                   Tiles(
                     onTap: () {
                       Navigator.push(
@@ -47,7 +71,6 @@ class _OrderingSystemState extends State<OrderingSystem> {
                     height: 120,
                   ),
                   const SizedBox(height: 7),
-
                   Tiles(
                     onTap: () {
                       Navigator.push(
@@ -62,7 +85,6 @@ class _OrderingSystemState extends State<OrderingSystem> {
                     height: 120,
                   ),
                   const SizedBox(height: 7),
-
                   Tiles(
                     onTap: () {
                       Navigator.push(
@@ -76,13 +98,15 @@ class _OrderingSystemState extends State<OrderingSystem> {
                     width: 400,
                     height: 120,
                   ),
-                  const SizedBox(height: 7),
                   
+                  const SizedBox(height: 80),
                   
                 ],
               ),
             ),
-          )
+          ),
+        ),
+      ),
     );
   }
 }
