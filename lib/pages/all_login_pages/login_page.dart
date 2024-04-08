@@ -1,9 +1,7 @@
 import 'package:africa_med_app/components/Login_Page_Comps/register_now.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
 
 import '../../components/Login_Page_Comps/forgot_password.dart';
 import '../../components/Login_Page_Comps/logo_comp.dart';
@@ -14,8 +12,6 @@ import '../../components/Login_Page_Comps/square_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../../components/Login_Page_Comps/wrong_credentials.dart';
 import 'google_registration_page.dart';
-
-
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -173,7 +169,6 @@ class _LoginPageState extends State<LoginPage> {
         //Finish the auth process by signing in with credential
         final UserCredential userCredential =
             await _auth.signInWithCredential(credential);
-
 
         // Navigate to the Google Registration Page *if* the user is not already in the accounts collection in the firestore with the uid being their name
         String uid = userCredential.user!.uid;

@@ -3,7 +3,7 @@ import 'package:africa_med_app/pages/all_dashboard_pages/Orders.dart';
 import 'package:africa_med_app/pages/all_dashboard_pages/messaging_page.dart';
 import 'package:africa_med_app/pages/all_dashboard_pages/patients_page.dart';
 import 'package:africa_med_app/pages/all_dashboard_pages/schedule_page.dart';
-import 'package:africa_med_app/pages/all_settings_pages/account_settings.dart';
+import 'package:africa_med_app/pages/all_settings_pages/settings_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -84,7 +84,7 @@ class _DashBoardState extends State<DashBoard> {
           ),
         ),
         child: Scaffold(
-          backgroundColor: Color.fromARGB(156, 102, 133, 161),
+          backgroundColor: const Color.fromARGB(156, 102, 133, 161),
           body: SafeArea(
             minimum: const EdgeInsets.symmetric(horizontal: 10),
             child: SingleChildScrollView(
@@ -127,38 +127,36 @@ class _DashBoardState extends State<DashBoard> {
                       ),
                       const SizedBox(
                           width: 90), // Add spacing between name and image
-                      Container(
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: ((context) => const PickImage()),
-                              ),
-                            );
-                          },
-                          child: Column(
-                            children: [
-                              CircleAvatar(
-                                radius: 30,
-                                backgroundColor:
-                                    const Color.fromARGB(0, 255, 255, 255),
-                                backgroundImage: _userImageUrl.isNotEmpty
-                                    ? NetworkImage(_userImageUrl)
-                                    : const AssetImage(
-                                            'assets/profile_picture.png')
-                                        as ImageProvider<Object>,
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              const Text(
-                                "Settings",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 12),
-                              )
-                            ],
-                          ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: ((context) => const SettingsPage()),
+                            ),
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            CircleAvatar(
+                              radius: 30,
+                              backgroundColor:
+                                  const Color.fromARGB(0, 255, 255, 255),
+                              backgroundImage: _userImageUrl.isNotEmpty
+                                  ? NetworkImage(_userImageUrl)
+                                  : const AssetImage(
+                                          'assets/Anonymous_profile.jpg')
+                                      as ImageProvider<Object>,
+                            ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            const Text(
+                              "Settings",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 12),
+                            )
+                          ],
                         ),
                       ),
                     ],
