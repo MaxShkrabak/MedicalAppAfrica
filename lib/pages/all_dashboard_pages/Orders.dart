@@ -1,4 +1,3 @@
-import 'package:africa_med_app/pages/all_dashboard_pages/patients_page.dart';
 import 'package:flutter/material.dart';
 import 'package:africa_med_app/components/Dashboard_Comps/Tiles.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,12 +35,12 @@ class _OrderingSystemState extends State<OrderingSystem> {
         ),
         child: Scaffold(
           appBar: AppBar(
-             backgroundColor: Color.fromARGB(156, 102, 134, 161),
-             title: const Text('Orders'),
-             leading: IconButton(
-             icon: const Icon(Icons.arrow_back),
-             onPressed: () {
-               Navigator.pop(context);
+            backgroundColor: Color.fromARGB(156, 102, 134, 161),
+            title: const Text('Orders'),
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
               },
             ),
           ),
@@ -51,7 +50,6 @@ class _OrderingSystemState extends State<OrderingSystem> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  
                   const Divider(
                     color: Color.fromRGBO(0, 0, 0, 1),
                     thickness: 2,
@@ -98,9 +96,7 @@ class _OrderingSystemState extends State<OrderingSystem> {
                     width: 400,
                     height: 120,
                   ),
-                  
                   const SizedBox(height: 80),
-                  
                 ],
               ),
             ),

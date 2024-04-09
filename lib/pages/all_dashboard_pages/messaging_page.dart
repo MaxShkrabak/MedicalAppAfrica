@@ -1,33 +1,18 @@
 import 'package:flutter/material.dart';
 
-class Messaging extends StatefulWidget {
-  const Messaging({super.key});
-
-  @override
-  _MessagingState createState() => _MessagingState();
-}
-
-class _MessagingState extends State<Messaging> {
+class Messaging extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Messaging'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: const Center(
-        child: Text(
-          'Messaging',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+    return Container(
+      decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+              Color.fromARGB(133, 23, 6, 87),
+              Color.fromARGB(221, 52, 4, 85),
+              ],
+            ),
       ),
     );
   }
