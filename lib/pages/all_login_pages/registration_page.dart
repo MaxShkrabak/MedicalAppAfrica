@@ -48,7 +48,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
       // Get the access level of the user
       try {
-        String accessLevel = await getAccessLevel(accessController.text.trim());
+        accessLevel = await getAccessLevel(accessController.text.trim());
       } on Exception {
         Navigator.pop(context);
       }
@@ -64,7 +64,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
       Navigator.pop(context); // Close the CircularProgressIndicator
       Navigator.pop(context); // Close the Registration Page
-      Navigator.pop(context);
       } else {
         Navigator.pop(context);
         onCreateErrorPopUp(context, "The passwords don't match!");
