@@ -12,22 +12,26 @@ class ContactsPage extends StatefulWidget {
 class _ContactsPageState extends State<ContactsPage> {
   final TextEditingController _searchController = TextEditingController();
 
-  // List of documents, the state of this widget
+  // List of documents, the state of this widget that changes on setState
   List<DocumentSnapshot> _docs = [];
   
 
-
+  // Logic to search for contacts in this function
   void _onSearchTextChanged(String text) async {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+    // If empty, ...
     if (text.isEmpty) {
       setState(() {
         _docs = [];
       });
     } else {
+
+      // Search for contacts with first_name or last_name equal to text
       final QuerySnapshot first_query = await _firestore.collection('accounts').where('first_name', isEqualTo: text).get();
       final QuerySnapshot last_query = await _firestore.collection('accounts').where('last_name', isEqualTo: text).get();
       
+      // Use a Map, or Dictionary  data structure to store the documents. This avoids duplicates by having the id as the key
       Map<String, DocumentSnapshot> docMap = {};
 
       for (final doc in first_query.docs) {
