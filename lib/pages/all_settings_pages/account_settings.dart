@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:africa_med_app/components/Settings_Comps/name_text_field.dart';
+import 'package:africa_med_app/pages/all_settings_pages/email_change_settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -87,141 +88,171 @@ class _AccountSettingsState extends State<AccountSettings> {
         titleSpacing: 60, //spacer between back button and text
       ),
       backgroundColor: const Color.fromRGBO(76, 90, 137, 1), //background color
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 20),
-              GestureDetector(
-                onTap: () {
-                  showImagePickerOption(context);
-                },
-                child: Stack(
-                  alignment: Alignment.center,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 20),
+                GestureDetector(
+                  onTap: () {
+                    showImagePickerOption(context);
+                  },
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      _image != null
+                          ? CircleAvatar(
+                              radius: 59,
+                              backgroundImage: MemoryImage(_image!),
+                            )
+                          : (imageUrl != null && imageUrl!.isNotEmpty)
+                              ? CircleAvatar(
+                                  radius: 59,
+                                  backgroundImage: NetworkImage(imageUrl!),
+                                )
+                              : const CircleAvatar(
+                                  radius: 59,
+                                  backgroundImage: AssetImage(
+                                      "assets/Anonymous_profile.jpg"),
+                                ),
+                      const Text(
+                        'Edit',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10),
+
+                //displays users access role
+                Text(
+                  'Access Role: ${userRole ?? ''}',
+                  style: const TextStyle(color: Colors.white),
+                ),
+                const SizedBox(height: 20),
+
+                //displays users name and last in textfields on same row
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _image != null
-                        ? CircleAvatar(
-                            radius: 59,
-                            backgroundImage: MemoryImage(_image!),
-                          )
-                        : (imageUrl != null && imageUrl!.isNotEmpty)
-                            ? CircleAvatar(
-                                radius: 59,
-                                backgroundImage: NetworkImage(imageUrl!),
-                              )
-                            : const CircleAvatar(
-                                radius: 59,
-                                backgroundImage:
-                                    AssetImage("assets/Anonymous_profile.jpg"),
-                              ),
-                    const Text(
-                      'Edit',
-                      style: TextStyle(color: Colors.white),
+                    Expanded(
+                      child: SettingsNameTextField(
+                        hintText: "Name",
+                        controller: _nameController,
+                      ),
+                    ),
+                    const SizedBox(width: 10), //gap between first and last name
+                    Expanded(
+                      child: SettingsNameTextField(
+                        hintText: "Last Name",
+                        controller: _lastNameController,
+                      ),
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(height: 10),
-
-              //displays users access role
-              Text(
-                'Access Role: ${userRole ?? ''}',
-                style: const TextStyle(color: Colors.white),
-              ),
-              const SizedBox(height: 20),
-
-              //displays users name and last in textfields on same row
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: SettingsNameTextField(
-                      hintText: "Name",
-                      controller: _nameController,
-                    ),
-                  ),
-                  const SizedBox(width: 10), //gap between first and last name
-                  Expanded(
-                    child: SettingsNameTextField(
-                      hintText: "Last Name",
-                      controller: _lastNameController,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              //users email
-              SettingsNameTextField(
-                hintText: "Email",
-                controller: _emailController,
-              ),
-              const SizedBox(height: 10),
-              //users phone number
-              SettingsNameTextField(
-                hintText: "Phone Number",
-                controller: _phoneNumberController,
-                isPhoneNumberField: true,
-              ),
-              //moves the save button down
-              const SizedBox(
-                height: 180,
-              ),
-              //save button
-              ElevatedButton(
-                onPressed: () {
-                  //checks if first or last name fields are empty and pops error if they are
-                  if (_nameController.text.isEmpty) {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text('Error'),
-                          content: const Text('Please enter your first name.'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text('OK'),
-                            ),
-                          ],
+                const SizedBox(height: 10),
+                //users email
+                SettingsNameTextField(
+                  hintText: "Email",
+                  controller: _emailController,
+                  isEmailField: true,
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const newEmailPage()));
+                  },
+                ),
+                const SizedBox(height: 10),
+                //users phone number
+                SettingsNameTextField(
+                  hintText: "Phone Number",
+                  controller: _phoneNumberController,
+                  isPhoneNumberField: true,
+                ),
+                //moves the save button down
+                const SizedBox(
+                  height: 180,
+                ),
+                //save button
+                ElevatedButton(
+                  onPressed: () {
+                    //checks if first or last name fields are empty and pops error if they are
+                    if (_nameController.text.isEmpty) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('Error'),
+                            content:
+                                const Text('Please enter your first name.'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    } else if (_lastNameController.text.isEmpty) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('Error'),
+                            content: const Text('Please enter your last name.'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      //checks if phone and email fields are valid and not empty, if fine lets user save data
+                    } else if (_emailController.text.isNotEmpty &&
+                        isValidEmail(_emailController.text)) {
+                      if (_phoneNumberController.text.isNotEmpty &&
+                          isValidPhoneNumber(_phoneNumberController.text)) {
+                        saveUserData();
+                      } else {
+                        //displays error message if phone # is invalid or empty
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('Error'),
+                              content: const Text(
+                                  'Please enter a valid phone number.'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
                         );
-                      },
-                    );
-                  } else if (_lastNameController.text.isEmpty) {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text('Error'),
-                          content: const Text('Please enter your last name.'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                    //checks if phone and email fields are valid and not empty, if fine lets user save data
-                  } else if (_emailController.text.isNotEmpty &&
-                      isValidEmail(_emailController.text)) {
-                    if (_phoneNumberController.text.isNotEmpty &&
-                        isValidPhoneNumber(_phoneNumberController.text)) {
-                      saveUserData();
+                      }
                     } else {
-                      //displays error message if phone # is invalid or empty
+                      // Displays error message if email is invalid or empty
                       showDialog(
                         context: context,
                         builder: (context) {
                           return AlertDialog(
                             title: const Text('Error'),
                             content: const Text(
-                                'Please enter a valid phone number.'),
+                                'Please enter a valid email address.'),
                             actions: [
                               TextButton(
                                 onPressed: () {
@@ -234,31 +265,11 @@ class _AccountSettingsState extends State<AccountSettings> {
                         },
                       );
                     }
-                  } else {
-                    // Displays error message if email is invalid or empty
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text('Error'),
-                          content:
-                              const Text('Please enter a valid email address.'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }
-                },
-                child: const Text('Save'),
-              ),
-            ],
+                  },
+                  child: const Text('Save'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
