@@ -1,9 +1,10 @@
-import 'package:africa_med_app/pages/all_dashboard_pages/all_messaging_pages/contacts_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'inbox_page.dart';
 import 'sent_page.dart';
 import 'contacts_page.dart';
+import 'compose_page.dart';
+
 
 
 
@@ -105,6 +106,8 @@ class Messaging extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 20),
                   ),
                 ),
+
+          
               ],
             ),
           ),

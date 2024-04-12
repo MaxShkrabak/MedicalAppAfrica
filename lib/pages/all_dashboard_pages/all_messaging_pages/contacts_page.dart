@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'compose_page.dart';
+
 
 
 class ContactsPage extends StatefulWidget {
@@ -98,6 +100,14 @@ class _ContactsPageState extends State<ContactsPage> {
                       itemCount: _docs.length,
                       itemBuilder: (context, index) {
                         return ListTile(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ComposePage(uid: _docs[index].id)
+                              )
+                            );
+                          },
                           title: Text(_docs[index]['first_name'] + ' ' + _docs[index]['last_name']),
                         );
                       },
