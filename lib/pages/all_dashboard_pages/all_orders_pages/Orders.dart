@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:africa_med_app/components/Dashboard_Comps/Tiles.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:africa_med_app/pages/all_dashboard_pages/labtests.dart';
-import 'package:africa_med_app/pages/all_dashboard_pages/radiologyscans.dart';
-import 'package:africa_med_app/pages/all_dashboard_pages/vieworders.dart';
+import 'package:africa_med_app/pages/all_dashboard_pages/all_orders_pages/labtests.dart';
+import 'package:africa_med_app/pages/all_dashboard_pages/all_orders_pages/radiologyscans.dart';
+import 'package:africa_med_app/pages/all_dashboard_pages/all_orders_pages/vieworders.dart';
 
 class OrderingSystem extends StatefulWidget {
   const OrderingSystem({super.key});

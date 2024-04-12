@@ -27,7 +27,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final lNameController = TextEditingController();
   final emailController = TextEditingController();
 
-
   bool _isStrong = false;
   bool _isValidPhone = false;
   bool _isValidAccessCode = false;
@@ -56,7 +55,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
       // Create the user
       try {
         UserCredential userCredential = await createUser(
-            emailController.text.trim(), passController.text.trim(), accessLevel);
+            emailController.text.trim(),
+            passController.text.trim(),
+            accessLevel);
       } on Exception catch (e) {
         Navigator.pop(context);
         onCreateErrorPopUp(context, e.toString());
@@ -64,10 +65,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
       Navigator.pop(context); // Close the CircularProgressIndicator
       Navigator.pop(context); // Close the Registration Page
-      } else {
-        Navigator.pop(context);
-        onCreateErrorPopUp(context, "The passwords don't match!");
-        confPassController.clear();
+    } else {
+      Navigator.pop(context);
+      onCreateErrorPopUp(context, "The passwords don't match!");
+      confPassController.clear();
     }
   }
 
@@ -89,21 +90,21 @@ class _RegistrationPageState extends State<RegistrationPage> {
         .doc(accessCode)
         .get();
     if (accessCodeDoc.exists) {
+      await FirebaseAuth.instance.currentUser?.delete();
       return accessCodeDoc.get('Level');
     } else {
-      throw Exception('The access code you entered is invalid! Please try again.');
+      throw Exception(
+          'The access code you entered is invalid! Please try again.');
     }
-
-    // Delete the anonymous user
-    await FirebaseAuth.instance.currentUser?.delete();
   }
 
-  Future<UserCredential> createUser(String email, String password, String accessLevel) async {
+  Future<UserCredential> createUser(
+      String email, String password, String accessLevel) async {
     UserCredential userCredential =
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passController.text.trim(),
-      );
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passController.text.trim(),
+    );
     // Create a new user in the firestore database, collection: accounts, document_id: user.uid, if the user is not null
     if (userCredential.user != null) {
       await FirebaseFirestore.instance
@@ -116,7 +117,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
         'access_level': accessLevel,
         'email': emailController.text.trim(),
         'imageURL': '',
-        //'password': passController.text.trim(), // Do not store the password in the database
       });
       return userCredential;
     } else {
@@ -281,7 +281,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 _isValidEmail &&
                                 _isValidAccessCode
                             ? const Color.fromARGB(218, 0, 0, 0).withOpacity(1)
-                            : const Color.fromARGB(218, 0, 0, 0).withOpacity(0.3))
+                            : const Color.fromARGB(218, 0, 0, 0)
+                                .withOpacity(0.3))
                   ],
                 ),
               ),

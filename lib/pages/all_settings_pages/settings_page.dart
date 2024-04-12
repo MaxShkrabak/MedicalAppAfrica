@@ -4,8 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:africa_med_app/components/Dashboard_Comps/Tiles.dart';
 import 'package:africa_med_app/pages/all_settings_pages/account_settings.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  List<String> languages = ['English', 'Russian', 'Ugandan'];
+  String? selectedLang = 'English';
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +83,20 @@ class SettingsPage extends StatelessWidget {
                   width: 250,
                   height: 60,
                 ),
+
+                const SizedBox(height: 15),
+                SizedBox(
+                  width: 250,
+                  child: DropdownButton<String>(
+                    value: selectedLang,
+                    items: languages
+                        .map((item) => DropdownMenuItem<String>(
+                            value: item, child: Text(item)))
+                        .toList(),
+                    onChanged: (item) => setState(() => selectedLang = item),
+                  ),
+                ),
+
                 //moves signout text down
                 const SizedBox(
                   height: 390,
