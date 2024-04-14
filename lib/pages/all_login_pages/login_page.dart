@@ -14,7 +14,9 @@ import '../../components/Login_Page_Comps/wrong_credentials.dart';
 import 'google_registration_page.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({super.key, required this.updateIsUserRegistered});
+
+  final Function(bool) updateIsUserRegistered;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -140,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
 
                     //create acc
-                    const RegisterButton(),
+                    RegisterButton(updateIsUserRegistered: widget.updateIsUserRegistered),
                   ],
                 ),
               ),
@@ -184,7 +186,7 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const GoogleRegistrationPage(),
+                builder: (context) => GoogleRegistrationPage(updateIsUserRegistered: widget.updateIsUserRegistered),
               ),
             );
           }

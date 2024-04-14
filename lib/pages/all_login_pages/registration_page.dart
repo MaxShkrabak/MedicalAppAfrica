@@ -11,7 +11,9 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({super.key});
+  const RegistrationPage({super.key, required this.updateIsUserRegistered});
+
+  final Function(bool) updateIsUserRegistered;
 
   @override
   State<RegistrationPage> createState() => _RegistrationPageState();
@@ -62,7 +64,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
         Navigator.pop(context);
         onCreateErrorPopUp(context, e.toString());
       }
-
+      // Update the user's registration status
+      widget.updateIsUserRegistered(true);
       Navigator.pop(context); // Close the CircularProgressIndicator
       Navigator.pop(context); // Close the Registration Page
     } else {

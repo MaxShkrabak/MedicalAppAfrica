@@ -13,7 +13,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class GoogleRegistrationPage extends StatefulWidget {
-  const GoogleRegistrationPage({super.key});
+  const GoogleRegistrationPage({super.key, required this.updateIsUserRegistered});
+
+  final Function(bool) updateIsUserRegistered;
 
   @override
   _GoogleRegistrationPageState createState() => _GoogleRegistrationPageState();
@@ -55,7 +57,10 @@ class _GoogleRegistrationPageState extends State<GoogleRegistrationPage> {
       String accessLevel = await getAccessLevel(accessController.text.trim());
       // Create user
       await createUser(accessLevel);
+      // Update the user's registration status
+      widget.updateIsUserRegistered(true);
       Navigator.pop(context);
+      
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(e.toString()),

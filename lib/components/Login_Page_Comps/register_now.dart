@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RegisterButton extends StatefulWidget {
-  const RegisterButton({Key? key}) : super(key: key);
+  const RegisterButton({super.key, required this.updateIsUserRegistered});
+
+  final Function(bool) updateIsUserRegistered;
 
   @override
   _RegisterButtonState createState() => _RegisterButtonState();
@@ -30,7 +32,7 @@ class _RegisterButtonState extends State<RegisterButton> {
             Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: ((context) => RegistrationPage()),
+                  builder: ((context) => RegistrationPage(updateIsUserRegistered: widget.updateIsUserRegistered)),
                 ));
           },
           onTapDown: (_) {
