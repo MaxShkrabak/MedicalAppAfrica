@@ -47,6 +47,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pop(context);
       }
       // Successfully signed in
+      widget.updateIsUserRegistered(true);
     } on FirebaseAuthException {
       if (mounted) {
         Navigator.pop(context);
