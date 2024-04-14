@@ -10,7 +10,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DashBoard extends StatefulWidget {
-  const DashBoard({super.key});
+  const DashBoard({super.key, required this.updateIsUserRegistered});
+
+  final Function(bool) updateIsUserRegistered;
 
   @override
   State<DashBoard> createState() => _DashBoardState();
@@ -60,7 +62,7 @@ class _DashBoardState extends State<DashBoard> {
   }
 
   void signUserOut() {
-    FirebaseAuth.instance.signOut();
+    widget.updateIsUserRegistered(false);
   }
 
   @override

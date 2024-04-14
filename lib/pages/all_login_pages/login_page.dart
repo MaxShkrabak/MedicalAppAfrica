@@ -181,6 +181,8 @@ class _LoginPageState extends State<LoginPage> {
             .then((DocumentSnapshot documentSnapshot) {
           if (documentSnapshot.exists) {
             // User already exists in the accounts collection
+            // Set the state flag to true so that the AuthPage can navigate to the Dashboard
+            widget.updateIsUserRegistered(true);
           } else {
             // User does not exist in the accounts collection
             Navigator.push(

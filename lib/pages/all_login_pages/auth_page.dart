@@ -25,7 +25,7 @@ class _AuthPageState extends State<AuthPage> {
     if (!isUserRegistered) {
       return LoginPage(updateIsUserRegistered: updateIsUserRegistered);
     } else {
-      return const DashBoard();
+      return DashBoard(updateIsUserRegistered: updateIsUserRegistered);
     }
   }
 }
