@@ -36,7 +36,7 @@ class Messaging extends StatelessWidget {
                     Navigator.push(
                       context,
                       CupertinoPageRoute(
-                        builder: (context) => const InboxPage(),
+                        builder: (context) => InboxPage(),
                       ),
                     );
                   },
@@ -59,7 +59,7 @@ class Messaging extends StatelessWidget {
                     Navigator.push(
                       context,
                       CupertinoPageRoute(
-                        builder: (context) => const SentPage(),
+                        builder: (context) => SentPage(),
                       ),
                     );
                   },

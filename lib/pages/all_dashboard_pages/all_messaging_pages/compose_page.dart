@@ -2,12 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 class ComposePage extends StatefulWidget {
   final String uid;
 
-  const ComposePage({Key? key, required this.uid}) : super(key: key);
+  const ComposePage({super.key, required this.uid});
 
   @override
   _ComposePageState createState() => _ComposePageState();
@@ -18,6 +19,50 @@ class _ComposePageState extends State<ComposePage> {
 
   Future<DocumentSnapshot> _loadContact() {
     return FirebaseFirestore.instance.collection('accounts').doc(widget.uid).get();
+  }
+
+  Future<String> getMyName() async {
+    DocumentSnapshot myDocSnap = await FirebaseFirestore.instance.collection('accounts').doc(FirebaseAuth.instance.currentUser!.uid).get();
+    Map<String, dynamic>  data = myDocSnap.data() as Map<String, dynamic>;
+    String firstName = data['first_name'];
+    String lastName = data['last_name'];
+    return firstName + ' ' + lastName;
+  }
+
+  Future<String> getTheirName() async {
+    DocumentSnapshot theirDocSnap = await FirebaseFirestore.instance.collection('accounts').doc(widget.uid).get();
+    Map<String, dynamic>  data = theirDocSnap.data() as Map<String, dynamic>;
+    String firstName = data['first_name'];
+    String lastName = data['last_name'];
+    return firstName + ' ' + lastName;
+  }
+
+  void sendMessage(String uid, String message) {
+    // Send a copy to the recipients account
+    final CollectionReference messages = FirebaseFirestore.instance.collection('accounts').doc(uid).collection('messages');
+    final User? currentUser = FirebaseAuth.instance.currentUser;
+    // Get the current users first and last name
+    getMyName().then((value) {
+      String name = value;
+      messages.add({
+        'message': message,
+        'timestamp': DateTime.now(),
+        'sender_name': name,
+      });
+    });
+
+    // Save a copy to the senders sent box
+    String currentUserUid = currentUser!.uid;
+    final CollectionReference sent = FirebaseFirestore.instance.collection('accounts').doc(currentUserUid).collection('sent');
+    getTheirName().then((value) {
+      String name = value;
+      sent.add({
+        'message': message,
+        'timestamp': DateTime.now(),
+        'recipient_name': name,
+      });
+    });
+    Navigator.pop(context);
   }
 
   @override
@@ -62,6 +107,10 @@ class _ComposePageState extends State<ComposePage> {
                     ElevatedButton(
                       onPressed: () {
                         // Send the message
+                        sendMessage(
+                          widget.uid,
+                          _messageController.text,
+                        );
                       },
                       child: const Text('Send'),
                     ),
