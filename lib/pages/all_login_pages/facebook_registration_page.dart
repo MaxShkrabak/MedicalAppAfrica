@@ -8,17 +8,18 @@ import 'package:africa_med_app/components/Registration_Comps/passChecker.dart';
 import 'package:africa_med_app/components/Registration_Comps/create_account_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class GoogleRegistrationPage extends StatefulWidget {
-  const GoogleRegistrationPage(
+class FacebookRegistrationPage extends StatefulWidget {
+  const FacebookRegistrationPage(
       {super.key, required this.updateIsUserRegistered});
 
   final Function(bool) updateIsUserRegistered;
 
   @override
-  _GoogleRegistrationPageState createState() => _GoogleRegistrationPageState();
+  _FacebookRegistrationPageState createState() =>
+      _FacebookRegistrationPageState();
 }
 
-class _GoogleRegistrationPageState extends State<GoogleRegistrationPage> {
+class _FacebookRegistrationPageState extends State<FacebookRegistrationPage> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController accessController = TextEditingController();
   final TextEditingController passController = TextEditingController();
@@ -122,7 +123,7 @@ class _GoogleRegistrationPageState extends State<GoogleRegistrationPage> {
                       },
                     ),
                     title: GradientText(
-                      'Google Registration',
+                      'Facebook Registration',
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,

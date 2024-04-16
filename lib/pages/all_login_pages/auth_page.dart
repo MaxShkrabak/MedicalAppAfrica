@@ -1,6 +1,5 @@
 import 'package:africa_med_app/pages/all_dashboard_pages/dashboard.dart';
 import 'package:africa_med_app/pages/all_login_pages/login_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AuthPage extends StatefulWidget {
@@ -12,7 +11,6 @@ class AuthPage extends StatefulWidget {
 
 class _AuthPageState extends State<AuthPage> {
   bool isUserRegistered = false;
-
 
   void updateIsUserRegistered(bool value) {
     setState(() {

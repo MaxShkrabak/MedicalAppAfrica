@@ -1,7 +1,9 @@
 import 'package:africa_med_app/components/Login_Page_Comps/register_now.dart';
+import 'package:africa_med_app/pages/all_login_pages/facebook_registration_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 import '../../components/Login_Page_Comps/forgot_password.dart';
 import '../../components/Login_Page_Comps/logo_comp.dart';
@@ -134,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                         //facebook
                         SquareBoxButton(
                           image: 'assets/facebook_logo.png',
-                          onPressed: () {},
+                          onPressed: _handleFacebookSignIn,
                         ),
                       ],
                     ),
@@ -143,7 +145,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
 
                     //create acc
-                    RegisterButton(updateIsUserRegistered: widget.updateIsUserRegistered),
+                    RegisterButton(
+                        updateIsUserRegistered: widget.updateIsUserRegistered),
                   ],
                 ),
               ),
@@ -189,7 +192,8 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => GoogleRegistrationPage(updateIsUserRegistered: widget.updateIsUserRegistered),
+                builder: (context) => GoogleRegistrationPage(
+                    updateIsUserRegistered: widget.updateIsUserRegistered),
               ),
             );
           }
@@ -199,6 +203,65 @@ class _LoginPageState extends State<LoginPage> {
       }
     } catch (error) {
       print(error);
+    }
+  }
+
+  // Function to handle Facebook sign in
+  void _handleFacebookSignIn() async {
+    try {
+      final LoginResult result = await FacebookAuth.instance.login();
+
+      // Checks if login was successful
+      if (result.status == LoginStatus.success) {
+        final AccessToken accessToken =
+            result.accessToken!; // Gets access token
+
+        //Creates auth credential
+        final OAuthCredential credential =
+            FacebookAuthProvider.credential(accessToken.token);
+
+        // Signs in with credential
+        final UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithCredential(credential);
+
+        // Checks firebase to see if user exists
+        final userDoc = await FirebaseFirestore.instance
+            .collection('accounts')
+            .doc(userCredential.user!.uid)
+            .get();
+
+        //if exists
+        if (userDoc.exists) {
+          widget.updateIsUserRegistered(true);
+        } else {
+          // If user doesn't exist in database, navigates to Facebook registration page
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FacebookRegistrationPage(
+                updateIsUserRegistered: widget.updateIsUserRegistered,
+              ),
+            ),
+          );
+        }
+      } else if (result.status == LoginStatus.cancelled) {
+        print('Facebook login cancelled by user');
+      } else {
+        print('Error during Facebook login: ${result.message}');
+      }
+    } catch (error) {
+      print('Error during Facebook login: $error');
+      if (error
+          .toString()
+          .contains('account-exists-with-different-credential')) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'An account already exists with the same email address but different sign-in credentials. Please sign in using a provider associated with this email address.',
+            ),
+          ),
+        );
+      }
     }
   }
 }
