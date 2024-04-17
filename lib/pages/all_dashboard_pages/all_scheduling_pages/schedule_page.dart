@@ -22,9 +22,9 @@ class _ScheduleState extends State<Schedule> {
   @override
   void initState() {
     super.initState();
-    _selectedDay = DateTime.now();
-    _focusedDay = DateTime.now();
-    _selectedDate = DateTime.now();
+    _selectedDay = DateTime.now().toLocal();
+    _focusedDay = DateTime.now().toLocal();
+    _selectedDate = DateTime.now().toLocal();
     _timeSlotAvailabilityMap = {};
     _appointmentsMap = {};
     _availableTimeSlots = _generateAvailableTimeSlots(_focusedDay);
@@ -35,7 +35,10 @@ class _ScheduleState extends State<Schedule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Schedule'),
+        title: const Padding(
+          padding: EdgeInsets.only(left: 85),
+          child: Text('Schedule'),
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -128,6 +131,17 @@ class _ScheduleState extends State<Schedule> {
       currentTime = currentTime.add(const Duration(minutes: 30));
     }
 
+    // check if there are appointments for the selected day and time slots
+    final appointmentsForSelectedDay = _appointmentsMap[selectedDay];
+    if (appointmentsForSelectedDay != null) {
+      for (var appointmentTimeSlot in appointmentsForSelectedDay) {
+        //mark the time slot as unavailable if an appointment exists for it
+        if (timeSlots.contains(appointmentTimeSlot)) {
+          _timeSlotAvailabilityMap[selectedDay]![appointmentTimeSlot] = false;
+        }
+      }
+    }
+
     return timeSlots;
   }
 
@@ -142,7 +156,7 @@ class _ScheduleState extends State<Schedule> {
         .collection('accounts')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('appointments')
-        .where('date', isEqualTo: _selectedDate)
+        .where('selectedAvailability', isEqualTo: _selectedDate)
         .get()
         .then((QuerySnapshot querySnapshot) {
       _appointmentsMap[_selectedDay] = [];
@@ -222,7 +236,7 @@ class _ScheduleState extends State<Schedule> {
         _selectedDate.day,
         int.parse(timeSlot.split(':')[0]),
         int.parse(timeSlot.split(':')[1]),
-      );
+      ).toLocal();
 
       //Adds the appointment to users 'appointments' sub collection
       final appointmentRef = await FirebaseFirestore.instance
@@ -230,7 +244,8 @@ class _ScheduleState extends State<Schedule> {
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('appointments')
           .add({
-        'date': _selectedDate,
+        'selectedAvailability': _selectedDate,
+        'date': appointmentDateTime,
         'timeSlot': timeSlot,
         'meetingDetails': meetingDetails,
       });

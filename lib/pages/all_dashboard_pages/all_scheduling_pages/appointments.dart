@@ -87,10 +87,6 @@ class AppointmentsPage extends StatelessWidget {
                   final formattedDate = DateFormat('MMMM d, y - HH:mm')
                       .format(appointment.dateTime.toLocal());
 
-                  //calculates time dif from curr time and app time
-                  final timeDifference =
-                      appointment.dateTime.difference(DateTime.now());
-
                   return ListTile(
                     //displays meeting details
                     title: Text(
@@ -102,7 +98,7 @@ class AppointmentsPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '$formattedDate, ${appointment.timeSlot}',
+                          '$formattedDate',
                           style: TextStyle(color: Colors.white), //text color
                         ),
                         //top appointment will have countdown timer
@@ -116,12 +112,6 @@ class AppointmentsPage extends StatelessWidget {
                                   255, 148, 224, 150), // Timer color
                             ),
                           ),
-                        //doesn't work but shows total time
-                        /*Text(
-                          'Time until appointment: ${_formatDuration(timeDifference)}',
-                          style: TextStyle(color: Colors.white), // Text color
-                        ),
-                        */
                       ],
                     ),
                   );
@@ -145,12 +135,4 @@ class AppointmentsPage extends StatelessWidget {
       ),
     );
   }
-  //used it for testing dont know if will be useful
-  /*
-  String _formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, "0");
-    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-    return "${twoDigits(duration.inHours)}:${twoDigitMinutes}:${twoDigits(duration.inSeconds.remainder(60))}";
-  }
-  */
 }
