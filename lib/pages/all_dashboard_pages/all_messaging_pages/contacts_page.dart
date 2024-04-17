@@ -38,6 +38,9 @@ class _ContactsPageState extends State<ContactsPage> {
         final QuerySnapshot first_query = await _firestore.collection('accounts').where('first_name', isEqualTo: token).get();
         final QuerySnapshot last_query = await _firestore.collection('accounts').where('last_name', isEqualTo: token).get();
 
+        // Search for contacts where the access_level is equal to text
+        final QuerySnapshot access_query = await _firestore.collection('accounts').where('access_level', isEqualTo: token).get();
+
         // Use a Map, or Dictionary  data structure to store the documents. This avoids duplicates by having the id as the key
         Map<String, DocumentSnapshot> docMap = {};
 
@@ -48,6 +51,12 @@ class _ContactsPageState extends State<ContactsPage> {
         }
 
         for (final doc in last_query.docs) {
+          setState(() {
+            docMap[doc.id] = doc;
+          });
+        }
+
+        for (final doc in access_query.docs) {
           setState(() {
             docMap[doc.id] = doc;
           });
@@ -107,16 +116,27 @@ class _ContactsPageState extends State<ContactsPage> {
                   : ListView.builder(
                       itemCount: _docs.length,
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          onTap: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ComposePage(uid: _docs[index].id)
-                              )
-                            );
-                          },
-                          title: Text(_docs[index]['first_name'] + ' ' + _docs[index]['last_name']),
+                        return Container(
+                          margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: InkWell(
+                            onTap: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ComposePage(uid: _docs[index].id)
+                                )
+                              );
+                            },
+                            child: ListTile(
+                              title: Text(_docs[index]['first_name'] + ' ' + _docs[index]['last_name']),
+                              subtitle: Text(_docs[index]['access_level']),
+                              trailing: Icon(Icons.message),
+                            ),
+                          ), 
                         );
                       },
                     ),
