@@ -50,10 +50,44 @@ class InboxPage extends StatelessWidget {
                     final String sender = message['sender_name'];
                     final String messageText = message['message'];
                     final String time = DateFormat('MM/dd kk:mm').format(message['timestamp'].toDate());
-                    return MessageTile(
-                      sender: sender,
-                      message: messageText,
-                      time: time,
+                    return Dismissible(
+                      key: Key(messages[index].id),
+                      direction: DismissDirection.endToStart,
+                      background: Container(
+                        alignment: Alignment.centerRight,
+                        padding: EdgeInsets.only(right: 20.0),
+                        color: Colors.red,
+                        child: Icon(Icons.delete, color: Colors.white),
+                      ),
+                      confirmDismiss: (direction) async {
+                        return await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Confirm"),
+                              content: const Text("Are you sure you want to delete this item?"),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(true),
+                                  child: const Text("DELETE")
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(false),
+                                  child: const Text("CANCEL"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      onDismissed: (direction) {
+                        _firestore.collection('accounts').doc(currentUserUid).collection('messages').doc(messages[index].id).delete();
+                      },
+                      child: MessageTile(
+                        sender: sender,
+                        message: messageText,
+                        time: time,
+                      ),
                     );
                   },
                 );

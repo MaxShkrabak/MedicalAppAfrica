@@ -28,32 +28,40 @@ class _ContactsPageState extends State<ContactsPage> {
         _docs = [];
       });
     } else {
-
-      // Search for contacts with first_name or last_name equal to text
-      final QuerySnapshot first_query = await _firestore.collection('accounts').where('first_name', isEqualTo: text).get();
-      final QuerySnapshot last_query = await _firestore.collection('accounts').where('last_name', isEqualTo: text).get();
       
-      // Use a Map, or Dictionary  data structure to store the documents. This avoids duplicates by having the id as the key
-      Map<String, DocumentSnapshot> docMap = {};
+      final List<String> tokens = text.split(' ');
 
-      for (final doc in first_query.docs) {
+
+      // iterate over the tokens
+      for (final token in tokens) {
+        // Search for contacts with first_name or last_name equal to text
+        final QuerySnapshot first_query = await _firestore.collection('accounts').where('first_name', isEqualTo: token).get();
+        final QuerySnapshot last_query = await _firestore.collection('accounts').where('last_name', isEqualTo: token).get();
+
+        // Use a Map, or Dictionary  data structure to store the documents. This avoids duplicates by having the id as the key
+        Map<String, DocumentSnapshot> docMap = {};
+
+        for (final doc in first_query.docs) {
+          setState(() {
+            docMap[doc.id] = doc;
+          });
+        }
+
+        for (final doc in last_query.docs) {
+          setState(() {
+            docMap[doc.id] = doc;
+          });
+        }
+
+        final List<DocumentSnapshot> docsMerged = docMap.values.toList();
         setState(() {
-          docMap[doc.id] = doc;
+          _docs = docsMerged;
         });
       }
-
-      for (final doc in last_query.docs) {
-        setState(() {
-          docMap[doc.id] = doc;
-        });
-      }
-      
-      final List<DocumentSnapshot> docsMerged = docMap.values.toList();
-      setState(() {
-        _docs = docsMerged;
-      });
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
