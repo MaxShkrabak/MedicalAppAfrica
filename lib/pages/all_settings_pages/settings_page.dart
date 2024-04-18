@@ -63,6 +63,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     );
                   },
                   mainText: 'Account Settings',
+                  subText: '',
                   width: 250,
                   height: 60,
                 ),
@@ -82,6 +83,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   mainText: 'Language',
                   width: 250,
                   height: 60,
+                  subText: '',
                 ),
 
                 const SizedBox(height: 15),

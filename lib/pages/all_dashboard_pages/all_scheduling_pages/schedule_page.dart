@@ -31,85 +31,159 @@ class _ScheduleState extends State<Schedule> {
     _updateTimeSlotAvailability();
   }
 
+  bool isWeekend(DateTime day) {
+    return day.weekday == DateTime.saturday || day.weekday == DateTime.sunday;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(161, 88, 82, 173),
         title: const Padding(
-          padding: EdgeInsets.only(left: 85),
-          child: Text('Schedule'),
+          padding: EdgeInsets.only(left: 80),
+          child: Text(
+            'Schedule',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
           onPressed: () {
             Navigator.pop(context);
           },
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TableCalendar(
-            locale: 'en_US',
-            firstDay: DateTime(2020, 10, 16),
-            lastDay: DateTime(2040, 3, 14),
-            focusedDay: _focusedDay,
-            selectedDayPredicate: (day) {
-              return isSameDay(_selectedDay, day);
-            },
-            onPageChanged: _onPageChanged,
-            onDaySelected: _onDaySelected,
-          ),
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              DateFormat('MMMM d, y').format(_selectedDay),
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
+      body: Scaffold(
+        backgroundColor: const Color.fromRGBO(76, 90, 137, 1),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TableCalendar(
+              rowHeight: 50,
+              calendarStyle: CalendarStyle(
+                defaultTextStyle: const TextStyle(color: Colors.white),
+                weekendTextStyle:
+                    TextStyle(color: Colors.white.withOpacity(0.3)),
+                selectedTextStyle: const TextStyle(
+                    color: Colors.white), // Set selected text color to white
+                withinRangeTextStyle: const TextStyle(color: Colors.white),
+                todayDecoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 152, 96, 204),
+                    shape: BoxShape.circle),
+                rangeStartTextStyle: const TextStyle(color: Colors.grey),
+                outsideDaysVisible: false,
+                selectedDecoration: const BoxDecoration(
+                  color: Color.fromARGB(
+                      255, 77, 126, 218), // selected day background
+                  shape: BoxShape.circle,
+                ),
               ),
-              itemCount: _availableTimeSlots.length,
-              itemBuilder: (context, index) {
-                final timeSlot = _availableTimeSlots[index];
-                final isAvailable = _timeSlotAvailabilityMap[_selectedDay]!
-                        .containsKey(timeSlot) &&
-                    _timeSlotAvailabilityMap[_selectedDay]![timeSlot]!;
-                final color = isAvailable ? Colors.green : Colors.red;
-                return GestureDetector(
-                  onTap: () {
-                    if (isAvailable) {
-                      _showMeetingDetailsDialog(timeSlot);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('This time slot is already taken'),
-                        ),
-                      );
-                    }
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: color,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      timeSlot,
-                      style: const TextStyle(color: Colors.white),
-                    ),
+              headerStyle: const HeaderStyle(
+                  formatButtonVisible: false,
+                  titleCentered: true,
+                  titleTextStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                  leftChevronIcon: Icon(
+                    Icons.chevron_left,
+                    color: Colors.white,
+                    size: 30,
                   ),
-                );
+                  rightChevronIcon: Icon(
+                    Icons.chevron_right,
+                    color: Colors.white,
+                    size: 30,
+                  )),
+              locale: 'en_US',
+              firstDay: DateTime(2020, 10, 16),
+              lastDay: DateTime(2040, 3, 14),
+              focusedDay: _focusedDay,
+              selectedDayPredicate: (day) {
+                return isSameDay(_selectedDay, day);
               },
+              onPageChanged: _onPageChanged,
+              onDaySelected: _onDaySelected,
+              // disables weekends
+              enabledDayPredicate: (day) {
+                return !isWeekend(day) &&
+                    (day.isAfter(
+                            DateTime.now().subtract(const Duration(days: 1))) ||
+                        isSameDay(day, DateTime.now()));
+              },
+              daysOfWeekStyle: DaysOfWeekStyle(
+                weekdayStyle: const TextStyle(
+                  color: Colors.white, // color of weekday names
+                ),
+                weekendStyle: TextStyle(
+                  color: Colors.white.withOpacity(0.3),
+                ),
+              ),
             ),
-          ),
-        ],
+            const Divider(
+              thickness: 3,
+              color: Colors.grey,
+            ),
+            const SizedBox(height: 10),
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                //The date that is currently selected
+                child: Center(
+                  child: Text(
+                    DateFormat('MMMM d, y').format(_selectedDay),
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                )),
+            const SizedBox(height: 10),
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                ),
+                itemCount: _availableTimeSlots.length,
+                itemBuilder: (context, index) {
+                  final timeSlot = _availableTimeSlots[index];
+                  final isAvailable = _timeSlotAvailabilityMap[_selectedDay]!
+                          .containsKey(timeSlot) &&
+                      _timeSlotAvailabilityMap[_selectedDay]![timeSlot]!;
+                  final color = isAvailable
+                      ? const Color.fromARGB(158, 76, 175, 79)
+                      : const Color.fromARGB(144, 244, 67, 54);
+                  return GestureDetector(
+                    onTap: () {
+                      if (isAvailable) {
+                        _showMeetingDetailsDialog(timeSlot);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('This time slot is already taken'),
+                          ),
+                        );
+                      }
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: color,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        timeSlot,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -117,13 +191,11 @@ class _ScheduleState extends State<Schedule> {
   List<String> _generateAvailableTimeSlots(DateTime selectedDay) {
     final timeSlots = <String>[];
     final formatter = DateFormat.Hm();
-
     // start and end time
     final startTime = DateTime(
         selectedDay.year, selectedDay.month, selectedDay.day, 9, 0); // 9:00 am
     final endTime = DateTime(
         selectedDay.year, selectedDay.month, selectedDay.day, 17, 0); //4:30 pm
-
     // time slots in 30 min intervals
     var currentTime = startTime;
     while (currentTime.isBefore(endTime)) {
@@ -131,11 +203,11 @@ class _ScheduleState extends State<Schedule> {
       currentTime = currentTime.add(const Duration(minutes: 30));
     }
 
-    // check if there are appointments for the selected day and time slots
+    // checks if there are appointments for the selected day and time slots
     final appointmentsForSelectedDay = _appointmentsMap[selectedDay];
     if (appointmentsForSelectedDay != null) {
       for (var appointmentTimeSlot in appointmentsForSelectedDay) {
-        //mark the time slot as unavailable if an appointment exists for it
+        //marks the time slot as unavailable if an appointment exists for it
         if (timeSlots.contains(appointmentTimeSlot)) {
           _timeSlotAvailabilityMap[selectedDay]![appointmentTimeSlot] = false;
         }
@@ -195,34 +267,37 @@ class _ScheduleState extends State<Schedule> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Meeting Details'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                decoration: const InputDecoration(labelText: 'Meeting Details'),
-                onChanged: (value) {
-                  meetingDetails = value;
+        return SingleChildScrollView(
+          child: AlertDialog(
+            title: const Text('Meeting Details'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  decoration:
+                      const InputDecoration(labelText: 'Meeting Details'),
+                  onChanged: (value) {
+                    meetingDetails = value;
+                  },
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
                 },
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () {
+                  _scheduleAppointment(timeSlot, meetingDetails);
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Confirm'),
               ),
             ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                _scheduleAppointment(timeSlot, meetingDetails);
-                Navigator.of(context).pop();
-              },
-              child: const Text('Confirm'),
-            ),
-          ],
         );
       },
     );
@@ -256,14 +331,8 @@ class _ScheduleState extends State<Schedule> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('Appointment scheduled successfully!'),
-          action: SnackBarAction(
-            label: 'Undo',
-            onPressed: () {
-              //undo logic will go here, if we do it
-            },
-          ),
+        const SnackBar(
+          content: Center(child: Text('Appointment scheduled successfully!')),
         ),
       );
 

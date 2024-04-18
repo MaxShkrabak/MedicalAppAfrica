@@ -65,6 +65,7 @@ class _OrderingSystemState extends State<OrderingSystem> {
                       );
                     },
                     mainText: 'Radiology',
+                    subText: '',
                     width: 400,
                     height: 120,
                   ),
@@ -79,6 +80,7 @@ class _OrderingSystemState extends State<OrderingSystem> {
                       );
                     },
                     mainText: 'Laboratory',
+                    subText: '',
                     width: 400,
                     height: 120,
                   ),
@@ -93,6 +95,7 @@ class _OrderingSystemState extends State<OrderingSystem> {
                       );
                     },
                     mainText: 'View Orders',
+                    subText: '',
                     width: 400,
                     height: 120,
                   ),

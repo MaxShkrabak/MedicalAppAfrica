@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 class Tiles extends StatefulWidget {
   final Function()? onTap;
-  final String mainText;
+  final String mainText, subText;
   final double height, width;
   const Tiles({
     Key? key,
     required this.onTap,
     required this.mainText,
+    required this.subText,
     required this.height,
     required this.width,
   }) : super(key: key);
@@ -43,32 +44,60 @@ class _TilesState extends State<Tiles> {
             const Duration(milliseconds: 150), // Adjust the duration as needed
         opacity: isPressed ? 0.8 : 1.0, // Lower opacity when pressed
         child: Container(
-          width: widget.width,
-          height: widget.height,
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.black,
-            gradient: const LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color.fromARGB(255, 6, 74, 83),
-                Color.fromARGB(255, 99, 25, 148)
-              ],
-            ),
-          ),
-          child: Center(
-            child: Text(
-              widget.mainText,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+            width: widget.width,
+            height: widget.height,
+            padding: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.black,
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromARGB(255, 6, 74, 83),
+                  Color.fromARGB(255, 99, 25, 148)
+                ],
               ),
             ),
-          ),
-        ),
+            child: (widget.subText.isEmpty)
+                ? Center(
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      widget.mainText,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                : Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Column(
+                        children: [
+                          Text(
+                            textAlign: TextAlign.center,
+                            widget.mainText,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            textAlign: TextAlign.center,
+                            widget.subText,
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 190, 255, 37),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )),
       ),
     );
   }
