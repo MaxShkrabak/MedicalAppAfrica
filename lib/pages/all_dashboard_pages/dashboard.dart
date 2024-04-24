@@ -64,8 +64,8 @@ class _DashBoardState extends State<DashBoard> {
                       if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       }
-                      _userName = snapshot.data?['first_name'];
-                      _userImageUrl = snapshot.data?['imageURL'];
+                      _userName = snapshot.data?['first_name'] ?? '';
+                      _userImageUrl = snapshot.data?['imageURL'] ?? '';
                       return _buildDashboard();
                     },
                   ),
@@ -79,11 +79,16 @@ class _DashBoardState extends State<DashBoard> {
   }
 
   Stream<DocumentSnapshot> _getUserData() {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    return FirebaseFirestore.instance
-        .collection('accounts')
-        .doc(uid)
-        .snapshots();
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return FirebaseFirestore.instance
+          .collection('accounts')
+          .doc(user.uid)
+          .snapshots();
+    } else {
+      //returns empty stream if no current user
+      return const Stream.empty();
+    }
   }
 
   Widget _buildDashboard() {
@@ -306,14 +311,19 @@ class _DashBoardState extends State<DashBoard> {
   }
 
   Stream<QuerySnapshot> _getNextAppointment() {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    return FirebaseFirestore.instance
-        .collection('accounts')
-        .doc(uid)
-        .collection('appointments')
-        .orderBy('date', descending: false)
-        .limit(1) // Limit to only one appointment
-        .snapshots();
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return FirebaseFirestore.instance
+          .collection('accounts')
+          .doc(user.uid)
+          .collection('appointments')
+          .orderBy('date', descending: false)
+          .limit(1) // Limit to only one appointment
+          .snapshots();
+    } else {
+      //returns empty stream
+      return const Stream.empty();
+    }
   }
 
   void signUserOut() {
