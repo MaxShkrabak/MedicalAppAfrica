@@ -129,7 +129,7 @@ class _RadiologyScansState extends State<RadiologyScans> {
     }
   }
 
-   //asks user for meeting details
+   //asks user for order details
   void _showOrderDetailsDialog(String orderType, String department) {
     String patientName = '';
     String orderDetails = '';

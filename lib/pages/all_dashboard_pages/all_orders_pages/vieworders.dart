@@ -182,7 +182,7 @@ class _ViewOrdersState extends State<ViewOrders> {
       ),
     );
   }
-  //asks user for verification before canceling appointment
+  //asks user for verification before canceling order
   Future<void> _showCancelConfirmationDialog(
       BuildContext context, Order order, String userId) async {
     return showDialog<void>(
@@ -208,7 +208,7 @@ class _ViewOrdersState extends State<ViewOrders> {
             TextButton(
               child: const Text('Confirm'),
               onPressed: () {
-                _cancelAppointment(order, userId);
+                _cancelOrder(order, userId);
                 Navigator.of(context).pop();
               },
             ),
@@ -218,8 +218,8 @@ class _ViewOrdersState extends State<ViewOrders> {
     );
   }
 
-  //cancels the appointment, removes data from firebase
-  Future<void> _cancelAppointment(
+  //cancels the order, removes data from firebase
+  Future<void> _cancelOrder(
       Order order, String userId) async {
     try {
       await FirebaseFirestore.instance
@@ -237,7 +237,7 @@ class _ViewOrdersState extends State<ViewOrders> {
         }
       });
     } catch (error) {
-      print('Error cancelling appointment: $error');
+      print('Error cancelling order: $error');
     }
   }
 }
