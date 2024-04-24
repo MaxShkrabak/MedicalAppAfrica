@@ -129,7 +129,7 @@ class _LabTestsState extends State<LabTests> {
     }
   }
 
-   //asks user for meeting details
+   //asks user for order details
   void _showOrderDetailsDialog(String orderType, String department) {
     String patientName = '';
     String orderDetails = '';
