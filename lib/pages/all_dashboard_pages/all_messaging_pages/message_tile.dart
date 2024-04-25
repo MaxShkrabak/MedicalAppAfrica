@@ -17,39 +17,38 @@ class MessageTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [ 
-        ListTile(
-          title: Text(
-            sender,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-            ),
-          ),
-          subtitle: Text(
-            message,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 16,
-            ),
-          ),
-          trailing: Container(
-            width: 50,
-            child: Text(
-              time,
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [ 
+          ListTile(
+            title: Text(
+              sender,
               style: const TextStyle(
                 color: Colors.black,
-                fontSize: 12,
+                fontSize: 20,
               ),
+            ),
+            subtitle: Text(
+              message,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+              ),
+            ),
+            trailing: Container(
+              width: 50,
+              child: Text(
+                time,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                ),
+            ),
+            ),
           ),
-          ),
-        ),
-        const Divider(
-          color: Colors.black,
-          thickness: 1,
-        ),
-      ],
+        ],
+      ),
     );
-  }
-}
+  }   
+} 

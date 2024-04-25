@@ -32,9 +32,10 @@ class SentPage extends StatelessWidget {
           ),
       ),
       child: Scaffold(
+        backgroundColor: Color.fromRGBO(76, 90, 137, 1),
         appBar: AppBar(
           title: const Text('Sent'),
-          backgroundColor: Colors.white,
+          backgroundColor: Color.fromARGB(156, 102, 134, 161),
         ),
         body: SafeArea(
           child: FutureBuilder<QuerySnapshot> (
