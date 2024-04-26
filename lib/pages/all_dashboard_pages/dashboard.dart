@@ -168,24 +168,24 @@ class _DashBoardState extends State<DashBoard> {
           ),
           const SizedBox(height: 5),
           //search box stuff here
-          Container(
-            margin: const EdgeInsets.only(bottom: 10),
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.7),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: TextField(
-              style: const TextStyle(color: Colors.white), // Text color
-              decoration: InputDecoration(
-                hintText: 'Search',
-                hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
-                icon: const Icon(Icons.search,
-                    color: Colors.white), // Search icon
-                border: InputBorder.none, // Remove border
-              ),
-            ),
-          ),
+          //Container(
+          //  margin: const EdgeInsets.only(bottom: 10),
+          //  padding: const EdgeInsets.symmetric(horizontal: 10),
+          //  decoration: BoxDecoration(
+          //    color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.7),
+          //    borderRadius: BorderRadius.circular(10),
+          //  ),
+          //  child: TextField(
+          //    style: const TextStyle(color: Colors.white), // Text color
+          //    decoration: InputDecoration(
+          //      hintText: 'Search',
+          //      hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
+          //      icon: const Icon(Icons.search,
+          //          color: Colors.white), // Search icon
+          //      border: InputBorder.none, // Remove border
+          //    ),
+          //  ),
+          //),
           const SizedBox(
             height: 7,
           ),
