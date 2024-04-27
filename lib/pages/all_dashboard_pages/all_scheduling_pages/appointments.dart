@@ -143,7 +143,7 @@ class AppointmentsPage extends StatelessWidget {
                                             215), //color of date/time
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  //if (index <= 1) //for displaying counter for limited amount of appointments
+                                  //for displaying counter for limited amount of appointments
                                   CountdownTimer(
                                     endWidget: const Text(
                                       "On-Going meeting or Completed.",

@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'Patient.dart';
@@ -7,38 +6,42 @@ class AddPatientPage extends StatefulWidget {
   final Function updatePatientsCallback;
 
   const AddPatientPage({super.key, required this.updatePatientsCallback});
-  
 
   @override
   _AddPatientPageState createState() => _AddPatientPageState();
 }
 
 class _AddPatientPageState extends State<AddPatientPage> {
-
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _middleNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
   final TextEditingController _bloodGroupController = TextEditingController();
   final TextEditingController _rhFactorController = TextEditingController();
-  final TextEditingController _maritalStatusController = TextEditingController();
-  final TextEditingController _preferredLanguageController = TextEditingController();
+  final TextEditingController _maritalStatusController =
+      TextEditingController();
+  final TextEditingController _preferredLanguageController =
+      TextEditingController();
   final TextEditingController _homePhoneController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _emergencyFirstNameController = TextEditingController();
+  final TextEditingController _emergencyFirstNameController =
+      TextEditingController();
 
-  final TextEditingController _emergencyLastNameController = TextEditingController();
+  final TextEditingController _emergencyLastNameController =
+      TextEditingController();
   final TextEditingController _relationshipController = TextEditingController();
-  final TextEditingController _emergencyPhoneController = TextEditingController();
-  final TextEditingController _knownMedicalIllnessesController = TextEditingController();
-  final TextEditingController _previousMedicalIllnessesController = TextEditingController();
+  final TextEditingController _emergencyPhoneController =
+      TextEditingController();
+  final TextEditingController _knownMedicalIllnessesController =
+      TextEditingController();
+  final TextEditingController _previousMedicalIllnessesController =
+      TextEditingController();
   final TextEditingController _allergiesController = TextEditingController();
-  final TextEditingController _currentMedicationsController = TextEditingController();
-  final TextEditingController _pastMedicationsController = TextEditingController();
-
-
-
+  final TextEditingController _currentMedicationsController =
+      TextEditingController();
+  final TextEditingController _pastMedicationsController =
+      TextEditingController();
 
   signUp() async {
     final String firstName = _firstNameController.text;
@@ -57,19 +60,23 @@ class _AddPatientPageState extends State<AddPatientPage> {
     final String relationship = _relationshipController.text;
     final String emergencyPhone = _emergencyPhoneController.text;
     final String knownMedicalIllnesses = _knownMedicalIllnessesController.text;
-    final String previousMedicalIllnesses = _previousMedicalIllnessesController.text;
+    final String previousMedicalIllnesses =
+        _previousMedicalIllnessesController.text;
     final String allergies = _allergiesController.text;
     final String currentMedications = _currentMedicationsController.text;
     final String pastMedications = _pastMedicationsController.text;
 
     final String patient = '$firstName $middleName $lastName';
-    
 
     // Make a commit to the patients collection of the firestore
     // with the patient's details
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     DocumentReference ref = await firestore.collection('patients').add({
-      'lowerCaseSearchTokens': firstName.toLowerCase() + ' ' + middleName.toLowerCase() + ' ' + lastName.toLowerCase(),
+      'lowerCaseSearchTokens': firstName.toLowerCase() +
+          ' ' +
+          middleName.toLowerCase() +
+          ' ' +
+          lastName.toLowerCase(),
       'firstName': firstName,
       'middleName': middleName,
       'lastName': lastName,
@@ -95,7 +102,11 @@ class _AddPatientPageState extends State<AddPatientPage> {
     // Create a new patient object
     final Patient newPatient = Patient(
       uid: '',
-      lowerCaseSearchTokens: firstName.toLowerCase() + ' ' + middleName.toLowerCase() + ' ' + lastName.toLowerCase(),
+      lowerCaseSearchTokens: firstName.toLowerCase() +
+          ' ' +
+          middleName.toLowerCase() +
+          ' ' +
+          lastName.toLowerCase(),
       firstName: firstName,
       middleName: middleName,
       lastName: lastName,
@@ -141,7 +152,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
     _allergiesController.clear();
     _currentMedicationsController.clear();
     _pastMedicationsController.clear();
-}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +170,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
           ),
         ),
         body: TabBarView(
-          children: [ 
+          children: [
             SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -172,7 +183,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                     ),
                     TextField(
                       controller: _firstNameController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Enter first name',
                       ),
                     ),
@@ -183,7 +194,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                     ),
                     TextField(
                       controller: _middleNameController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Enter middle name',
                       ),
                     ),
@@ -194,7 +205,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                     ),
                     TextField(
                       controller: _lastNameController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Enter last name',
                       ),
                     ),
@@ -205,7 +216,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                     ),
                     TextField(
                       controller: _dobController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Enter date of birth',
                       ),
                     ),
@@ -216,7 +227,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                     ),
                     TextField(
                       controller: _bloodGroupController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Enter blood group',
                       ),
                     ),
@@ -227,7 +238,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                     ),
                     TextField(
                       controller: _rhFactorController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Enter RH factor',
                       ),
                     ),
@@ -238,7 +249,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                     ),
                     TextField(
                       controller: _maritalStatusController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Enter marital status',
                       ),
                     ),
@@ -249,7 +260,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                     ),
                     TextField(
                       controller: _preferredLanguageController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Enter preferred language',
                       ),
                     ),
@@ -269,7 +280,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                   ),
                   TextField(
                     controller: _homePhoneController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter home phone',
                     ),
                   ),
@@ -280,7 +291,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                   ),
                   TextField(
                     controller: _phoneController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter phone number',
                     ),
                   ),
@@ -291,7 +302,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                   ),
                   TextField(
                     controller: _emailController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter email address',
                     ),
                   ),
@@ -307,7 +318,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                   ),
                   TextField(
                     controller: _emergencyFirstNameController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter first name',
                     ),
                   ),
@@ -318,7 +329,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                   ),
                   TextField(
                     controller: _emergencyLastNameController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter last name',
                     ),
                   ),
@@ -329,7 +340,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                   ),
                   TextField(
                     controller: _relationshipController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter relationship',
                     ),
                   ),
@@ -340,7 +351,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                   ),
                   TextField(
                     controller: _emergencyPhoneController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter phone number',
                     ),
                   ),
@@ -359,7 +370,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                   ),
                   TextField(
                     controller: _knownMedicalIllnessesController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter known medical illnesses',
                     ),
                   ),
@@ -370,7 +381,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                   ),
                   TextField(
                     controller: _previousMedicalIllnessesController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter previous medical illnesses',
                     ),
                   ),
@@ -381,7 +392,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                   ),
                   TextField(
                     controller: _allergiesController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter allergies',
                     ),
                   ),
@@ -392,7 +403,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                   ),
                   TextField(
                     controller: _currentMedicationsController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter current medications',
                     ),
                   ),
@@ -403,7 +414,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                   ),
                   TextField(
                     controller: _pastMedicationsController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter past medications',
                     ),
                   ),
@@ -431,6 +442,3 @@ class _AddPatientPageState extends State<AddPatientPage> {
     );
   }
 }
-
-
-

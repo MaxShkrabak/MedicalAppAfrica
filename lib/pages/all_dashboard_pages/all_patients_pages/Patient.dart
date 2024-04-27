@@ -1,26 +1,26 @@
-class Patient{
-  final String uid;
-  final String lowerCaseSearchTokens;
-  final String firstName;
-  final String middleName;
-  final String lastName;
-  final String dob;
-  final String bloodGroup;
-  final String rhFactor;
-  final String maritalStatus;
-  final String preferredLanguage;
-  final String homePhone;
-  final String phone;
-  final String email;
-  final String emergencyFirstName;
-  final String emergencyLastName;
-  final String relationship;
-  final String emergencyPhone;
-  final String knownMedicalIllnesses;
-  final String previousMedicalIllnesses;
-  final String allergies;
-  final String currentMedications;
-  final String pastMedications;
+class Patient {
+  String uid;
+  String lowerCaseSearchTokens;
+  String firstName;
+  String middleName;
+  String lastName;
+  String dob;
+  String bloodGroup;
+  String rhFactor;
+  String maritalStatus;
+  String preferredLanguage;
+  String homePhone;
+  String phone;
+  String email;
+  String emergencyFirstName;
+  String emergencyLastName;
+  String relationship;
+  String emergencyPhone;
+  String knownMedicalIllnesses;
+  String previousMedicalIllnesses;
+  String allergies;
+  String currentMedications;
+  String pastMedications;
 
   Patient({
     required this.uid,
@@ -46,4 +46,31 @@ class Patient{
     required this.currentMedications,
     required this.pastMedications,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'uid': uid,
+      'lowerCaseSearchTokens': lowerCaseSearchTokens,
+      'firstName': firstName,
+      'middleName': middleName,
+      'lastName': lastName,
+      'dob': dob,
+      'bloodGroup': bloodGroup,
+      'rhFactor': rhFactor,
+      'maritalStatus': maritalStatus,
+      'preferredLanguage': preferredLanguage,
+      'homePhone': homePhone,
+      'phone': phone,
+      'email': email,
+      'emergencyFirstName': emergencyFirstName,
+      'emergencyLastName': emergencyLastName,
+      'relationship': relationship,
+      'emergencyPhone': emergencyPhone,
+      'knownMedicalIllnesses': knownMedicalIllnesses,
+      'previousMedicalIllnesses': previousMedicalIllnesses,
+      'allergies': allergies,
+      'currentMedications': currentMedications,
+      'pastMedications': pastMedications,
+    };
+  }
 }
