@@ -14,12 +14,13 @@ class PatientList extends StatefulWidget {
 class _PatientListState extends State<PatientList> {
   final TextEditingController _searchController = TextEditingController();
 
-  final List<Patient> _patients = [];
-  final List<String> _searchResults = [];
+  List<Patient> _patients = [];
+  List<Patient> _searchResults = [];
 
   @override
   void initState() {
     super.initState();
+    _searchController.addListener(_onSearchChanged);
     FirebaseFirestore.instance
         .collection('patients')
         .get()
@@ -52,30 +53,36 @@ class _PatientListState extends State<PatientList> {
         );
         setState(() {
           _patients.add(patient);
+          _searchResults.add(patient);
         });
       });
     });
   }
 
-  void _onSearchTextChanged(String text) {
-    _searchResults.clear();
-    if (text.isEmpty) {
-      setState(() {});
-      return;
-    }
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
-    _patients.forEach((patient) {
-      if (patient.lowerCaseSearchTokens.contains(text.toLowerCase())) {
-        _searchResults.add(patient.uid);
+  void _onSearchChanged() {
+    final query = _searchController.text.toLowerCase();
+    if (query.isEmpty) {
+      setState(() => _searchResults = _patients);
+    } else {
+      final List<Patient> searchResults = [];
+      for (final patient in _patients) {
+        if (patient.lowerCaseSearchTokens.contains(query)) {
+          searchResults.add(patient);
+        }
       }
-    });
-
-    setState(() {});
+      setState(() => _searchResults = searchResults);
+    }
   }
 
   void updatePatientsCallback(Patient patient) {
     setState(() {
       _patients.add(patient);
+      _searchResults.add(patient);
     });
   }
 
@@ -138,7 +145,6 @@ class _PatientListState extends State<PatientList> {
                   children: [
                     TextField(
                       controller: _searchController,
-                      onChanged: _onSearchTextChanged,
                       style: const TextStyle(color: Colors.white),
                       cursorColor: const Color.fromARGB(
                           255, 255, 255, 255), //cursor color
@@ -160,7 +166,7 @@ class _PatientListState extends State<PatientList> {
                           icon: const Icon(Icons.clear, color: Colors.white),
                           onPressed: () {
                             _searchController.clear();
-                            _onSearchTextChanged('');
+                    
                           },
                         ),
                       ),
@@ -179,7 +185,7 @@ class _PatientListState extends State<PatientList> {
                         style: TextStyle(color: Colors.white),
                       ))
                     : ListView.builder(
-                        itemCount: _patients.length,
+                        itemCount: _searchResults.length,
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(
@@ -198,11 +204,11 @@ class _PatientListState extends State<PatientList> {
                               ),
                               child: ListTile(
                                 title: Text(
-                                  '${_patients[index].firstName} ${_patients[index].lastName}',
+                                  '${_searchResults[index].firstName} ${_searchResults[index].lastName}',
                                   style: const TextStyle(color: Colors.white),
                                 ),
                                 subtitle: Text(
-                                  _patients[index].phone,
+                                  _searchResults[index].phone,
                                   style: const TextStyle(color: Colors.white),
                                 ),
                                 trailing: Row(
@@ -261,7 +267,7 @@ class _PatientListState extends State<PatientList> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => PatientViewPage(
-                                        uid: _patients[index].uid,
+                                        uid: _searchResults[index].uid,
                                       ),
                                     ),
                                   );

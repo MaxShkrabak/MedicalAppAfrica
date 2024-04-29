@@ -43,7 +43,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
   final TextEditingController _pastMedicationsController =
       TextEditingController();
 
-  signUp() async {
+  signUp(BuildContext context) async {
     final String firstName = _firstNameController.text;
     final String middleName = _middleNameController.text;
     final String lastName = _lastNameController.text;
@@ -66,7 +66,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
     final String currentMedications = _currentMedicationsController.text;
     final String pastMedications = _pastMedicationsController.text;
 
-    final String patient = '$firstName $middleName $lastName';
+
 
     // Make a commit to the patients collection of the firestore
     // with the patient's details
@@ -265,6 +265,20 @@ class _AddPatientPageState extends State<AddPatientPage> {
                       ),
                     ),
                     const SizedBox(height: 16),
+                    // forward button that takes care to avoid issues with DefaultTabController context bugs
+                    Builder(
+                      builder: (BuildContext context) {
+                        return Align(
+                          alignment: Alignment.bottomRight,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              DefaultTabController.of(context)!.animateTo(1);
+                            },
+                            child: const Text('Next'),
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -356,6 +370,28 @@ class _AddPatientPageState extends State<AddPatientPage> {
                     ),
                   ),
                   const SizedBox(height: 16),
+                  //forward and back buttons
+                  Builder(
+                    builder: (BuildContext context) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              DefaultTabController.of(context)!.animateTo(0);
+                            },
+                            child: const Text('Back'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              DefaultTabController.of(context)!.animateTo(2);
+                            },
+                            child: const Text('Next'),
+                          ),
+                        ],
+                      );
+                    },
+                  )
                 ],
               ),
             ),
@@ -419,20 +455,28 @@ class _AddPatientPageState extends State<AddPatientPage> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-
-                          signUp();
-                        },
-                        child: const Text('Finish'),
-                      ),
-                    ),
-                  ),
+                  Builder(
+                    builder: (BuildContext context) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              DefaultTabController.of(context)!.animateTo(1);
+                            },
+                            child: const Text('Back'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              signUp(context);
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('Submit'),
+                          ),
+                        ],
+                      );
+                    },
+                  )
                 ],
               ),
             ),
