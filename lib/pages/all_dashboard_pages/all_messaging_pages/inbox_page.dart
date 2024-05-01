@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,7 +21,7 @@ class InboxPage extends StatelessWidget {
         .get();
 
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -34,10 +32,10 @@ class InboxPage extends StatelessWidget {
         ),
       ),
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(76, 90, 137, 1),
+        backgroundColor: const Color.fromRGBO(76, 90, 137, 1),
         appBar: AppBar(
           title: const Text('Inbox'),
-          backgroundColor: Color.fromARGB(156, 102, 134, 161),
+          backgroundColor: const Color.fromARGB(156, 102, 134, 161),
         ),
         body: SafeArea(
           child: FutureBuilder<QuerySnapshot>(
@@ -61,9 +59,9 @@ class InboxPage extends StatelessWidget {
                       direction: DismissDirection.endToStart,
                       background: Container(
                         alignment: Alignment.centerRight,
-                        padding: EdgeInsets.only(right: 20.0),
+                        padding: const EdgeInsets.only(right: 20.0),
                         color: Colors.red,
-                        child: Icon(Icons.delete, color: Colors.white),
+                        child: const Icon(Icons.delete, color: Colors.white),
                       ),
                       confirmDismiss: (direction) async {
                         return await showDialog(

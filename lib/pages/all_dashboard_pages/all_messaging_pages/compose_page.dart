@@ -8,10 +8,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 class ComposePage extends StatefulWidget {
   final String uid;
 
-  const ComposePage({Key? key, required this.uid}) : super(key: key);
+  const ComposePage({super.key, required this.uid});
 
   @override
-  _ComposePageState createState() => _ComposePageState();
+  State<ComposePage> createState() => _ComposePageState();
 }
 
 class _ComposePageState extends State<ComposePage> {
@@ -90,6 +90,7 @@ class _ComposePageState extends State<ComposePage> {
       'recipient_name': recipientName,
     });
 
+    // ignore: use_build_context_synchronously
     Navigator.pop(context);
   }
 
@@ -115,7 +116,7 @@ class _ComposePageState extends State<ComposePage> {
           final String lastName = data['last_name'];
 
           return Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -128,7 +129,7 @@ class _ComposePageState extends State<ComposePage> {
             child: Scaffold(
               backgroundColor: Colors.white, // White background for visibility
               appBar: AppBar(
-                backgroundColor: Color.fromARGB(156, 102, 134, 161),
+                backgroundColor: const Color.fromARGB(156, 102, 134, 161),
                 title: Text('Compose to $firstName $lastName'),
               ),
               body: SafeArea(
@@ -138,7 +139,7 @@ class _ComposePageState extends State<ComposePage> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextField(
                         controller: _messageController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'Type your message here',
                         ),
                         maxLines: 10,
@@ -150,12 +151,12 @@ class _ComposePageState extends State<ComposePage> {
                             width: 200,
                             child: Image.file(File(_image!.path)),
                           )
-                        : SizedBox(), // Display selected image if available
+                        : const SizedBox(), // Display selected image if available
                     ElevatedButton(
                       onPressed: () {
                         _getImage();
                       },
-                      child: Text('Select Image'),
+                      child: const Text('Select Image'),
                     ),
                     ElevatedButton(
                       onPressed: () {
@@ -165,7 +166,7 @@ class _ComposePageState extends State<ComposePage> {
                           _messageController.text,
                         );
                       },
-                      child: Text('Send'),
+                      child: const Text('Send'),
                     ),
                   ],
                 ),
@@ -173,7 +174,7 @@ class _ComposePageState extends State<ComposePage> {
             ),
           );
         } else {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }

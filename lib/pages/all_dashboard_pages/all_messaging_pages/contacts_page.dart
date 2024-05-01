@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'compose_page.dart';
 
-
-
 class ContactsPage extends StatefulWidget {
-  ContactsPage({Key? key}) : super(key: key);
-  
+  const ContactsPage({super.key});
+
   @override
-  _ContactsPageState createState() => _ContactsPageState();
+  State<ContactsPage> createState() => _ContactsPageState();
 }
 
 class _ContactsPageState extends State<ContactsPage> {
@@ -16,11 +14,10 @@ class _ContactsPageState extends State<ContactsPage> {
 
   // List of documents, the state of this widget that changes on setState
   List<DocumentSnapshot> _docs = [];
-  
 
   // Logic to search for contacts in this function
   void _onSearchTextChanged(String text) async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     // If empty, ...
     if (text.isEmpty) {
@@ -28,35 +25,42 @@ class _ContactsPageState extends State<ContactsPage> {
         _docs = [];
       });
     } else {
-      
       final List<String> tokens = text.split(' ');
-
 
       // iterate over the tokens
       for (final token in tokens) {
         // Search for contacts with first_name or last_name equal to text
-        final QuerySnapshot first_query = await _firestore.collection('accounts').where('first_name', isEqualTo: token).get();
-        final QuerySnapshot last_query = await _firestore.collection('accounts').where('last_name', isEqualTo: token).get();
+        final QuerySnapshot firstQuery = await firestore
+            .collection('accounts')
+            .where('first_name', isEqualTo: token)
+            .get();
+        final QuerySnapshot lastQuery = await firestore
+            .collection('accounts')
+            .where('last_name', isEqualTo: token)
+            .get();
 
         // Search for contacts where the access_level is equal to text
-        final QuerySnapshot access_query = await _firestore.collection('accounts').where('access_level', isEqualTo: token).get();
+        final QuerySnapshot accessQuery = await firestore
+            .collection('accounts')
+            .where('access_level', isEqualTo: token)
+            .get();
 
         // Use a Map, or Dictionary  data structure to store the documents. This avoids duplicates by having the id as the key
         Map<String, DocumentSnapshot> docMap = {};
 
-        for (final doc in first_query.docs) {
+        for (final doc in firstQuery.docs) {
           setState(() {
             docMap[doc.id] = doc;
           });
         }
 
-        for (final doc in last_query.docs) {
+        for (final doc in lastQuery.docs) {
           setState(() {
             docMap[doc.id] = doc;
           });
         }
 
-        for (final doc in access_query.docs) {
+        for (final doc in accessQuery.docs) {
           setState(() {
             docMap[doc.id] = doc;
           });
@@ -70,26 +74,24 @@ class _ContactsPageState extends State<ContactsPage> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-              Color.fromARGB(133, 23, 6, 87),
-              Color.fromARGB(221, 52, 4, 85),
-            ],
-          ),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color.fromARGB(133, 23, 6, 87),
+            Color.fromARGB(221, 52, 4, 85),
+          ],
+        ),
       ),
       child: Scaffold(
         backgroundColor: Colors.white, // White background for visibility
         appBar: AppBar(
           title: const Text('Contacts'),
-          backgroundColor: Color.fromARGB(156, 102, 134, 161),
+          backgroundColor: const Color.fromARGB(156, 102, 134, 161),
         ),
         body: SafeArea(
           child: Column(
@@ -113,34 +115,35 @@ class _ContactsPageState extends State<ContactsPage> {
               ),
               Expanded(
                 child: _docs.isEmpty
-                  ? Center(child: Text('No contacts found'))
-                  : ListView.builder(
-                      itemCount: _docs.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: InkWell(
-                            onTap: (){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ComposePage(uid: _docs[index].id)
-                                )
-                              );
-                            },
-                            child: ListTile(
-                              title: Text(_docs[index]['first_name'] + ' ' + _docs[index]['last_name']),
-                              subtitle: Text(_docs[index]['access_level']),
-                              trailing: Icon(Icons.message),
+                    ? const Center(child: Text('No contacts found'))
+                    : ListView.builder(
+                        itemCount: _docs.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                          ), 
-                        );
-                      },
-                    ),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ComposePage(uid: _docs[index].id)));
+                              },
+                              child: ListTile(
+                                title: Text(_docs[index]['first_name'] +
+                                    ' ' +
+                                    _docs[index]['last_name']),
+                                subtitle: Text(_docs[index]['access_level']),
+                                trailing: const Icon(Icons.message),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
               ),
             ],
           ),

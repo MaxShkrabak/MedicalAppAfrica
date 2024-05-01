@@ -1,6 +1,8 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'Patient.dart';
+import 'patient.dart';
 
 class PatientViewPage extends StatefulWidget {
   const PatientViewPage({super.key, required this.uid});
@@ -8,7 +10,7 @@ class PatientViewPage extends StatefulWidget {
   final String uid;
 
   @override
-  _PatientViewPageState createState() => _PatientViewPageState();
+  State<PatientViewPage> createState() => _PatientViewPageState();
 }
 
 class _PatientViewPageState extends State<PatientViewPage> {

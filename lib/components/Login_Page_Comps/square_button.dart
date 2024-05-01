@@ -4,8 +4,7 @@ class SquareBoxButton extends StatelessWidget {
   final String image;
   final VoidCallback? onPressed; // Add onPressed callback
 
-  const SquareBoxButton({Key? key, required this.image, this.onPressed})
-      : super(key: key);
+  const SquareBoxButton({super.key, required this.image, this.onPressed});
 
   @override
   Widget build(BuildContext context) {

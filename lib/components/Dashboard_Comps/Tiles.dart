@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 class Tiles extends StatefulWidget {
@@ -5,16 +7,16 @@ class Tiles extends StatefulWidget {
   final String mainText, subText;
   final double height, width;
   const Tiles({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.mainText,
     required this.subText,
     required this.height,
     required this.width,
-  }) : super(key: key);
+  });
 
   @override
-  _TilesState createState() => _TilesState();
+  State<Tiles> createState() => _TilesState();
 }
 
 class _TilesState extends State<Tiles> {

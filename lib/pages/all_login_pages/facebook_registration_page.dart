@@ -1,10 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:africa_med_app/components/Login_Page_Comps/my_textfield.dart';
-import 'package:africa_med_app/components/Registration_Comps/NameTextFields.dart';
-import 'package:africa_med_app/components/Registration_Comps/PhoneNumField.dart';
-import 'package:africa_med_app/components/Registration_Comps/passChecker.dart';
+import 'package:africa_med_app/components/Registration_Comps/name_text_fields.dart';
+import 'package:africa_med_app/components/Registration_Comps/phone_num_field.dart';
+import 'package:africa_med_app/components/Registration_Comps/pass_checker.dart';
 import 'package:africa_med_app/components/Registration_Comps/create_account_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -15,7 +17,7 @@ class FacebookRegistrationPage extends StatefulWidget {
   final Function(bool) updateIsUserRegistered;
 
   @override
-  _FacebookRegistrationPageState createState() =>
+  State<FacebookRegistrationPage> createState() =>
       _FacebookRegistrationPageState();
 }
 

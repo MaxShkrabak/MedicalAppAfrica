@@ -1,13 +1,15 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:africa_med_app/components/Dashboard_Comps/Tiles.dart';
+import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
 
 class RadiologyScans extends StatefulWidget {
   const RadiologyScans({super.key});
 
   @override
-  _RadiologyScansState createState() => _RadiologyScansState();
+  State<RadiologyScans> createState() => _RadiologyScansState();
 }
 
 class _RadiologyScansState extends State<RadiologyScans> {
@@ -33,16 +35,16 @@ class _RadiologyScansState extends State<RadiologyScans> {
         ),
         child: Scaffold(
           appBar: AppBar(
-             backgroundColor: Color.fromARGB(156, 102, 134, 161),
-             title: const Text('Radiology'),
-             leading: IconButton(
-             icon: const Icon(Icons.arrow_back),
-             onPressed: () {
-               Navigator.pop(context);
+            backgroundColor: const Color.fromARGB(156, 102, 134, 161),
+            title: const Text('Radiology'),
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
               },
             ),
           ),
-          backgroundColor: Color.fromARGB(156, 102, 133, 161),
+          backgroundColor: const Color.fromARGB(156, 102, 133, 161),
           body: SafeArea(
             minimum: const EdgeInsets.symmetric(horizontal: 10),
             child: SingleChildScrollView(
@@ -91,9 +93,8 @@ class _RadiologyScansState extends State<RadiologyScans> {
                     width: 250,
                     height: 100,
                   ),
-
                   const SizedBox(height: 60),
-                ],  
+                ],
               ),
             ),
           ),
@@ -101,9 +102,11 @@ class _RadiologyScansState extends State<RadiologyScans> {
       ),
     );
   }
-  void _SendOrder(String patientName, String department, String orderType, String areatoScan, String orderDetails) async {
+
+  // ignore: non_constant_identifier_names
+  void _SendOrder(String patientName, String department, String orderType,
+      String areatoScan, String orderDetails) async {
     try {
-    
       //Adds the order to users 'orders' sub collection
       final appointmentRef = await FirebaseFirestore.instance
           .collection('accounts')
@@ -111,12 +114,13 @@ class _RadiologyScansState extends State<RadiologyScans> {
           .collection('orders')
           .add({
         'order details': orderDetails,
-        'testing' : areatoScan,
-        'order type' : orderType,
+        'testing': areatoScan,
+        'order type': orderType,
         'patient': patientName,
-        'testing department' : department,
+        'testing department': department,
       });
 
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Center(child: Text('Order added successfully!')),
@@ -129,7 +133,7 @@ class _RadiologyScansState extends State<RadiologyScans> {
     }
   }
 
-   //asks user for order details
+  //asks user for order details
   void _showOrderDetailsDialog(String orderType, String department) {
     String patientName = '';
     String orderDetails = '';
@@ -144,8 +148,7 @@ class _RadiologyScansState extends State<RadiologyScans> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
-                  decoration:
-                      const InputDecoration(labelText: 'Patient Name'),
+                  decoration: const InputDecoration(labelText: 'Patient Name'),
                   onChanged: (value) {
                     patientName = value;
                   },
@@ -158,8 +161,7 @@ class _RadiologyScansState extends State<RadiologyScans> {
                   },
                 ),
                 TextField(
-                  decoration:
-                      const InputDecoration(labelText: 'Order Details'),
+                  decoration: const InputDecoration(labelText: 'Order Details'),
                   onChanged: (value) {
                     orderDetails = value;
                   },
@@ -175,7 +177,8 @@ class _RadiologyScansState extends State<RadiologyScans> {
               ),
               TextButton(
                 onPressed: () {
-                  _SendOrder(patientName, department, orderType, areaToScan, orderDetails);
+                  _SendOrder(patientName, department, orderType, areaToScan,
+                      orderDetails);
                   Navigator.of(context).pop();
                 },
                 child: const Text('Confirm'),

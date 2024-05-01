@@ -1,4 +1,4 @@
-import 'package:africa_med_app/components/Dashboard_Comps/Tiles.dart';
+import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
 import 'package:africa_med_app/pages/all_dashboard_pages/all_orders_pages/Orders.dart';
 import 'package:africa_med_app/pages/all_dashboard_pages/all_messaging_pages/messaging_page.dart';
 import 'package:africa_med_app/pages/all_dashboard_pages/all_scheduling_pages/appointments.dart';
@@ -266,7 +266,7 @@ class _DashBoardState extends State<DashBoard> {
                     Navigator.push(
                       context,
                       CupertinoPageRoute(
-                        builder: ((context) => Messaging()),
+                        builder: ((context) => const Messaging()),
                       ),
                     );
                   },

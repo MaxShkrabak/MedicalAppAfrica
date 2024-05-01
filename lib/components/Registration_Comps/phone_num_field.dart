@@ -7,13 +7,13 @@ class PhoneNumField extends StatefulWidget {
   final Function(bool isValid) onValidated;
 
   const PhoneNumField({
-    Key? key,
+    super.key,
     required this.controller,
     required this.onValidated,
-  }) : super(key: key);
+  });
 
   @override
-  _PhoneNumFieldState createState() => _PhoneNumFieldState();
+  State<PhoneNumField> createState() => _PhoneNumFieldState();
 }
 
 class _PhoneNumFieldState extends State<PhoneNumField> {
@@ -23,7 +23,7 @@ class _PhoneNumFieldState extends State<PhoneNumField> {
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: TextFormField(
           controller: widget.controller,
-          // Include validator that the phone number contains 10 digits 
+          // Include validator that the phone number contains 10 digits
           validator: (value) {
             bool isValid = RegExp(r'^\(\d{3}\) \d{3}-\d{4}$').hasMatch(value!);
             widget.onValidated(isValid);
@@ -39,7 +39,7 @@ class _PhoneNumFieldState extends State<PhoneNumField> {
           ],
           autovalidateMode: AutovalidateMode.onUserInteraction,
           decoration: const InputDecoration(
-            fillColor: const Color.fromRGBO(127, 162, 193, 100),
+            fillColor: Color.fromRGBO(127, 162, 193, 100),
             filled: true,
             labelText: "Your Phone Number",
             labelStyle:
@@ -63,11 +63,13 @@ class _PhoneNumFieldState extends State<PhoneNumField> {
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(35.0)),
-              borderSide: BorderSide(color: Colors.red), // change this color as needed
+              borderSide:
+                  BorderSide(color: Colors.red), // change this color as needed
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(35.0)),
-              borderSide: BorderSide(color: Colors.red), // change this color as needed
+              borderSide:
+                  BorderSide(color: Colors.red), // change this color as needed
             ),
           )),
     );

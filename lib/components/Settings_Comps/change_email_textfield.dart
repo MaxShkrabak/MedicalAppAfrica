@@ -6,14 +6,13 @@ class ChangeEmailTF extends StatefulWidget {
   final String hintText;
 
   const ChangeEmailTF(
-      {Key? key,
+      {super.key,
       required this.controller,
       required this.onValidated,
-      required this.hintText})
-      : super(key: key);
+      required this.hintText});
 
   @override
-  _ChangeEmailTFState createState() => _ChangeEmailTFState();
+  State<ChangeEmailTF> createState() => _ChangeEmailTFState();
 }
 
 class _ChangeEmailTFState extends State<ChangeEmailTF> {

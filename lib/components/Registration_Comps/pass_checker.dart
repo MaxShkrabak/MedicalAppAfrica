@@ -72,7 +72,7 @@ class _PasswordStrengthCheckerState extends State<PasswordStrengthChecker> {
           /// red color
           final color = hasValue
               ? (hasMatch ? Colors.green : Colors.red)
-              : Color.fromARGB(223, 241, 106, 106);
+              : const Color.fromARGB(223, 241, 106, 106);
 
           return Padding(
             padding: const EdgeInsets.only(bottom: 4.0),

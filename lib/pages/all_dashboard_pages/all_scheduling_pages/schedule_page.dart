@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
@@ -8,7 +10,7 @@ class Schedule extends StatefulWidget {
   const Schedule({super.key});
 
   @override
-  _ScheduleState createState() => _ScheduleState();
+  State<Schedule> createState() => _ScheduleState();
 }
 
 class _ScheduleState extends State<Schedule> {
@@ -330,6 +332,7 @@ class _ScheduleState extends State<Schedule> {
         _timeSlotAvailabilityMap[_selectedDay]![timeSlot] = false;
       });
 
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Center(child: Text('Appointment scheduled successfully!')),

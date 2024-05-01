@@ -1,8 +1,8 @@
-import 'package:africa_med_app/components/Registration_Comps/onCreate_error_popup.dart';
+import 'package:africa_med_app/components/Registration_Comps/on_create_error_popup.dart';
 import 'package:africa_med_app/components/Settings_Comps/change_email_textfield.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// ignore: camel_case_types
 class newEmailPage extends StatefulWidget {
   const newEmailPage({super.key});
 
@@ -10,6 +10,7 @@ class newEmailPage extends StatefulWidget {
   State<newEmailPage> createState() => _newEmailPageState();
 }
 
+// ignore: camel_case_types
 class _newEmailPageState extends State<newEmailPage> {
   final emailController = TextEditingController();
   final confEmailController = TextEditingController();

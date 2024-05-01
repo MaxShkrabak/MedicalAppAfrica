@@ -16,11 +16,12 @@ class Order {
       required this.testing,
       required this.testInfo});
 }
+
 class ViewOrders extends StatefulWidget {
   const ViewOrders({super.key});
 
   @override
-  _ViewOrdersState createState() => _ViewOrdersState();
+  State<ViewOrders> createState() => _ViewOrdersState();
 }
 
 class _ViewOrdersState extends State<ViewOrders> {
@@ -47,141 +48,135 @@ class _ViewOrdersState extends State<ViewOrders> {
         ),
         child: Scaffold(
           appBar: AppBar(
-             backgroundColor: Color.fromARGB(156, 102, 134, 161),
-             title: const Text('View Orders'),
-             leading: IconButton(
-             icon: const Icon(Icons.arrow_back),
-             onPressed: () {
-               Navigator.pop(context);
+            backgroundColor: const Color.fromARGB(156, 102, 134, 161),
+            title: const Text('View Orders'),
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
               },
             ),
           ),
-          backgroundColor: Color.fromARGB(156, 102, 133, 161),
+          backgroundColor: const Color.fromARGB(156, 102, 133, 161),
           body: SafeArea(
             minimum: const EdgeInsets.symmetric(horizontal: 10),
             child: StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection('accounts')
-                .doc(user!.uid)
-                .collection('orders')
-                .snapshots(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              }
+              stream: FirebaseFirestore.instance
+                  .collection('accounts')
+                  .doc(user!.uid)
+                  .collection('orders')
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-              if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              }
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                }
 
-              final orders =
-                  snapshot.data!.docs.map((DocumentSnapshot document) {
-                Map<String, dynamic> data =
-                    document.data() as Map<String, dynamic>;
-                return Order(
-                  patientName: (data['patient']),
-                  department: data['testing department'] ?? '',
-                  orderType: data['order type'] ?? '',
-                  testing: data['testing'] ?? '',
-                  testInfo: data['order details']?? '',
-                );
-              }).toList();
+                final orders =
+                    snapshot.data!.docs.map((DocumentSnapshot document) {
+                  Map<String, dynamic> data =
+                      document.data() as Map<String, dynamic>;
+                  return Order(
+                    patientName: (data['patient']),
+                    department: data['testing department'] ?? '',
+                    orderType: data['order type'] ?? '',
+                    testing: data['testing'] ?? '',
+                    testInfo: data['order details'] ?? '',
+                  );
+                }).toList();
 
-              orders.sort((a, b) => a.department.compareTo(b.department));
+                orders.sort((a, b) => a.department.compareTo(b.department));
 
-              return ListView.builder(
-                itemCount: orders.length,
-                itemBuilder: (context, index) {
-                  final order = orders[index];
+                return ListView.builder(
+                  itemCount: orders.length,
+                  itemBuilder: (context, index) {
+                    final order = orders[index];
 
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 76, 57, 100),
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 4,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: ListTile(
-                              title: Text(
-                                order.patientName,
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 143, 226,
-                                      247),
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 76, 57, 100),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 4,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: ListTile(
+                                title: Text(
+                                  order.patientName,
+                                  style: const TextStyle(
+                                    color: Color.fromARGB(255, 143, 226, 247),
+                                  ),
+                                ),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      order.department,
+                                      style: const TextStyle(
+                                          color: Color.fromARGB(
+                                              255, 143, 226, 247),
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    Text(
+                                      order.testing,
+                                      style: const TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 143, 226, 2),
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    Text(
+                                      order.testInfo,
+                                      style: const TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 143, 226, 2),
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-
-                                  Text(
-                                    order.department,
-                                    style: const TextStyle(
-                                        color: Color.fromARGB(255, 143, 226, 247),
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  
-                                  Text(
-                                    order.testing,
-                                    style: const TextStyle(
-                                        color: Color.fromARGB(255, 143, 226,
-                                            2),
-                                        fontWeight: FontWeight.w600),
-                                  ),
-
-                                  Text(
-                                    order.testInfo,
-                                    style: const TextStyle(
-                                        color: Color.fromARGB(255, 143, 226,
-                                            2),
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  
-                                ],
+                            ),
+                            //cancel order
+                            Container(
+                              margin: const EdgeInsets.only(left: 8),
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.cancel,
+                                  color: Color.fromARGB(255, 189, 68, 68),
+                                ),
+                                onPressed: () {
+                                  _showCancelConfirmationDialog(
+                                      context, order, user.uid);
+                                },
                               ),
                             ),
-                          ),
-                          //cancel order
-                          Container(
-                            margin: const EdgeInsets.only(left: 8),
-                            child: IconButton(
-                              icon: const Icon(
-                                Icons.cancel,
-                                color: Color.fromARGB(255, 189, 68,
-                                    68), 
-                              ),
-                              onPressed: () {
-                                _showCancelConfirmationDialog(
-                                    context, order, user.uid);
-                              },
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
-              );
-            },
-          ),
-             
-        
+                    );
+                  },
+                );
+              },
+            ),
           ),
         ),
       ),
     );
   }
+
   //asks user for verification before canceling order
   Future<void> _showCancelConfirmationDialog(
       BuildContext context, Order order, String userId) async {
@@ -219,8 +214,7 @@ class _ViewOrdersState extends State<ViewOrders> {
   }
 
   //cancels the order, removes data from firebase
-  Future<void> _cancelOrder(
-      Order order, String userId) async {
+  Future<void> _cancelOrder(Order order, String userId) async {
     try {
       await FirebaseFirestore.instance
           .collection('accounts')
@@ -237,6 +231,7 @@ class _ViewOrdersState extends State<ViewOrders> {
         }
       });
     } catch (error) {
+      // ignore: avoid_print
       print('Error cancelling order: $error');
     }
   }

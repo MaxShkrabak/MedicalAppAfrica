@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'patient_view_page.dart';
-import 'Patient.dart';
+import 'patient.dart';
 import 'add_patient_page.dart';
 
 class PatientList extends StatefulWidget {
   const PatientList({super.key});
 
   @override
-  _PatientListState createState() => _PatientListState();
+  State<PatientList> createState() => _PatientListState();
 }
 
 class _PatientListState extends State<PatientList> {
@@ -24,8 +24,8 @@ class _PatientListState extends State<PatientList> {
         .collection('patients')
         .get()
         .then((querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      for (var doc in querySnapshot.docs) {
+        Map<String, dynamic> data = doc.data();
         Patient patient = Patient(
           uid: doc.id,
           lowerCaseSearchTokens: data['lowerCaseSearchTokens'] ?? '',
@@ -53,7 +53,7 @@ class _PatientListState extends State<PatientList> {
         setState(() {
           _patients.add(patient);
         });
-      });
+      }
     });
   }
 
@@ -64,11 +64,11 @@ class _PatientListState extends State<PatientList> {
       return;
     }
 
-    _patients.forEach((patient) {
+    for (var patient in _patients) {
       if (patient.lowerCaseSearchTokens.contains(text.toLowerCase())) {
         _searchResults.add(patient.uid);
       }
-    });
+    }
 
     setState(() {});
   }
