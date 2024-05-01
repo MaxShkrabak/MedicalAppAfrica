@@ -7,8 +7,6 @@ import 'package:intl/intl.dart';
 
 import 'message_tile.dart';
 
-
-
 class InboxPage extends StatelessWidget {
   InboxPage({super.key});
 
@@ -16,10 +14,13 @@ class InboxPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final User? currentUser = FirebaseAuth.instance.currentUser;
     final String currentUserUid = currentUser!.uid;
-    final Future<QuerySnapshot> messagesFuture = _firestore.collection('accounts').doc(currentUserUid).collection('messages').get();
+    final Future<QuerySnapshot> messagesFuture = _firestore
+        .collection('accounts')
+        .doc(currentUserUid)
+        .collection('messages')
+        .get();
 
     return Container(
       decoration: BoxDecoration(
@@ -39,18 +40,22 @@ class InboxPage extends StatelessWidget {
           backgroundColor: Color.fromARGB(156, 102, 134, 161),
         ),
         body: SafeArea(
-         child: FutureBuilder<QuerySnapshot>(
+          child: FutureBuilder<QuerySnapshot>(
             future: messagesFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                final List<QueryDocumentSnapshot> messages = snapshot.data!.docs;
+                final List<QueryDocumentSnapshot> messages =
+                    snapshot.data!.docs;
                 return ListView.builder(
                   itemCount: messages.length,
                   itemBuilder: (context, index) {
-                    final message = messages[index].data() as Map<String, dynamic>;
+                    final message =
+                        messages[index].data() as Map<String, dynamic>;
                     final String sender = message['sender_name'];
                     final String messageText = message['message'];
-                    final String time = DateFormat('MM/dd kk:mm').format(message['timestamp'].toDate());
+                    final String time = DateFormat('MM/dd kk:mm')
+                        .format(message['timestamp'].toDate());
+                    final String? imageUrl = message['image'];
                     return Dismissible(
                       key: Key(messages[index].id),
                       direction: DismissDirection.endToStart,
@@ -66,14 +71,17 @@ class InboxPage extends StatelessWidget {
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: const Text("Confirm"),
-                              content: const Text("Are you sure you want to delete this item?"),
+                              content: const Text(
+                                  "Are you sure you want to delete this item?"),
                               actions: <Widget>[
                                 TextButton(
-                                  onPressed: () => Navigator.of(context).pop(true),
-                                  child: const Text("DELETE")
+                                  onPressed: () =>
+                                      Navigator.of(context).pop(true),
+                                  child: const Text("DELETE"),
                                 ),
                                 TextButton(
-                                  onPressed: () => Navigator.of(context).pop(false),
+                                  onPressed: () =>
+                                      Navigator.of(context).pop(false),
                                   child: const Text("CANCEL"),
                                 ),
                               ],
@@ -82,12 +90,18 @@ class InboxPage extends StatelessWidget {
                         );
                       },
                       onDismissed: (direction) {
-                        _firestore.collection('accounts').doc(currentUserUid).collection('messages').doc(messages[index].id).delete();
+                        _firestore
+                            .collection('accounts')
+                            .doc(currentUserUid)
+                            .collection('messages')
+                            .doc(messages[index].id)
+                            .delete();
                       },
                       child: MessageTile(
                         sender: sender,
                         message: messageText,
                         time: time,
+                        imageUrl: imageUrl, // Pass imageUrl to MessageTile
                       ),
                     );
                   },
@@ -98,10 +112,9 @@ class InboxPage extends StatelessWidget {
                 );
               }
             },
-         )
+          ),
         ),
       ),
     );
   }
 }
-
