@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Patient.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:path/path.dart' show basename;
+
 
 class PatientViewPage extends StatefulWidget {
   const PatientViewPage({super.key, required this.uid});
@@ -20,6 +25,34 @@ class _PatientViewPageState extends State<PatientViewPage> {
   void initState() {
     super.initState();
     _patientFuture = fetchPatient(widget.uid);
+  }
+
+
+  // Fetch Image method
+
+
+  Future<void> _uploadImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image == null) {
+      return;
+    }
+
+    final File file = File(image.path);
+    final String fileName = basename(file.path);
+    final Reference ref = FirebaseStorage.instance.ref().child(fileName);
+    await ref.putFile(file);
+    final String url = await ref.getDownloadURL();
+
+    //Also set the patients field to the new image URL in the firestore 
+    await FirebaseFirestore.instance
+        .collection('patients')
+        .doc(widget.uid)
+        .update({'imageURL': url});
+
+    setState(() {
+      _patient.imageURL = url;
+    });
   }
 
   Future<Patient> fetchPatient(String uid) async {
@@ -58,6 +91,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
         currentMedications:
             data['currentMedications'] ?? '', // Provide default value
         pastMedications: data['pastMedications'] ?? '', // Provide default value
+        imageURL: data['imageURL'] ?? '', // Provide default value
       );
     } else {
       throw Exception('Patient with uid: $uid not found');
@@ -117,6 +151,23 @@ class _PatientViewPageState extends State<PatientViewPage> {
                 color: const Color.fromRGBO(76, 90, 137, 1),
                 child: ListView(
                   children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Center(
+                        child: CircleAvatar(
+                          radius: 50.0,
+                          backgroundImage: _patient.imageURL != null
+                              ? NetworkImage(_patient.imageURL!)
+                              : null,
+                          child: _patient.imageURL == null
+                              ? const Icon(
+                                  Icons.person,
+                                  size: 50.0,
+                                )
+                              : null,
+                        ),
+                      ),
+                    ),
                     _buildEditableTile(
                       title: 'First Name',
                       value: _patient.firstName,
@@ -296,6 +347,13 @@ class _PatientViewPageState extends State<PatientViewPage> {
                           _patient.pastMedications = value;
                         });
                       },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: ElevatedButton(
+                        onPressed: _uploadImage,
+                        child: const Text('Upload Image'),
+                      ),
                     ),
                   ],
                 ),

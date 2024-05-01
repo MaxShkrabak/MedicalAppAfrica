@@ -101,7 +101,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
 
     // Create a new patient object
     final Patient newPatient = Patient(
-      uid: '',
+      uid: ref.id,
       lowerCaseSearchTokens: firstName.toLowerCase() +
           ' ' +
           middleName.toLowerCase() +
