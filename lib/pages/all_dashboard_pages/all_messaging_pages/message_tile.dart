@@ -1,18 +1,18 @@
-
 import 'package:flutter/material.dart';
-
-// MessageTile widget
+import 'package:photo_view/photo_view.dart';
 
 class MessageTile extends StatelessWidget {
   final String sender;
   final String message;
   final String time;
+  final String? imageUrl;
 
   const MessageTile({
     Key? key,
     required this.sender,
     required this.message,
     required this.time,
+    this.imageUrl,
   }) : super(key: key);
 
   @override
@@ -20,7 +20,7 @@ class MessageTile extends StatelessWidget {
     return Container(
       color: Colors.white,
       child: Column(
-        children: [ 
+        children: [
           ListTile(
             title: Text(
               sender,
@@ -29,12 +29,35 @@ class MessageTile extends StatelessWidget {
                 fontSize: 20,
               ),
             ),
-            subtitle: Text(
-              message,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-              ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (imageUrl != null)
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ImageDetailView(imageUrl: imageUrl!),
+                        ),
+                      );
+                    },
+                    child: Image.network(
+                      imageUrl!,
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                Text(
+                  message,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
             ),
             trailing: Container(
               width: 50,
@@ -44,11 +67,35 @@ class MessageTile extends StatelessWidget {
                   color: Colors.black,
                   fontSize: 12,
                 ),
-            ),
+              ),
             ),
           ),
         ],
       ),
     );
-  }   
-} 
+  }
+}
+
+class ImageDetailView extends StatelessWidget {
+  final String imageUrl;
+
+  const ImageDetailView({Key? key, required this.imageUrl}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+        child: PhotoView(
+          imageProvider: NetworkImage(imageUrl),
+          minScale: PhotoViewComputedScale.contained * 0.8,
+          maxScale: PhotoViewComputedScale.covered * 2,
+          initialScale: PhotoViewComputedScale.contained,
+          backgroundDecoration: BoxDecoration(
+            color: Colors.black,
+          ),
+        ),
+      ),
+    );
+  }
+}
