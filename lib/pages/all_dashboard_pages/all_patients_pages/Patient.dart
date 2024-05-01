@@ -23,6 +23,7 @@ class Patient {
   String allergies;
   String currentMedications;
   String pastMedications;
+  String caregiver;
 
   Patient({
     required this.uid,
@@ -47,6 +48,7 @@ class Patient {
     required this.allergies,
     required this.currentMedications,
     required this.pastMedications,
+    required this.caregiver,
   });
 
   Map<String, dynamic> toMap() {
@@ -73,6 +75,7 @@ class Patient {
       'allergies': allergies,
       'currentMedications': currentMedications,
       'pastMedications': pastMedications,
+      'caregiver': caregiver,
     };
   }
 }

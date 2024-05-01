@@ -58,6 +58,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
       // Create the user
       try {
+        // ignore: unused_local_variable
         UserCredential userCredential = await createUser(
             emailController.text.trim(),
             passController.text.trim(),
@@ -87,6 +88,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   Future<String> getAccessLevel(String accessCode) async {
     // Sign in anonymously to use the Firebase services
+    // ignore: unused_local_variable
     UserCredential anonymousUserCredential =
         await FirebaseAuth.instance.signInAnonymously();
 

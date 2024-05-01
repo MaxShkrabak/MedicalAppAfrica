@@ -32,34 +32,28 @@ class _PatientViewPageState extends State<PatientViewPage> {
           documentSnapshot.data() as Map<String, dynamic>;
       return Patient(
         uid: documentSnapshot.id,
-        lowerCaseSearchTokens:
-            data['lowerCaseSearchTokens'] ?? '', // Provide default value
-        firstName: data['firstName'] ?? '', // Provide default value
-        middleName: data['middleName'] ?? '', // Provide default value
-        lastName: data['lastName'] ?? '', // Provide default value
-        dob: data['dob'] ?? '', // Provide default value
-        bloodGroup: data['bloodGroup'] ?? '', // Provide default value
-        rhFactor: data['rhFactor'] ?? '', // Provide default value
-        maritalStatus: data['maritalStatus'] ?? '', // Provide default value
-        preferredLanguage:
-            data['preferredLanguage'] ?? '', // Provide default value
-        homePhone: data['homePhone'] ?? '', // Provide default value
-        phone: data['phone'] ?? '', // Provide default value
-        email: data['email'] ?? '', // Provide default value
-        emergencyFirstName:
-            data['emergencyFirstName'] ?? '', // Provide default value
-        emergencyLastName:
-            data['emergencyLastName'] ?? '', // Provide default value
-        relationship: data['relationship'] ?? '', // Provide default value
-        emergencyPhone: data['emergencyPhone'] ?? '', // Provide default value
-        knownMedicalIllnesses:
-            data['knownMedicalIllnesses'] ?? '', // Provide default value
-        previousMedicalIllnesses:
-            data['previousMedicalIllnesses'] ?? '', // Provide default value
-        allergies: data['allergies'] ?? '', // Provide default value
-        currentMedications:
-            data['currentMedications'] ?? '', // Provide default value
-        pastMedications: data['pastMedications'] ?? '', // Provide default value
+        lowerCaseSearchTokens: data['lowerCaseSearchTokens'] ?? 'Not Given',
+        firstName: data['firstName'] ?? 'Not Given',
+        middleName: data['middleName'] ?? 'Not Given',
+        lastName: data['lastName'] ?? 'Not Given',
+        dob: data['dob'] ?? 'Not Given',
+        bloodGroup: data['bloodGroup'] ?? 'Not Given',
+        rhFactor: data['rhFactor'] ?? 'Not Given',
+        maritalStatus: data['maritalStatus'] ?? 'Not Given',
+        preferredLanguage: data['preferredLanguage'] ?? 'Not Provided',
+        homePhone: data['homePhone'] ?? 'None',
+        phone: data['phone'] ?? 'None',
+        email: data['email'] ?? 'None',
+        emergencyFirstName: data['emergencyFirstName'] ?? 'None',
+        emergencyLastName: data['emergencyLastName'] ?? 'None',
+        relationship: data['relationship'] ?? 'None',
+        emergencyPhone: data['emergencyPhone'] ?? 'None',
+        knownMedicalIllnesses: data['knownMedicalIllnesses'] ?? 'None',
+        previousMedicalIllnesses: data['previousMedicalIllnesses'] ?? 'None',
+        allergies: data['allergies'] ?? 'None',
+        currentMedications: data['currentMedications'] ?? 'None',
+        pastMedications: data['pastMedications'] ?? 'None',
+        caregiver: data['caregiver'] ?? 'None',
       );
     } else {
       throw Exception('Patient with uid: $uid not found');

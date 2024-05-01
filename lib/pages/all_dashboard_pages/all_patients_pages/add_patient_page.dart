@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:africa_med_app/components/Patients_Comps/add_patient_tfs.dart';
 import 'package:flutter/material.dart';
 import 'patient.dart';
 
@@ -42,6 +42,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
       TextEditingController();
   final TextEditingController _pastMedicationsController =
       TextEditingController();
+  final TextEditingController _caregiverController = TextEditingController();
 
   signUp() async {
     final String firstName = _firstNameController.text;
@@ -65,9 +66,10 @@ class _AddPatientPageState extends State<AddPatientPage> {
     final String allergies = _allergiesController.text;
     final String currentMedications = _currentMedicationsController.text;
     final String pastMedications = _pastMedicationsController.text;
+    final String caregiver = _caregiverController.text;
 
-    final String patient = '$firstName $middleName $lastName';
-
+    //final String patient = '$firstName $middleName $lastName';
+    /*
     // Make a commit to the patients collection of the firestore
     // with the patient's details
     FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -95,7 +97,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
       'currentMedications': currentMedications,
       'pastMedications': pastMedications,
     });
-
+    */
     // Create a new patient object
     final Patient newPatient = Patient(
       uid: '',
@@ -121,6 +123,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
       allergies: allergies,
       currentMedications: currentMedications,
       pastMedications: pastMedications,
+      caregiver: caregiver,
     );
 
     // Send the new patient object to the parent widget
@@ -146,6 +149,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
     _allergiesController.clear();
     _currentMedicationsController.clear();
     _pastMedicationsController.clear();
+    _caregiverController.clear();
   }
 
   @override
@@ -157,9 +161,9 @@ class _AddPatientPageState extends State<AddPatientPage> {
           title: const Text('Add Patient'),
           bottom: const TabBar(
             tabs: [
-              Tab(text: 'Personal Information'),
-              Tab(text: 'Contact Information'),
-              Tab(text: 'Medical Information'),
+              Tab(text: 'Personal Info'),
+              Tab(text: 'Contact Info'),
+              Tab(text: 'Medical Info'),
             ],
           ),
         ),
@@ -171,93 +175,45 @@ class _AddPatientPageState extends State<AddPatientPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'First Name:',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    TextField(
-                      controller: _firstNameController,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter first name',
-                      ),
-                    ),
+                    AddPatientTFs(
+                        onlyChars: true,
+                        controller: _firstNameController,
+                        hintText: "Enter First Name"),
                     const SizedBox(height: 12),
-                    const Text(
-                      'Middle Name:',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    TextField(
-                      controller: _middleNameController,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter middle name',
-                      ),
-                    ),
+                    AddPatientTFs(
+                        onlyChars: true,
+                        controller: _middleNameController,
+                        hintText: "Enter Middle Name"),
                     const SizedBox(height: 12),
-                    const Text(
-                      'Last Name:',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    TextField(
-                      controller: _lastNameController,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter last name',
-                      ),
-                    ),
+                    AddPatientTFs(
+                        onlyChars: true,
+                        controller: _lastNameController,
+                        hintText: "Enter Last Name"),
                     const SizedBox(height: 12),
-                    const Text(
-                      'Date of Birth (YYYY/MM/DD):',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    TextField(
-                      controller: _dobController,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter date of birth',
-                      ),
-                    ),
+                    AddPatientTFs(
+                        onlyChars: false,
+                        controller: _dobController,
+                        hintText: "Date of Birth (YYYY/MM/DD)"),
                     const SizedBox(height: 12),
-                    const Text(
-                      'Blood Group:',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    TextField(
-                      controller: _bloodGroupController,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter blood group',
-                      ),
-                    ),
+                    AddPatientTFs(
+                        onlyChars: true,
+                        controller: _bloodGroupController,
+                        hintText: "Enter Blood Group"),
                     const SizedBox(height: 12),
-                    const Text(
-                      'RH Factor:',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    TextField(
-                      controller: _rhFactorController,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter RH factor',
-                      ),
-                    ),
+                    AddPatientTFs(
+                        onlyChars: true,
+                        controller: _rhFactorController,
+                        hintText: "Enter RH factor"),
                     const SizedBox(height: 12),
-                    const Text(
-                      'Marital Status:',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    TextField(
-                      controller: _maritalStatusController,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter marital status',
-                      ),
-                    ),
+                    AddPatientTFs(
+                        onlyChars: true,
+                        controller: _maritalStatusController,
+                        hintText: "Enter Marital Status"),
                     const SizedBox(height: 12),
-                    const Text(
-                      'Preferred Language:',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    TextField(
-                      controller: _preferredLanguageController,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter preferred language',
-                      ),
-                    ),
+                    AddPatientTFs(
+                        onlyChars: true,
+                        controller: _preferredLanguageController,
+                        hintText: "Enter Preferred Language"),
                     const SizedBox(height: 16),
                   ],
                 ),
@@ -268,87 +224,45 @@ class _AddPatientPageState extends State<AddPatientPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Home Phone:',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  TextField(
-                    controller: _homePhoneController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter home phone',
-                    ),
-                  ),
+                  AddPatientTFs(
+                      onlyChars: false,
+                      controller: _homePhoneController,
+                      hintText: "Enter Home Phone"),
                   const SizedBox(height: 12),
-                  const Text(
-                    'Phone:',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  TextField(
-                    controller: _phoneController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter phone number',
-                    ),
-                  ),
+                  AddPatientTFs(
+                      onlyChars: false,
+                      controller: _phoneController,
+                      hintText: "Enter Phone Number"),
                   const SizedBox(height: 12),
-                  const Text(
-                    'Email Address:',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  TextField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter email address',
-                    ),
-                  ),
+                  AddPatientTFs(
+                      onlyChars: false,
+                      controller: _emailController,
+                      hintText: "Enter Email Address"),
                   const SizedBox(height: 24),
                   const Text(
                     'Emergency Contact',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 12),
-                  const Text(
-                    'First Name:',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  TextField(
-                    controller: _emergencyFirstNameController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter first name',
-                    ),
-                  ),
+                  AddPatientTFs(
+                      onlyChars: true,
+                      controller: _emergencyFirstNameController,
+                      hintText: "Enter First Name"),
                   const SizedBox(height: 12),
-                  const Text(
-                    'Last Name:',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  TextField(
-                    controller: _emergencyLastNameController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter last name',
-                    ),
-                  ),
+                  AddPatientTFs(
+                      onlyChars: true,
+                      controller: _emergencyLastNameController,
+                      hintText: "Enter Last Name"),
                   const SizedBox(height: 12),
-                  const Text(
-                    'Relationship:',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  TextField(
-                    controller: _relationshipController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter relationship',
-                    ),
-                  ),
+                  AddPatientTFs(
+                      onlyChars: true,
+                      controller: _relationshipController,
+                      hintText: "Enter Relationship"),
                   const SizedBox(height: 12),
-                  const Text(
-                    'Phone Number:',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  TextField(
-                    controller: _emergencyPhoneController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter phone number',
-                    ),
-                  ),
+                  AddPatientTFs(
+                      onlyChars: false,
+                      controller: _emergencyPhoneController,
+                      hintText: "Enter Phone Number"),
                   const SizedBox(height: 16),
                 ],
               ),
@@ -358,72 +272,53 @@ class _AddPatientPageState extends State<AddPatientPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Known Medical Illnesses:',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  TextField(
-                    controller: _knownMedicalIllnessesController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter known medical illnesses',
-                    ),
-                  ),
+                  AddPatientTFs(
+                      onlyChars: true,
+                      controller: _knownMedicalIllnessesController,
+                      hintText: "Enter Known Medical Illnesses"),
                   const SizedBox(height: 12),
-                  const Text(
-                    'Previous Medical Illnesses:',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  TextField(
-                    controller: _previousMedicalIllnessesController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter previous medical illnesses',
-                    ),
-                  ),
+                  AddPatientTFs(
+                      onlyChars: true,
+                      controller: _previousMedicalIllnessesController,
+                      hintText: "Enter Previous Medical Illnesses"),
                   const SizedBox(height: 12),
-                  const Text(
-                    'Allergies:',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  TextField(
-                    controller: _allergiesController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter allergies',
-                    ),
-                  ),
+                  AddPatientTFs(
+                      onlyChars: true,
+                      controller: _allergiesController,
+                      hintText: "Enter Known Allergies"),
                   const SizedBox(height: 12),
-                  const Text(
-                    'Current Medications:',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  TextField(
-                    controller: _currentMedicationsController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter current medications',
-                    ),
-                  ),
+                  AddPatientTFs(
+                      onlyChars: true,
+                      controller: _currentMedicationsController,
+                      hintText: "Enter Current Medications"),
                   const SizedBox(height: 12),
-                  const Text(
-                    'Past Medications:',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  TextField(
-                    controller: _pastMedicationsController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter past medications',
-                    ),
-                  ),
+                  AddPatientTFs(
+                      onlyChars: true,
+                      controller: _pastMedicationsController,
+                      hintText: "Enter Past Medications"),
+                  const SizedBox(height: 60),
+                  AddPatientTFs(
+                      onlyChars: true,
+                      controller: _caregiverController,
+                      hintText: "Signing as Primary Caregiver:"),
                   const SizedBox(height: 16),
                   Align(
                     alignment: Alignment.bottomRight,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateColor.resolveWith(
+                                (states) => Colors.green)),
                         onPressed: () {
                           Navigator.pop(context);
 
                           signUp();
                         },
-                        child: const Text('Finish'),
+                        child: const Text(
+                          'Finish',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ),

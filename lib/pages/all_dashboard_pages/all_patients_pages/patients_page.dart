@@ -28,27 +28,28 @@ class _PatientListState extends State<PatientList> {
         Map<String, dynamic> data = doc.data();
         Patient patient = Patient(
           uid: doc.id,
-          lowerCaseSearchTokens: data['lowerCaseSearchTokens'] ?? '',
-          firstName: data['firstName'] ?? '',
-          middleName: data['middleName'] ?? '',
-          lastName: data['lastName'] ?? '',
-          dob: data['dob'] ?? '',
-          bloodGroup: data['bloodGroup'] ?? '',
-          rhFactor: data['rhFactor'] ?? '',
-          maritalStatus: data['maritalStatus'] ?? '',
-          preferredLanguage: data['preferredLanguage'] ?? '',
-          homePhone: data['homePhone'] ?? '',
-          phone: data['phone'] ?? '',
-          email: data['email'] ?? '',
-          emergencyFirstName: data['emergencyFirstName'] ?? '',
-          emergencyLastName: data['emergencyLastName'] ?? '',
-          relationship: data['relationship'] ?? '',
-          emergencyPhone: data['emergencyPhone'] ?? '',
-          knownMedicalIllnesses: data['knownMedicalIllnesses'] ?? '',
-          previousMedicalIllnesses: data['previousMedicalIllnesses'] ?? '',
-          allergies: data['allergies'] ?? '',
-          currentMedications: data['currentMedications'] ?? '',
-          pastMedications: data['pastMedications'] ?? '',
+          lowerCaseSearchTokens: data['lowerCaseSearchTokens'] ?? 'Not Given',
+          firstName: data['firstName'] ?? 'Not Given',
+          middleName: data['middleName'] ?? 'Not Given',
+          lastName: data['lastName'] ?? 'Not Given',
+          dob: data['dob'] ?? 'Not Given',
+          bloodGroup: data['bloodGroup'] ?? 'Not Given',
+          rhFactor: data['rhFactor'] ?? 'Not Given',
+          maritalStatus: data['maritalStatus'] ?? 'Not Given',
+          preferredLanguage: data['preferredLanguage'] ?? 'Not Provided',
+          homePhone: data['homePhone'] ?? 'None',
+          phone: data['phone'] ?? 'None',
+          email: data['email'] ?? 'None',
+          emergencyFirstName: data['emergencyFirstName'] ?? 'None',
+          emergencyLastName: data['emergencyLastName'] ?? 'None',
+          relationship: data['relationship'] ?? 'None',
+          emergencyPhone: data['emergencyPhone'] ?? 'None',
+          knownMedicalIllnesses: data['knownMedicalIllnesses'] ?? 'None',
+          previousMedicalIllnesses: data['previousMedicalIllnesses'] ?? 'None',
+          allergies: data['allergies'] ?? 'None',
+          currentMedications: data['currentMedications'] ?? 'None',
+          pastMedications: data['pastMedications'] ?? 'None',
+          caregiver: data['caregiver'] ?? 'None',
         );
         setState(() {
           _patients.add(patient);
@@ -74,8 +75,27 @@ class _PatientListState extends State<PatientList> {
   }
 
   void updatePatientsCallback(Patient patient) {
-    setState(() {
-      _patients.add(patient);
+    FirebaseFirestore.instance
+        .collection('patients')
+        .add(patient.toMap()) //adds to firebase
+        .then((DocumentReference docRef) {
+      String uid = docRef.id;
+      patient.uid = uid;
+
+      setState(() {
+        _patients.add(patient);
+      });
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PatientViewPage(
+            uid: uid,
+          ),
+        ),
+      );
+    }).catchError((error) {
+      //print('Error adding patient: $error');
     });
   }
 
@@ -95,7 +115,7 @@ class _PatientListState extends State<PatientList> {
             ),
           ],
         ),
-        backgroundColor: const Color.fromARGB(161, 88, 82, 173),
+        backgroundColor: const Color.fromARGB(161, 88, 82, 173), //appbar
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
@@ -120,7 +140,7 @@ class _PatientListState extends State<PatientList> {
                   );
                 },
                 elevation: 8,
-                backgroundColor: const Color.fromARGB(255, 200, 178, 250),
+                backgroundColor: const Color.fromARGB(255, 201, 187, 235),
                 child: const Icon(Icons.add, size: 24),
               ),
             ),
@@ -128,7 +148,7 @@ class _PatientListState extends State<PatientList> {
         ],
       ),
       body: Container(
-        color: const Color.fromRGBO(76, 90, 137, 1),
+        color: const Color.fromRGBO(76, 90, 137, 1), //background
         child: SafeArea(
           child: Column(
             children: [
@@ -208,6 +228,27 @@ class _PatientListState extends State<PatientList> {
                                 trailing: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
+                                    Column(
+                                      children: [
+                                        const Text(
+                                          "Primary Caregiver",
+                                          style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 149, 247, 152),
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          textAlign: TextAlign.center,
+                                          _patients[index].caregiver,
+                                          style: const TextStyle(
+                                              color: Colors.white),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      width: 13,
+                                    ),
                                     //delete patient
                                     IconButton(
                                       icon: const Icon(
@@ -233,18 +274,24 @@ class _PatientListState extends State<PatientList> {
                                                 TextButton(
                                                   onPressed: () {
                                                     // Delete patient from Firestore
-                                                    FirebaseFirestore.instance
-                                                        .collection('patients')
-                                                        .doc(_patients[index]
-                                                            .uid)
-                                                        .delete()
-                                                        .then((_) {
-                                                      setState(() {
-                                                        _patients
-                                                            .removeAt(index);
+                                                    try {
+                                                      FirebaseFirestore.instance
+                                                          .collection(
+                                                              'patients')
+                                                          .doc(_patients[index]
+                                                              .uid)
+                                                          .delete()
+                                                          .then((_) {
+                                                        setState(() {
+                                                          _patients
+                                                              .removeAt(index);
+                                                        });
+                                                        Navigator.pop(context);
                                                       });
-                                                      Navigator.pop(context);
-                                                    });
+                                                    } on Error catch (_) {
+                                                      // print(
+                                                      //"Path is empty: $e");
+                                                    }
                                                   },
                                                   child: const Text('Delete'),
                                                 ),
