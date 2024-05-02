@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class AddPatientTFs extends StatefulWidget {
   final TextEditingController controller;
   final bool onlyChars;
   final String hintText;
+  final List<MaskTextInputFormatter>? maskFormatters;
 
   const AddPatientTFs({
     super.key,
     required this.controller,
     required this.hintText,
     required this.onlyChars,
+    this.maskFormatters,
   });
 
   @override
@@ -20,10 +23,18 @@ class AddPatientTFs extends StatefulWidget {
 class _AddPatientTFsState extends State<AddPatientTFs> {
   @override
   Widget build(BuildContext context) {
+
+    List<TextInputFormatter> formatters = widget.onlyChars
+        ? [FilteringTextInputFormatter.allow(RegExp("[a-zA-Z+-- ]"))]
+        : [FilteringTextInputFormatter.deny(RegExp("[%^&*()#\$!;:'/|,]"))];
+
+    if (widget.maskFormatters != null) {
+      formatters.addAll(widget.maskFormatters!);
+    }
+
+
     return TextField(
-      inputFormatters: widget.onlyChars
-          ? [FilteringTextInputFormatter.allow(RegExp("[a-zA-Z+-- ]"))]
-          : [FilteringTextInputFormatter.deny(RegExp("[%^&*()#\$!;:'/|,]"))],
+      inputFormatters: formatters,
       controller: widget.controller,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.only(left: 12, top: 20),

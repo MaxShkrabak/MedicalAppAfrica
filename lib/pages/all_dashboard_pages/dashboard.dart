@@ -22,10 +22,24 @@ class DashBoard extends StatefulWidget {
 class _DashBoardState extends State<DashBoard> {
   late String _userName = '';
   late String _userImageUrl = '';
+  late String _accessLevel = '';
+
+
+  Future<String> getAccessLevel() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    DocumentSnapshot doc = await FirebaseFirestore.instance.collection('accounts').doc(user!.uid).get();
+    return doc['access_level'];
+  }
 
   @override
   void initState() {
     super.initState();
+    getAccessLevel().then((value) {
+      setState(() {
+        _accessLevel = value;
+      });
+    });
+
   }
 
   @override
@@ -204,59 +218,60 @@ class _DashBoardState extends State<DashBoard> {
             height: 120,
           ),
           const SizedBox(height: 7),
-          StreamBuilder(
-            stream: _getNextAppointment(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              }
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              }
-              if (snapshot.hasData) {
-                QuerySnapshot querySnapshot = snapshot.data as QuerySnapshot;
-                if (querySnapshot.docs.isNotEmpty) {
-                  DocumentSnapshot appointmentSnap = querySnapshot.docs.first;
-                  Map<String, dynamic> data =
-                      appointmentSnap.data() as Map<String, dynamic>;
-                  Appointment nextAppointment = Appointment(
-                    dateTime: (data['date'] as Timestamp).toDate(),
-                    meetingDetails: data['meetingDetails'] ?? '',
-                    timeSlot: data['timeSlot'] ?? '',
-                  );
-                  return Tiles(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: ((context) => const AppointmentsPage()),
-                        ),
-                      );
-                    },
-                    mainText: "Appointments\nNext up: ",
-                    subText: DateFormat('MMMM d, y - HH:mm')
-                        .format(nextAppointment.dateTime.toLocal()),
-                    width: 400,
-                    height: 120,
-                  );
+          if (_accessLevel != 'Physician Assistant')
+            StreamBuilder(
+              stream: _getNextAppointment(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
                 }
-              }
-              return Tiles(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: ((context) => const AppointmentsPage()),
-                    ),
-                  );
-                },
-                mainText: "Appointments",
-                subText: '',
-                width: 400,
-                height: 120,
-              );
-            },
-          ),
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
+                if (snapshot.hasData) {
+                  QuerySnapshot querySnapshot = snapshot.data as QuerySnapshot;
+                  if (querySnapshot.docs.isNotEmpty) {
+                    DocumentSnapshot appointmentSnap = querySnapshot.docs.first;
+                    Map<String, dynamic> data =
+                        appointmentSnap.data() as Map<String, dynamic>;
+                    Appointment nextAppointment = Appointment(
+                      dateTime: (data['date'] as Timestamp).toDate(),
+                      meetingDetails: data['meetingDetails'] ?? '',
+                      timeSlot: data['timeSlot'] ?? '',
+                    );
+                    return Tiles(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: ((context) => const AppointmentsPage()),
+                          ),
+                        );
+                      },
+                      mainText: "Appointments\nNext up: ",
+                      subText: DateFormat('MMMM d, y - HH:mm')
+                          .format(nextAppointment.dateTime.toLocal()),
+                      width: 400,
+                      height: 120,
+                    );
+                  }
+                }
+                return Tiles(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: ((context) => const AppointmentsPage()),
+                      ),
+                    );
+                  },
+                  mainText: "Appointments",
+                  subText: '',
+                  width: 400,
+                  height: 120,
+                );
+              },
+            ),
           const SizedBox(height: 7),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -274,19 +289,20 @@ class _DashBoardState extends State<DashBoard> {
                   subText: '',
                   height: 120,
                   width: 170),
-              Tiles(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                        builder: ((context) => const OrderingSystem()),
-                      ),
-                    );
-                  },
-                  mainText: "Orders",
-                  subText: '',
-                  height: 120,
-                  width: 170)
+              if (_accessLevel != 'Physician Assistant' || _accessLevel != 'Nurse')
+                Tiles(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: ((context) => const OrderingSystem()),
+                        ),
+                      );
+                    },
+                    mainText: "Orders",
+                    subText: '',
+                    height: 120,
+                    width: 170)
             ],
           ),
           const SizedBox(height: 80),

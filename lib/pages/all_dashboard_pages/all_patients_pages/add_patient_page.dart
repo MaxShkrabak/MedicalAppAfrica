@@ -2,6 +2,7 @@ import 'package:africa_med_app/components/Patients_Comps/add_patient_tfs.dart';
 import 'package:flutter/material.dart';
 import 'patient.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 
 class AddPatientPage extends StatefulWidget {
@@ -45,6 +46,11 @@ class _AddPatientPageState extends State<AddPatientPage> {
   final TextEditingController _pastMedicationsController =
       TextEditingController();
   final TextEditingController _caregiverController = TextEditingController();
+  //mask text input formatter for phone numbers
+  final MaskTextInputFormatter phoneFormatter = MaskTextInputFormatter(
+    mask: '(###) ###-####', 
+    filter: {"#": RegExp(r'[0-9]')},
+    );
 
   signUp(BuildContext context) async {
     final String firstName = _firstNameController.text;
@@ -246,11 +252,13 @@ class _AddPatientPageState extends State<AddPatientPage> {
                   AddPatientTFs(
                       onlyChars: false,
                       controller: _homePhoneController,
+                      maskFormatters: [phoneFormatter],
                       hintText: "Enter Home Phone"),
                   const SizedBox(height: 12),
                   AddPatientTFs(
                       onlyChars: false,
                       controller: _phoneController,
+                      maskFormatters: [phoneFormatter],
                       hintText: "Enter Phone Number"),
                   const SizedBox(height: 12),
                   AddPatientTFs(
@@ -281,6 +289,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                   AddPatientTFs(
                       onlyChars: false,
                       controller: _emergencyPhoneController,
+                      maskFormatters: [phoneFormatter],
                       hintText: "Enter Phone Number"),
                   const SizedBox(height: 16),
                   //forward and back buttons
