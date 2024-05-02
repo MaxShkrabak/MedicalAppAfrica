@@ -4,6 +4,7 @@ import 'package:africa_med_app/pages/all_dashboard_pages/all_messaging_pages/mes
 import 'package:africa_med_app/pages/all_dashboard_pages/all_scheduling_pages/appointments.dart';
 import 'package:africa_med_app/pages/all_dashboard_pages/all_patients_pages/patients_page.dart';
 import 'package:africa_med_app/pages/all_settings_pages/settings_page.dart';
+import 'package:africa_med_app/pages/all_dashboard_pages/all_admin_pages/admin_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -305,6 +306,24 @@ class _DashBoardState extends State<DashBoard> {
                     width: 170)
             ],
           ),
+          const SizedBox(height: 7),
+          // Special admin tile
+          if (_accessLevel == 'Admin')
+            Tiles(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: ((context) => AdminPage()),
+                    ),
+                  );
+                },
+                mainText: "Admin",
+                subText: '',
+                height: 120,
+                width: 400,
+            ),
+              
           const SizedBox(height: 80),
           Center(
             child: TextButton(
