@@ -23,11 +23,8 @@ class Patient {
   String allergies;
   String currentMedications;
   String pastMedications;
-<<<<<<< HEAD
   String? imageURL;
-=======
   String caregiver;
->>>>>>> 2ae5cad (Co-authored-by: MaxShkrabak <MaxShkrabak@users.noreply.github.com>)
 
   Patient({
     required this.uid,
@@ -52,11 +49,8 @@ class Patient {
     required this.allergies,
     required this.currentMedications,
     required this.pastMedications,
-<<<<<<< HEAD
     this.imageURL,
-=======
     required this.caregiver,
->>>>>>> 2ae5cad (Co-authored-by: MaxShkrabak <MaxShkrabak@users.noreply.github.com>)
   });
 
   Map<String, dynamic> toMap() {

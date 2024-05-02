@@ -1,6 +1,8 @@
 import 'package:africa_med_app/components/Patients_Comps/add_patient_tfs.dart';
 import 'package:flutter/material.dart';
 import 'patient.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class AddPatientPage extends StatefulWidget {
   final Function updatePatientsCallback;
@@ -69,11 +71,8 @@ class _AddPatientPageState extends State<AddPatientPage> {
     final String caregiver = _caregiverController.text;
 
 
-    //final String patient = '$firstName $middleName $lastName';
-    /*
-
-    // Make a commit to the patients collection of the firestore
-    // with the patient's details
+    final String patient = '$firstName $middleName $lastName';
+    
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     DocumentReference ref = await firestore.collection('patients').add({
       'lowerCaseSearchTokens':
@@ -98,8 +97,11 @@ class _AddPatientPageState extends State<AddPatientPage> {
       'allergies': allergies,
       'currentMedications': currentMedications,
       'pastMedications': pastMedications,
+      'caregiver': caregiver,
+      
     });
-    */
+    
+
     // Create a new patient object
     final Patient newPatient = Patient(
 
@@ -352,7 +354,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                         onPressed: () {
                           Navigator.pop(context);
 
-                          signUp();
+                          signUp(context);
                         },
                         child: const Text(
                           'Finish',

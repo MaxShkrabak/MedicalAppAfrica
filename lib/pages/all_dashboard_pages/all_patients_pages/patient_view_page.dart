@@ -88,6 +88,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
         currentMedications: data['currentMedications'] ?? 'None',
         pastMedications: data['pastMedications'] ?? 'None',
         caregiver: data['caregiver'] ?? 'None',
+        imageURL: data['imageURL'] ?? '',
       );
     } else {
       throw Exception('Patient with uid: $uid not found');

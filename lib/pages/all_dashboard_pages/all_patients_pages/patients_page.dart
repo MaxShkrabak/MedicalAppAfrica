@@ -71,15 +71,10 @@ class _PatientListState extends State<PatientList> {
     if (query.isEmpty) {
       setState(() => _searchResults = _patients);
     } else {
-      final List<Patient> searchResults = [];
-      for (final patient in _patients) {
-        if (patient.lowerCaseSearchTokens.contains(query)) {
-          searchResults.add(patient);
-        }
-      }
+      final searchResults = _patients.where((patient) => 
+        patient.lowerCaseSearchTokens.contains(query)).toList();
       setState(() => _searchResults = searchResults);
     }
-
   }
 
   void updatePatientsCallback(Patient patient) {
@@ -92,6 +87,7 @@ class _PatientListState extends State<PatientList> {
 
       setState(() {
         _patients.add(patient);
+        _searchResults.add(patient);
       });
 
       Navigator.push(
@@ -199,7 +195,7 @@ class _PatientListState extends State<PatientList> {
                 height: 10,
               ),
               Expanded(
-                child: _patients.isEmpty
+                child: _searchResults.isEmpty
                     ? const Center(
                         child: Text(
                         'No patients found',
@@ -247,7 +243,7 @@ class _PatientListState extends State<PatientList> {
                                         ),
                                         Text(
                                           textAlign: TextAlign.center,
-                                          _patients[index].caregiver,
+                                          _searchResults[index].caregiver,
                                           style: const TextStyle(
                                               color: Colors.white),
                                         ),
@@ -290,8 +286,8 @@ class _PatientListState extends State<PatientList> {
                                                           .delete()
                                                           .then((_) {
                                                         setState(() {
-                                                          _patients
-                                                              .removeAt(index);
+                                                        _searchResults.removeAt(index);
+                                                        _patients.removeAt(index);
                                                         });
                                                         Navigator.pop(context);
                                                       });
