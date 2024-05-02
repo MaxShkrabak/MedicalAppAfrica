@@ -8,7 +8,7 @@ class RegisterButton extends StatefulWidget {
   final Function(bool) updateIsUserRegistered;
 
   @override
-  _RegisterButtonState createState() => _RegisterButtonState();
+  State<RegisterButton> createState() => _RegisterButtonState();
 }
 
 class _RegisterButtonState extends State<RegisterButton> {
@@ -32,7 +32,8 @@ class _RegisterButtonState extends State<RegisterButton> {
             Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: ((context) => RegistrationPage(updateIsUserRegistered: widget.updateIsUserRegistered)),
+                  builder: ((context) => RegistrationPage(
+                      updateIsUserRegistered: widget.updateIsUserRegistered)),
                 ));
           },
           onTapDown: (_) {
@@ -51,8 +52,8 @@ class _RegisterButtonState extends State<RegisterButton> {
             });
           },
           child: AnimatedOpacity(
-            duration:
-                Duration(milliseconds: 200), // Adjust the duration as needed
+            duration: const Duration(
+                milliseconds: 200), // Adjust the duration as needed
             opacity: isPressed ? 0.5 : 1.0, // Lower opacity when pressed
             child: const Text(
               '  Register Now',

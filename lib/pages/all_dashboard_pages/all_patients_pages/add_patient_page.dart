@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'Patient.dart';
+import 'patient.dart';
 
 class AddPatientPage extends StatefulWidget {
   final Function updatePatientsCallback;
@@ -8,7 +8,7 @@ class AddPatientPage extends StatefulWidget {
   const AddPatientPage({super.key, required this.updatePatientsCallback});
 
   @override
-  _AddPatientPageState createState() => _AddPatientPageState();
+  State<AddPatientPage> createState() => _AddPatientPageState();
 }
 
 class _AddPatientPageState extends State<AddPatientPage> {
@@ -72,11 +72,8 @@ class _AddPatientPageState extends State<AddPatientPage> {
     // with the patient's details
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     DocumentReference ref = await firestore.collection('patients').add({
-      'lowerCaseSearchTokens': firstName.toLowerCase() +
-          ' ' +
-          middleName.toLowerCase() +
-          ' ' +
-          lastName.toLowerCase(),
+      'lowerCaseSearchTokens':
+          '${firstName.toLowerCase()} ${middleName.toLowerCase()} ${lastName.toLowerCase()}',
       'firstName': firstName,
       'middleName': middleName,
       'lastName': lastName,
@@ -101,12 +98,10 @@ class _AddPatientPageState extends State<AddPatientPage> {
 
     // Create a new patient object
     final Patient newPatient = Patient(
+
       uid: ref.id,
-      lowerCaseSearchTokens: firstName.toLowerCase() +
-          ' ' +
-          middleName.toLowerCase() +
-          ' ' +
-          lastName.toLowerCase(),
+      lowerCaseSearchTokens:
+          '${firstName.toLowerCase()} ${middleName.toLowerCase()} ${lastName.toLowerCase()}',
       firstName: firstName,
       middleName: middleName,
       lastName: lastName,

@@ -1,7 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:africa_med_app/components/Dashboard_Comps/Tiles.dart';
+import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
 import 'package:africa_med_app/pages/all_settings_pages/account_settings.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -96,22 +95,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             value: item, child: Text(item)))
                         .toList(),
                     onChanged: (item) => setState(() => selectedLang = item),
-                  ),
-                ),
-
-                //moves signout text down
-                const SizedBox(
-                  height: 390,
-                ),
-                //sign out text button
-                TextButton(
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
-                    Navigator.of(context).popUntil((route) => route.isFirst);
-                  },
-                  child: const Text(
-                    'Sign Out',
-                    style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
                 ),
               ],

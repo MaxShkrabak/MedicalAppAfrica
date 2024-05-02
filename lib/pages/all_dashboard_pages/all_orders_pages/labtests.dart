@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:africa_med_app/components/Dashboard_Comps/Tiles.dart';
+import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
 
 class LabTests extends StatefulWidget {
   const LabTests({super.key});
 
   @override
-  _LabTestsState createState() => _LabTestsState();
+  State<LabTests> createState() => _LabTestsState();
 }
 
 class _LabTestsState extends State<LabTests> {
@@ -33,16 +33,16 @@ class _LabTestsState extends State<LabTests> {
         ),
         child: Scaffold(
           appBar: AppBar(
-             backgroundColor: Color.fromARGB(156, 102, 134, 161),
-             title: const Text('Laboratory'),
-             leading: IconButton(
-             icon: const Icon(Icons.arrow_back),
-             onPressed: () {
-               Navigator.pop(context);
+            backgroundColor: const Color.fromARGB(156, 102, 134, 161),
+            title: const Text('Laboratory'),
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
               },
             ),
           ),
-          backgroundColor: Color.fromARGB(156, 102, 133, 161),
+          backgroundColor: const Color.fromARGB(156, 102, 133, 161),
           body: SafeArea(
             minimum: const EdgeInsets.symmetric(horizontal: 10),
             child: SingleChildScrollView(
@@ -91,9 +91,8 @@ class _LabTestsState extends State<LabTests> {
                     width: 250,
                     height: 100,
                   ),
-
                   const SizedBox(height: 60),
-                ],  
+                ],
               ),
             ),
           ),
@@ -101,9 +100,11 @@ class _LabTestsState extends State<LabTests> {
       ),
     );
   }
-  void _SendOrder(String patientName, String department, String orderType, String testType, String orderDetails) async {
+
+  // ignore: non_constant_identifier_names
+  void _SendOrder(String patientName, String department, String orderType,
+      String testType, String orderDetails) async {
     try {
-    
       //Adds the order to users 'orders' sub collection
       final appointmentRef = await FirebaseFirestore.instance
           .collection('accounts')
@@ -111,25 +112,28 @@ class _LabTestsState extends State<LabTests> {
           .collection('orders')
           .add({
         'order details': orderDetails,
-        'testing' : testType,
-        'order type' : orderType,
-        'testing department' : department,
+        'testing': testType,
+        'order type': orderType,
+        'testing department': department,
         'patient': patientName,
       });
 
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Center(child: Text('Order added successfully!')),
         ),
       );
 
+      // ignore: avoid_print
       print('Order added successfully: ${appointmentRef.id}');
     } catch (e) {
+      // ignore: avoid_print
       print('Error adding order: $e');
     }
   }
 
-   //asks user for order details
+  //asks user for order details
   void _showOrderDetailsDialog(String orderType, String department) {
     String patientName = '';
     String orderDetails = '';
@@ -144,22 +148,19 @@ class _LabTestsState extends State<LabTests> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
-                  decoration:
-                      const InputDecoration(labelText: 'Patient Name'),
+                  decoration: const InputDecoration(labelText: 'Patient Name'),
                   onChanged: (value) {
                     patientName = value;
                   },
                 ),
                 TextField(
-                  decoration:
-                      const InputDecoration(labelText: 'Testing Field'),
+                  decoration: const InputDecoration(labelText: 'Testing Field'),
                   onChanged: (value) {
                     testingField = value;
                   },
                 ),
                 TextField(
-                  decoration:
-                      const InputDecoration(labelText: 'Order Details'),
+                  decoration: const InputDecoration(labelText: 'Order Details'),
                   onChanged: (value) {
                     orderDetails = value;
                   },
@@ -175,7 +176,8 @@ class _LabTestsState extends State<LabTests> {
               ),
               TextButton(
                 onPressed: () {
-                  _SendOrder(patientName, department, orderType, testingField, orderDetails);
+                  _SendOrder(patientName, department, orderType, testingField,
+                      orderDetails);
                   Navigator.of(context).pop();
                 },
                 child: const Text('Confirm'),

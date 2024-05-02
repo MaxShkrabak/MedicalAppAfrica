@@ -1,5 +1,7 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
-import 'package:africa_med_app/components/Dashboard_Comps/Tiles.dart';
+import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:africa_med_app/pages/all_dashboard_pages/all_orders_pages/labtests.dart';
 import 'package:africa_med_app/pages/all_dashboard_pages/all_orders_pages/radiologyscans.dart';
@@ -9,7 +11,7 @@ class OrderingSystem extends StatefulWidget {
   const OrderingSystem({super.key});
 
   @override
-  _OrderingSystemState createState() => _OrderingSystemState();
+  State<OrderingSystem> createState() => _OrderingSystemState();
 }
 
 class _OrderingSystemState extends State<OrderingSystem> {
@@ -35,7 +37,7 @@ class _OrderingSystemState extends State<OrderingSystem> {
         ),
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Color.fromARGB(156, 102, 134, 161),
+            backgroundColor: const Color.fromARGB(156, 102, 134, 161),
             title: const Text('Orders'),
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
@@ -44,7 +46,7 @@ class _OrderingSystemState extends State<OrderingSystem> {
               },
             ),
           ),
-          backgroundColor: Color.fromARGB(156, 102, 133, 161),
+          backgroundColor: const Color.fromARGB(156, 102, 133, 161),
           body: SafeArea(
             minimum: const EdgeInsets.symmetric(horizontal: 10),
             child: SingleChildScrollView(

@@ -244,6 +244,7 @@ class AppointmentsPage extends StatelessWidget {
         }
       });
     } catch (error) {
+      // ignore: avoid_print
       print('Error cancelling appointment: $error');
     }
   }

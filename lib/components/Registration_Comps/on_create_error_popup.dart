@@ -14,7 +14,7 @@ void onCreateErrorPopUp(BuildContext context, String text) {
               children: [
                 Text(
                   text,
-                  style: TextStyle(color: Colors.black, fontSize: 14.0),
+                  style: const TextStyle(color: Colors.black, fontSize: 14.0),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 15.0),

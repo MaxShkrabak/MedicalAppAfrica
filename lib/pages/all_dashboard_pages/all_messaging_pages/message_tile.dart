@@ -8,12 +8,12 @@ class MessageTile extends StatelessWidget {
   final String? imageUrl;
 
   const MessageTile({
-    Key? key,
+    super.key,
     required this.sender,
     required this.message,
     required this.time,
     this.imageUrl,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class MessageTile extends StatelessWidget {
                 ),
               ],
             ),
-            trailing: Container(
+            trailing: SizedBox(
               width: 50,
               child: Text(
                 time,
@@ -79,7 +79,7 @@ class MessageTile extends StatelessWidget {
 class ImageDetailView extends StatelessWidget {
   final String imageUrl;
 
-  const ImageDetailView({Key? key, required this.imageUrl}) : super(key: key);
+  const ImageDetailView({super.key, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +91,7 @@ class ImageDetailView extends StatelessWidget {
           minScale: PhotoViewComputedScale.contained * 0.8,
           maxScale: PhotoViewComputedScale.covered * 2,
           initialScale: PhotoViewComputedScale.contained,
-          backgroundDecoration: BoxDecoration(
+          backgroundDecoration: const BoxDecoration(
             color: Colors.black,
           ),
         ),

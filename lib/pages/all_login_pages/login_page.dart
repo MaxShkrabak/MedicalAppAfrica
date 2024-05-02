@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, avoid_print
+
 import 'package:africa_med_app/components/Login_Page_Comps/register_now.dart';
 import 'package:africa_med_app/pages/all_login_pages/facebook_registration_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

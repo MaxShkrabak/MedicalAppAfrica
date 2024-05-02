@@ -5,13 +5,13 @@ class EmailTextField extends StatefulWidget {
   final Function(bool isValid) onValidated;
 
   const EmailTextField({
-    Key? key,
+    super.key,
     required this.controller,
     required this.onValidated,
-  }) : super(key: key);
+  });
 
   @override
-  _EmailTextFieldState createState() => _EmailTextFieldState();
+  State<EmailTextField> createState() => _EmailTextFieldState();
 }
 
 class _EmailTextFieldState extends State<EmailTextField> {
@@ -34,7 +34,7 @@ class _EmailTextFieldState extends State<EmailTextField> {
         keyboardType: TextInputType.emailAddress,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: const InputDecoration(
-          fillColor: const Color.fromRGBO(127, 162, 193, 100),
+          fillColor: Color.fromRGBO(127, 162, 193, 100),
           filled: true,
           labelStyle:
               TextStyle(color: Colors.black, fontWeight: FontWeight.w500),

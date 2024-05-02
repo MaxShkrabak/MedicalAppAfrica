@@ -3,10 +3,10 @@ import 'package:africa_med_app/pages/all_login_pages/login_page.dart';
 import 'package:flutter/material.dart';
 
 class AuthPage extends StatefulWidget {
-  AuthPage({super.key});
+  const AuthPage({super.key});
 
   @override
-  _AuthPageState createState() => _AuthPageState();
+  State<AuthPage> createState() => _AuthPageState();
 }
 
 class _AuthPageState extends State<AuthPage> {

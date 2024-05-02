@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -13,7 +15,7 @@ class AccountSettings extends StatefulWidget {
   const AccountSettings({super.key});
 
   @override
-  _AccountSettingsState createState() => _AccountSettingsState();
+  State<AccountSettings> createState() => _AccountSettingsState();
 }
 
 class _AccountSettingsState extends State<AccountSettings> {

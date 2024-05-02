@@ -6,13 +6,13 @@ class NameTextFields extends StatefulWidget {
   final String hintText;
 
   const NameTextFields({
-    Key? key,
+    super.key,
     required this.controller,
     required this.hintText,
-  }) : super(key: key);
+  });
 
   @override
-  _NameTextFieldsState createState() => _NameTextFieldsState();
+  State<NameTextFields> createState() => _NameTextFieldsState();
 }
 
 class _NameTextFieldsState extends State<NameTextFields> {
@@ -27,7 +27,7 @@ class _NameTextFieldsState extends State<NameTextFields> {
         labelText: widget.hintText,
         labelStyle:
             const TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
-        fillColor: Color.fromRGBO(127, 162, 193, 90),
+        fillColor: const Color.fromRGBO(127, 162, 193, 90),
         filled: true,
         enabledBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(35.0)),
