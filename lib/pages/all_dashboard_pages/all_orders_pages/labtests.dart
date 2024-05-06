@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
 
@@ -103,12 +102,10 @@ class _LabTestsState extends State<LabTests> {
 
   // ignore: non_constant_identifier_names
   void _SendOrder(String patientName, String department, String orderType,
-      String testType, String orderDetails) async {
+      String testType, String orderDetails, int? selectedInt) async {
     try {
       //Adds the order to users 'orders' sub collection
       final appointmentRef = await FirebaseFirestore.instance
-          .collection('accounts')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('orders')
           .add({
         'order details': orderDetails,
@@ -116,6 +113,8 @@ class _LabTestsState extends State<LabTests> {
         'order type': orderType,
         'testing department': department,
         'patient': patientName,
+        'status' : "active",
+        'urgency': selectedInt,
       });
 
       // ignore: use_build_context_synchronously
@@ -138,6 +137,7 @@ class _LabTestsState extends State<LabTests> {
     String patientName = '';
     String orderDetails = '';
     String testingField = '';
+    int? selectedInt;
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -165,6 +165,21 @@ class _LabTestsState extends State<LabTests> {
                     orderDetails = value;
                   },
                 ),
+                const SizedBox(height: 7),
+                DropdownMenu(
+                  hintText: 'Urgency',
+                  width: 130,
+                  onSelected: (int? num) {
+                    setState((){
+                      selectedInt = num;
+                    });
+                  },
+                  dropdownMenuEntries:  [
+                    DropdownMenuEntry(value: 3, label: 'Minor'),
+                    DropdownMenuEntry(value: 2, label: 'Average'),
+                    DropdownMenuEntry(value: 1, label: 'Urgent'),
+                  ]
+                ),
               ],
             ),
             actions: [
@@ -177,7 +192,7 @@ class _LabTestsState extends State<LabTests> {
               TextButton(
                 onPressed: () {
                   _SendOrder(patientName, department, orderType, testingField,
-                      orderDetails);
+                      orderDetails, selectedInt);
                   Navigator.of(context).pop();
                 },
                 child: const Text('Confirm'),

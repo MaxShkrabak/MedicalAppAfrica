@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
 
@@ -105,12 +104,10 @@ class _RadiologyScansState extends State<RadiologyScans> {
 
   // ignore: non_constant_identifier_names
   void _SendOrder(String patientName, String department, String orderType,
-      String areatoScan, String orderDetails) async {
+      String areatoScan, String orderDetails, int? selectedInt) async {
     try {
       //Adds the order to users 'orders' sub collection
       final appointmentRef = await FirebaseFirestore.instance
-          .collection('accounts')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('orders')
           .add({
         'order details': orderDetails,
@@ -118,6 +115,8 @@ class _RadiologyScansState extends State<RadiologyScans> {
         'order type': orderType,
         'patient': patientName,
         'testing department': department,
+        'urgency': selectedInt,
+        'status': "active",
       });
 
       // ignore: use_build_context_synchronously
@@ -138,6 +137,8 @@ class _RadiologyScansState extends State<RadiologyScans> {
     String patientName = '';
     String orderDetails = '';
     String areaToScan = '';
+    int urgency = 0;
+    int? selectedInt;
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -166,6 +167,21 @@ class _RadiologyScansState extends State<RadiologyScans> {
                     orderDetails = value;
                   },
                 ),
+                const SizedBox(height: 7),
+                DropdownMenu(
+                  hintText: 'Urgency',
+                  width: 130,
+                  onSelected: (int? num) {
+                    setState((){
+                      selectedInt = num;
+                    });
+                  },
+                  dropdownMenuEntries:  [
+                    DropdownMenuEntry(value: 3, label: 'Minor'),
+                    DropdownMenuEntry(value: 2, label: 'Average'),
+                    DropdownMenuEntry(value: 1, label: 'Urgent'),
+                  ]
+                ),
               ],
             ),
             actions: [
@@ -178,7 +194,7 @@ class _RadiologyScansState extends State<RadiologyScans> {
               TextButton(
                 onPressed: () {
                   _SendOrder(patientName, department, orderType, areaToScan,
-                      orderDetails);
+                      orderDetails, selectedInt);
                   Navigator.of(context).pop();
                 },
                 child: const Text('Confirm'),
