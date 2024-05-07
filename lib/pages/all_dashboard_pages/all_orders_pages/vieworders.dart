@@ -187,7 +187,7 @@ class _ViewOrdersState extends State<ViewOrders> {
                     orderType: data['order type'] ?? '',
                     testing: data['testing'] ?? '',
                     testInfo: data['order details'] ?? '',
-                    urgency: data['urgency'] ?? '',
+                    urgency: data['urgency'] ?? 0,
                   );
                 }).toList();
 
