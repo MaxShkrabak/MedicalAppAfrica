@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
+import 'package:flutter/widgets.dart';
 
 class RadiologyScans extends StatefulWidget {
   const RadiologyScans({super.key});
@@ -140,7 +141,6 @@ class _RadiologyScansState extends State<RadiologyScans> {
     String patientName = '';
     String orderDetails = '';
     String areaToScan = '';
-    int urgency = 0;
     int? selectedInt;
     showDialog(
       context: context,
@@ -152,20 +152,34 @@ class _RadiologyScansState extends State<RadiologyScans> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
-                  decoration: const InputDecoration(labelText: 'Patient Name'),
+                  maxLines: null,
+                  style: TextStyle(fontSize: 20),
+                  decoration: const InputDecoration(
+                    labelText: 'Patient Name',
+                    border: OutlineInputBorder()),
                   onChanged: (value) {
                     patientName = value;
                   },
                 ),
+                const SizedBox(height: 7),
                 TextField(
+                  maxLines: null,
+                  style: TextStyle(fontSize: 20),
                   decoration:
-                      const InputDecoration(labelText: 'Area of Interest'),
+                      const InputDecoration(
+                        labelText: 'Area of Interest',
+                        border: OutlineInputBorder()),
                   onChanged: (value) {
                     areaToScan = value;
                   },
                 ),
+                const SizedBox(height: 7),
                 TextField(
-                  decoration: const InputDecoration(labelText: 'Order Details'),
+                  maxLines: null,
+                  style: TextStyle(fontSize: 20),
+                  decoration: const InputDecoration(
+                    labelText: 'Order Details',
+                    border: OutlineInputBorder()),
                   onChanged: (value) {
                     orderDetails = value;
                   },
@@ -179,7 +193,7 @@ class _RadiologyScansState extends State<RadiologyScans> {
                         selectedInt = num;
                       });
                     },
-                    dropdownMenuEntries: [
+                    dropdownMenuEntries: const [
                       DropdownMenuEntry(value: 3, label: 'Minor'),
                       DropdownMenuEntry(value: 2, label: 'Average'),
                       DropdownMenuEntry(value: 1, label: 'Urgent'),

@@ -33,7 +33,7 @@ class _LabTestsState extends State<LabTests> {
         child: */
         Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(156, 102, 134, 161),
+        backgroundColor: const Color.fromARGB(160, 165, 96, 255),
         title: const Text('Laboratory'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -150,19 +150,33 @@ class _LabTestsState extends State<LabTests> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
-                  decoration: const InputDecoration(labelText: 'Patient Name'),
+                  maxLines: null,
+                  style: TextStyle(fontSize: 20),
+                  decoration: const InputDecoration(
+                    labelText: 'Patient Name',
+                    border: OutlineInputBorder()),
                   onChanged: (value) {
                     patientName = value;
                   },
                 ),
+                const SizedBox(height: 7),
                 TextField(
-                  decoration: const InputDecoration(labelText: 'Testing Field'),
+                  maxLines: null,
+                  style: TextStyle(fontSize: 20),
+                  decoration: const InputDecoration(
+                    labelText: 'Testing Field',
+                    border: OutlineInputBorder()),
                   onChanged: (value) {
                     testingField = value;
                   },
                 ),
+                const SizedBox(height: 7),
                 TextField(
-                  decoration: const InputDecoration(labelText: 'Order Details'),
+                  maxLines: null,
+                  style: TextStyle(fontSize: 20),
+                  decoration: const InputDecoration(
+                    labelText: 'Order Details',
+                    border: OutlineInputBorder()),
                   onChanged: (value) {
                     orderDetails = value;
                   },
