@@ -11,8 +11,8 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  List<String> languages = ['English', 'Russian', 'Ugandan'];
-  String? selectedLang = 'English';
+  //List<String> languages = ['English', 'Russian', 'Ugandan'];
+  //String? selectedLang = 'English';
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,8 @@ class _SettingsPageState extends State<SettingsPage> {
           'Settings',
           style: TextStyle(color: Colors.white), //color of
         ),
-        backgroundColor: const Color.fromARGB(161, 88, 82, 173), //app bar color
+        backgroundColor:
+            const Color.fromARGB(160, 165, 96, 255), //app bar color
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           color:
@@ -35,7 +36,7 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       body: Scaffold(
         backgroundColor:
-            const Color.fromRGBO(76, 90, 137, 1), //background color
+            const Color.fromARGB(246, 244, 236, 255), //background color
         body: SafeArea(
           minimum: const EdgeInsets.symmetric(horizontal: 10),
           child: SingleChildScrollView(
@@ -86,7 +87,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
 
                 const SizedBox(height: 15),
-                SizedBox(
+                /* SizedBox(
                   width: 250,
                   child: DropdownButton<String>(
                     value: selectedLang,
@@ -96,7 +97,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         .toList(),
                     onChanged: (item) => setState(() => selectedLang = item),
                   ),
-                ),
+                ),*/
               ],
             ),
           ),

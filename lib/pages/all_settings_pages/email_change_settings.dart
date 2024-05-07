@@ -50,7 +50,8 @@ class _newEmailPageState extends State<newEmailPage> {
           'Change Email',
           style: TextStyle(color: Colors.white), //color of
         ),
-        backgroundColor: const Color.fromARGB(161, 88, 82, 173), //app bar color
+        backgroundColor:
+            const Color.fromARGB(160, 165, 96, 255), //app bar color
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           color:
@@ -63,7 +64,7 @@ class _newEmailPageState extends State<newEmailPage> {
       ),
       body: Scaffold(
         backgroundColor:
-            const Color.fromRGBO(76, 90, 137, 1), //background color
+            const Color.fromARGB(246, 244, 236, 255), //background color
         body: SafeArea(
           minimum: const EdgeInsets.symmetric(horizontal: 10),
           child: SingleChildScrollView(
@@ -104,18 +105,20 @@ class _newEmailPageState extends State<newEmailPage> {
                     hintText: "Confirm New Email",
                     hintStyle: TextStyle(
                         color:
-                            Colors.white.withOpacity(0.7)), // hint text color
+                            Colors.black.withOpacity(0.7)), // hint text color
                     border: const OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.white), // border color
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(180, 0, 0, 0)), // border color
                     ),
                     focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Colors.white), // focused border color
+                          color: Color.fromARGB(
+                              180, 0, 0, 0)), // focused border color
                     ),
                     enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Colors.white), // enabled border color
+                          color: Color.fromARGB(
+                              180, 0, 0, 0)), // enabled border color
                     ),
                   ),
                 ),

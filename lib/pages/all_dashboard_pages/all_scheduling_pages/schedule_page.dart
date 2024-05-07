@@ -41,7 +41,8 @@ class _ScheduleState extends State<Schedule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(161, 88, 82, 173),
+        backgroundColor: const Color.fromARGB(
+            160, 165, 96, 255), //old: const Color.fromARGB(161, 88, 82, 173),
         title: const Padding(
           padding: EdgeInsets.only(left: 80),
           child: Text(

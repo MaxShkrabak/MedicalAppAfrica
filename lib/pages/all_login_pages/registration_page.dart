@@ -145,7 +145,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
           gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Colors.black54, Colors.black87]),
+              colors: [
+                Color.fromARGB(133, 0, 225, 255),
+                Color.fromARGB(221, 44, 25, 148)
+              ]),
         ),
         child: Scaffold(
           appBar: AppBar(

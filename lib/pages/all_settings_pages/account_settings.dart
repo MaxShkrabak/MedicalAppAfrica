@@ -79,7 +79,8 @@ class _AccountSettingsState extends State<AccountSettings> {
           'Account Settings',
           style: TextStyle(color: Colors.white), //color of text
         ),
-        backgroundColor: const Color.fromRGBO(150, 145, 203, 1), //app bar color
+        backgroundColor:
+            const Color.fromARGB(160, 165, 96, 255), //app bar color
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           color: Colors.white, //back arrow color
@@ -89,7 +90,8 @@ class _AccountSettingsState extends State<AccountSettings> {
         ),
         titleSpacing: 60, //spacer between back button and text
       ),
-      backgroundColor: const Color.fromRGBO(76, 90, 137, 1), //background color
+      backgroundColor:
+          const Color.fromARGB(246, 244, 236, 255), //background color
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
@@ -121,7 +123,7 @@ class _AccountSettingsState extends State<AccountSettings> {
                                 ),
                       const Text(
                         'Edit',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Color.fromARGB(180, 0, 0, 0)),
                       ),
                     ],
                   ),
@@ -131,7 +133,7 @@ class _AccountSettingsState extends State<AccountSettings> {
                 //displays users access role
                 Text(
                   'Access Role: ${userRole ?? ''}',
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Color.fromARGB(180, 0, 0, 0)),
                 ),
                 const SizedBox(height: 20),
 

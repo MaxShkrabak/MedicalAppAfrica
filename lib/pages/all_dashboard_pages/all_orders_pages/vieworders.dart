@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -28,11 +27,12 @@ class ViewOrders extends StatefulWidget {
 
 class _ViewOrdersState extends State<ViewOrders> {
   @override
-Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(160, 165, 96, 255),
           title: const Text('View Orders'),
           bottom: const TabBar(
             tabs: [
@@ -43,7 +43,7 @@ Widget build(BuildContext context) {
         ),
         body: TabBarView(
           children: [
-             StreamBuilder(
+            StreamBuilder(
               stream: FirebaseFirestore.instance
                   .collection('orders')
                   .where('status', isEqualTo: 'active')
@@ -68,7 +68,7 @@ Widget build(BuildContext context) {
                     orderType: data['order type'] ?? '',
                     testing: data['testing'] ?? '',
                     testInfo: data['order details'] ?? '',
-                    urgency: data['urgency'] ?? '',
+                    urgency: data['urgency'] ?? 0,
                   );
                 }).toList();
 
@@ -100,7 +100,7 @@ Widget build(BuildContext context) {
                             Expanded(
                               child: ListTile(
                                 title: Text(
-                                  'Patient: '+ order.patientName,
+                                  'Patient: ${order.patientName}',
                                   style: const TextStyle(
                                     color: Color.fromARGB(255, 143, 226, 247),
                                   ),
@@ -109,31 +109,31 @@ Widget build(BuildContext context) {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Department: '+order.department,
+                                      'Department: ${order.department}',
                                       style: const TextStyle(
                                           color: Color.fromARGB(
                                               255, 143, 226, 247),
                                           fontWeight: FontWeight.w600),
                                     ),
                                     Text(
-                                      'Testing: '+order.testing,
+                                      'Testing: ${order.testing}',
                                       style: const TextStyle(
                                           color:
                                               Color.fromARGB(255, 143, 226, 2),
                                           fontWeight: FontWeight.w600),
                                     ),
                                     Text(
-                                      'Test Info:'+order.testInfo,
+                                      'Test Info: ${order.testInfo}',
                                       style: const TextStyle(
                                           color:
                                               Color.fromARGB(255, 143, 226, 2),
                                           fontWeight: FontWeight.w600),
                                     ),
                                     Text(
-                                      'Urgency Grade: '+order.urgency.toString(),
+                                      'Urgency Grade: ${order.urgency.toString()}',
                                       style: const TextStyle(
                                           color:
-                                              Color.fromARGB(255, 224, 10, 10),
+                                              Color.fromARGB(255, 255, 75, 75),
                                           fontWeight: FontWeight.w600),
                                     ),
                                   ],
@@ -150,7 +150,7 @@ Widget build(BuildContext context) {
                                 ),
                                 onPressed: () {
                                   _showCompleteConfirmationDialog(
-                                       context, order);
+                                      context, order);
                                 },
                               ),
                             ),
@@ -249,7 +249,8 @@ Widget build(BuildContext context) {
                                           fontWeight: FontWeight.w600),
                                     ),
                                     Text(
-                                      'Urgency Grade: '+order.urgency.toString(),
+                                      'Urgency Grade: ' +
+                                          order.urgency.toString(),
                                       style: const TextStyle(
                                           color:
                                               Color.fromARGB(255, 224, 10, 10),
@@ -268,8 +269,7 @@ Widget build(BuildContext context) {
                                   color: Color.fromARGB(255, 189, 68, 68),
                                 ),
                                 onPressed: () {
-                                  _showCancelConfirmationDialog(
-                                      context, order);
+                                  _showCancelConfirmationDialog(context, order);
                                 },
                               ),
                             ),
@@ -281,7 +281,6 @@ Widget build(BuildContext context) {
                 );
               },
             ),
-          
           ],
         ),
       ),
@@ -324,7 +323,7 @@ Widget build(BuildContext context) {
     );
   }
 
- Future<void> updateStatus(Order order) async{
+  Future<void> updateStatus(Order order) async {
     try {
       await FirebaseFirestore.instance
           .collection('orders')
@@ -335,9 +334,7 @@ Widget build(BuildContext context) {
           .get()
           .then((snapshot) {
         for (DocumentSnapshot doc in snapshot.docs) {
-          doc.reference.update({
-            'status' : 'complete'
-          });
+          doc.reference.update({'status': 'complete'});
         }
       });
     } catch (error) {
@@ -345,62 +342,61 @@ Widget build(BuildContext context) {
       print('Error cancelling order: $error');
     }
   }
-  }
+}
 
-  //asks user for verification before canceling order
-  Future<void> _showCancelConfirmationDialog(
-      BuildContext context, Order order) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Delete Order'),
-          content: const SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Are you sure you want to delete this order?'),
-              ],
-            ),
+//asks user for verification before canceling order
+Future<void> _showCancelConfirmationDialog(
+    BuildContext context, Order order) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Delete Order'),
+        content: const SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text('Are you sure you want to delete this order?'),
+            ],
           ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: const Text('Confirm'),
-              onPressed: () {
-                _cancelOrder(order);
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: const Text('Confirm'),
+            onPressed: () {
+              _cancelOrder(order);
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
 
-  //cancels the order, removes data from firebase
-  Future<void> _cancelOrder(Order order) async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('orders')
-          .where('patient', isEqualTo: order.patientName)
-          .where('testing department', isEqualTo: order.department)
-          .where('testing', isEqualTo: order.testing)
-          .where('order type', isEqualTo: order.orderType)
-          .get()
-          .then((snapshot) {
-        for (DocumentSnapshot doc in snapshot.docs) {
-          doc.reference.delete();
-        }
-      });
-    } catch (error) {
-      // ignore: avoid_print
-      print('Error cancelling order: $error');
-    }
+//cancels the order, removes data from firebase
+Future<void> _cancelOrder(Order order) async {
+  try {
+    await FirebaseFirestore.instance
+        .collection('orders')
+        .where('patient', isEqualTo: order.patientName)
+        .where('testing department', isEqualTo: order.department)
+        .where('testing', isEqualTo: order.testing)
+        .where('order type', isEqualTo: order.orderType)
+        .get()
+        .then((snapshot) {
+      for (DocumentSnapshot doc in snapshot.docs) {
+        doc.reference.delete();
+      }
+    });
+  } catch (error) {
+    // ignore: avoid_print
+    print('Error cancelling order: $error');
   }
-
+}

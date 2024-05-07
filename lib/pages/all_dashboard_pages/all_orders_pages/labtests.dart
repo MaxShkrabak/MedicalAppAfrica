@@ -12,7 +12,7 @@ class LabTests extends StatefulWidget {
 class _LabTestsState extends State<LabTests> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return /*Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/logo.png'),
@@ -30,74 +30,77 @@ class _LabTestsState extends State<LabTests> {
             ],
           ),
         ),
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: const Color.fromARGB(156, 102, 134, 161),
-            title: const Text('Laboratory'),
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-          backgroundColor: const Color.fromARGB(156, 102, 133, 161),
-          body: SafeArea(
-            minimum: const EdgeInsets.symmetric(horizontal: 10),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const Divider(
-                    color: Color.fromRGBO(0, 0, 0, 1),
-                    thickness: 2,
-                  ),
-                  Tiles(
-                    onTap: () {
-                      _showOrderDetailsDialog('Blood Test', "Laboratory");
-                    },
-                    mainText: 'Blood Tests',
-                    subText: '',
-                    width: 250,
-                    height: 100,
-                  ),
-                  const SizedBox(height: 7),
-                  Tiles(
-                    onTap: () {
-                      _showOrderDetailsDialog('Urine Sample', "Laboratory");
-                    },
-                    mainText: 'Urine Sample',
-                    subText: '',
-                    width: 250,
-                    height: 100,
-                  ),
-                  const SizedBox(height: 7),
-                  Tiles(
-                    onTap: () {
-                      _showOrderDetailsDialog('Stool Sample', 'Laboratory');
-                    },
-                    mainText: 'Stool Sample',
-                    subText: '',
-                    width: 250,
-                    height: 100,
-                  ),
-                  const SizedBox(height: 7),
-                  Tiles(
-                    onTap: () {
-                      _showOrderDetailsDialog('Other', 'Laboratory');
-                    },
-                    mainText: 'Other',
-                    subText: '',
-                    width: 250,
-                    height: 100,
-                  ),
-                  const SizedBox(height: 60),
-                ],
-              ),
+        child: */
+        Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(156, 102, 134, 161),
+        title: const Text('Laboratory'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      backgroundColor: const Color.fromARGB(
+          246, 244, 236, 255), //old: const Color.fromARGB(156, 102, 133, 161),
+      body: SafeArea(
+        minimum: const EdgeInsets.symmetric(horizontal: 10),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 12,
+                ),
+                Tiles(
+                  onTap: () {
+                    _showOrderDetailsDialog('Blood Test', "Laboratory");
+                  },
+                  mainText: 'Blood Tests',
+                  subText: '',
+                  width: 250,
+                  height: 100,
+                ),
+                const SizedBox(height: 7),
+                Tiles(
+                  onTap: () {
+                    _showOrderDetailsDialog('Urine Sample', "Laboratory");
+                  },
+                  mainText: 'Urine Sample',
+                  subText: '',
+                  width: 250,
+                  height: 100,
+                ),
+                const SizedBox(height: 7),
+                Tiles(
+                  onTap: () {
+                    _showOrderDetailsDialog('Stool Sample', 'Laboratory');
+                  },
+                  mainText: 'Stool Sample',
+                  subText: '',
+                  width: 250,
+                  height: 100,
+                ),
+                const SizedBox(height: 7),
+                Tiles(
+                  onTap: () {
+                    _showOrderDetailsDialog('Other', 'Laboratory');
+                  },
+                  mainText: 'Other',
+                  subText: '',
+                  width: 250,
+                  height: 100,
+                ),
+                const SizedBox(height: 60),
+              ],
             ),
           ),
         ),
       ),
     );
+    //),
+    //);
   }
 
   // ignore: non_constant_identifier_names
@@ -105,15 +108,14 @@ class _LabTestsState extends State<LabTests> {
       String testType, String orderDetails, int? selectedInt) async {
     try {
       //Adds the order to users 'orders' sub collection
-      final appointmentRef = await FirebaseFirestore.instance
-          .collection('orders')
-          .add({
+      final appointmentRef =
+          await FirebaseFirestore.instance.collection('orders').add({
         'order details': orderDetails,
         'testing': testType,
         'order type': orderType,
         'testing department': department,
         'patient': patientName,
-        'status' : "active",
+        'status': "active",
         'urgency': selectedInt,
       });
 
@@ -167,19 +169,18 @@ class _LabTestsState extends State<LabTests> {
                 ),
                 const SizedBox(height: 7),
                 DropdownMenu(
-                  hintText: 'Urgency',
-                  width: 130,
-                  onSelected: (int? num) {
-                    setState((){
-                      selectedInt = num;
-                    });
-                  },
-                  dropdownMenuEntries:  [
-                    DropdownMenuEntry(value: 3, label: 'Minor'),
-                    DropdownMenuEntry(value: 2, label: 'Average'),
-                    DropdownMenuEntry(value: 1, label: 'Urgent'),
-                  ]
-                ),
+                    hintText: 'Urgency',
+                    width: 130,
+                    onSelected: (int? num) {
+                      setState(() {
+                        selectedInt = num;
+                      });
+                    },
+                    dropdownMenuEntries: [
+                      DropdownMenuEntry(value: 3, label: 'Minor'),
+                      DropdownMenuEntry(value: 2, label: 'Average'),
+                      DropdownMenuEntry(value: 1, label: 'Urgent'),
+                    ]),
               ],
             ),
             actions: [

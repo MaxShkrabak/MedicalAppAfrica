@@ -27,7 +27,7 @@ class SettingsNameTextField extends StatelessWidget {
               children: [
                 DecoratedBox(
                   decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white),
+                      border: Border.all(color: Color.fromARGB(180, 0, 0, 0)),
                       borderRadius: BorderRadius.circular(5)),
                   child: Padding(
                     padding: const EdgeInsets.only(
@@ -39,7 +39,8 @@ class SettingsNameTextField extends StatelessWidget {
                       children: [
                         Text(controller.text,
                             style: const TextStyle(
-                                color: Colors.white60, fontSize: 16)),
+                                color: Color.fromARGB(180, 0, 0, 0),
+                                fontSize: 16)),
                         TextButton(
                           onPressed: onTap,
                           child: const Text(
@@ -63,7 +64,8 @@ class SettingsNameTextField extends StatelessWidget {
                     TextPosition(offset: controller.text.length));
               },
               style: const TextStyle(
-                  color: Colors.white), // color of users data in text box
+                  color: Color.fromARGB(
+                      180, 0, 0, 0)), // color of users data in text box
               // Apply phone number formatting if it's a phone number field
               inputFormatters: isPhoneNumberField
                   ? [
@@ -76,15 +78,18 @@ class SettingsNameTextField extends StatelessWidget {
                 hintStyle: TextStyle(
                     color: Colors.white.withOpacity(0.7)), // hint text color
                 border: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white), // border color
+                  borderSide: BorderSide(
+                      color: Color.fromARGB(180, 0, 0, 0)), // border color
                 ),
                 focusedBorder: const OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Colors.white), // focused border color
+                  borderSide: BorderSide(
+                      color:
+                          Color.fromARGB(180, 0, 0, 0)), // focused border color
                 ),
                 enabledBorder: const OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Colors.white), // enabled border color
+                  borderSide: BorderSide(
+                      color:
+                          Color.fromARGB(180, 0, 0, 0)), // enabled border color
                 ),
               ),
             ),

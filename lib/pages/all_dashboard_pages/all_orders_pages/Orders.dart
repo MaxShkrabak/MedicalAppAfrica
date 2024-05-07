@@ -17,7 +17,7 @@ class OrderingSystem extends StatefulWidget {
 class _OrderingSystemState extends State<OrderingSystem> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return /*Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/logo.png'),
@@ -35,79 +35,78 @@ class _OrderingSystemState extends State<OrderingSystem> {
             ],
           ),
         ),
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: const Color.fromARGB(156, 102, 134, 161),
-            title: const Text('Orders'),
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-          backgroundColor: const Color.fromARGB(156, 102, 133, 161),
-          body: SafeArea(
-            minimum: const EdgeInsets.symmetric(horizontal: 10),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const Divider(
-                    color: Color.fromRGBO(0, 0, 0, 1),
-                    thickness: 2,
-                  ),
-                  const SizedBox(height: 12),
-                  Tiles(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: ((context) => const RadiologyScans()),
-                        ),
-                      );
-                    },
-                    mainText: 'Radiology',
-                    subText: '',
-                    width: 400,
-                    height: 120,
-                  ),
-                  const SizedBox(height: 7),
-                  Tiles(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: ((context) => const LabTests()),
-                        ),
-                      );
-                    },
-                    mainText: 'Laboratory',
-                    subText: '',
-                    width: 400,
-                    height: 120,
-                  ),
-                  const SizedBox(height: 7),
-                  Tiles(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: ((context) => const ViewOrders()),
-                        ),
-                      );
-                    },
-                    mainText: 'View Orders',
-                    subText: '',
-                    width: 400,
-                    height: 120,
-                  ),
-                  const SizedBox(height: 80),
-                ],
+        child: */
+        Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(
+            160, 165, 96, 255), //old: const Color.fromARGB(156, 102, 134, 161),
+        title: const Text('Orders'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      backgroundColor: const Color.fromARGB(
+          246, 244, 236, 255), //old: const Color.fromARGB(156, 102, 133, 161),
+      body: SafeArea(
+        minimum: const EdgeInsets.symmetric(horizontal: 10),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 12),
+              Tiles(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: ((context) => const RadiologyScans()),
+                    ),
+                  );
+                },
+                mainText: 'Radiology',
+                subText: '',
+                width: 400,
+                height: 120,
               ),
-            ),
+              const SizedBox(height: 7),
+              Tiles(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: ((context) => const LabTests()),
+                    ),
+                  );
+                },
+                mainText: 'Laboratory',
+                subText: '',
+                width: 400,
+                height: 120,
+              ),
+              const SizedBox(height: 7),
+              Tiles(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: ((context) => const ViewOrders()),
+                    ),
+                  );
+                },
+                mainText: 'View Orders',
+                subText: '',
+                width: 400,
+                height: 120,
+              ),
+              const SizedBox(height: 80),
+            ],
           ),
         ),
       ),
     );
+    //),
+    //);
   }
 }

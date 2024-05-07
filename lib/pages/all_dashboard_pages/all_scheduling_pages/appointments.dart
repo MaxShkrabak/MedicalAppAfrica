@@ -33,7 +33,8 @@ class AppointmentsPage extends StatelessWidget {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        backgroundColor: const Color.fromARGB(161, 88, 82, 173),
+        backgroundColor: const Color.fromARGB(
+            160, 165, 96, 255), //old: const Color.fromARGB(161, 88, 82, 173),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
@@ -65,7 +66,8 @@ class AppointmentsPage extends StatelessWidget {
         ],
       ),
       body: Scaffold(
-        backgroundColor: const Color.fromRGBO(76, 90, 137, 1),
+        backgroundColor: const Color.fromARGB(
+            246, 244, 236, 255), //old:const Color.fromRGBO(76, 90, 137, 1),
         body: SafeArea(
           minimum: const EdgeInsets.symmetric(horizontal: 10),
           child: StreamBuilder(

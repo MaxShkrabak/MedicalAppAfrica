@@ -8,8 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:path/path.dart' show basename;
 
-
-
 class PatientViewPage extends StatefulWidget {
   const PatientViewPage({super.key, required this.uid});
 
@@ -30,9 +28,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
     _patientFuture = fetchPatient(widget.uid);
   }
 
-
   // Fetch Image method
-
 
   Future<void> _uploadImage() async {
     final ImagePicker _picker = ImagePicker();
@@ -47,7 +43,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
     await ref.putFile(file);
     final String url = await ref.getDownloadURL();
 
-    //Also set the patients field to the new image URL in the firestore 
+    //Also set the patients field to the new image URL in the firestore
     await FirebaseFirestore.instance
         .collection('patients')
         .doc(widget.uid)
@@ -145,7 +141,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                 ],
               ),
               body: Container(
-                color: const Color.fromRGBO(76, 90, 137, 1),
+                color: Color.fromARGB(246, 244, 236, 255),
                 child: ListView(
                   children: <Widget>[
                     Padding(
@@ -374,17 +370,17 @@ class _PatientViewPageState extends State<PatientViewPage> {
     return ListTile(
       title: Text(
         title,
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.black),
       ),
       subtitle: _editMode
           ? TextField(
               controller: TextEditingController(text: value),
               onChanged: onChanged,
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.black),
             )
           : Text(
               value,
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.black),
             ),
     );
   }

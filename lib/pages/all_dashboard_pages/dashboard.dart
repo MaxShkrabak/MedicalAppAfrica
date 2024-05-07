@@ -25,10 +25,12 @@ class _DashBoardState extends State<DashBoard> {
   late String _userImageUrl = '';
   late String _accessLevel = '';
 
-
   Future<String> getAccessLevel() async {
     User? user = FirebaseAuth.instance.currentUser;
-    DocumentSnapshot doc = await FirebaseFirestore.instance.collection('accounts').doc(user!.uid).get();
+    DocumentSnapshot doc = await FirebaseFirestore.instance
+        .collection('accounts')
+        .doc(user!.uid)
+        .get();
     return doc['access_level'];
   }
 
@@ -40,12 +42,11 @@ class _DashBoardState extends State<DashBoard> {
         _accessLevel = value;
       });
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return /*Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/logo.png'),
@@ -63,34 +64,36 @@ class _DashBoardState extends State<DashBoard> {
             ],
           ),
         ),
-        child: Scaffold(
-          backgroundColor: const Color.fromARGB(156, 102, 133, 161),
-          body: SafeArea(
-            minimum: const EdgeInsets.symmetric(horizontal: 10),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  StreamBuilder(
-                    stream: _getUserData(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
-                      }
-                      if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      }
-                      _userName = snapshot.data?['first_name'] ?? '';
-                      _userImageUrl = snapshot.data?['imageURL'] ?? '';
-                      return _buildDashboard();
-                    },
-                  ),
-                ],
+        child: */
+        Scaffold(
+      backgroundColor: const Color.fromARGB(
+          246, 244, 236, 255), //old: Color.fromARGB(156, 102, 133, 161)
+      body: SafeArea(
+        minimum: const EdgeInsets.symmetric(horizontal: 10),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              StreamBuilder(
+                stream: _getUserData(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  }
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  }
+                  _userName = snapshot.data?['first_name'] ?? '';
+                  _userImageUrl = snapshot.data?['imageURL'] ?? '';
+                  return _buildDashboard();
+                },
               ),
-            ),
+            ],
           ),
         ),
       ),
     );
+    //),
+    //);
   }
 
   Stream<DocumentSnapshot> _getUserData() {
@@ -119,7 +122,7 @@ class _DashBoardState extends State<DashBoard> {
                   const Text(
                     'Welcome back,',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Color.fromARGB(180, 0, 0, 0),
                       fontWeight: FontWeight.bold,
                       fontSize: 25,
                     ),
@@ -130,7 +133,7 @@ class _DashBoardState extends State<DashBoard> {
                         "$_userName!",
                         textAlign: TextAlign.center,
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: Color.fromARGB(180, 0, 0, 0),
                           fontWeight: FontWeight.bold,
                           fontSize: 25,
                         ),
@@ -170,7 +173,8 @@ class _DashBoardState extends State<DashBoard> {
                     ),
                     const Text(
                       "Settings",
-                      style: TextStyle(color: Colors.white, fontSize: 12),
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0), fontSize: 12),
                     )
                   ],
                 ),
@@ -290,7 +294,8 @@ class _DashBoardState extends State<DashBoard> {
                   subText: '',
                   height: 120,
                   width: 170),
-              if (_accessLevel != 'Physician Assistant' || _accessLevel != 'Nurse')
+              if (_accessLevel != 'Physician Assistant' ||
+                  _accessLevel != 'Nurse')
                 Tiles(
                     onTap: () {
                       Navigator.push(
@@ -310,20 +315,20 @@ class _DashBoardState extends State<DashBoard> {
           // Special admin tile
           if (_accessLevel == 'Admin')
             Tiles(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: ((context) => AdminPage()),
-                    ),
-                  );
-                },
-                mainText: "Admin",
-                subText: '',
-                height: 120,
-                width: 400,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: ((context) => AdminPage()),
+                  ),
+                );
+              },
+              mainText: "Admin",
+              subText: '',
+              height: 120,
+              width: 400,
             ),
-              
+
           const SizedBox(height: 80),
           Center(
             child: TextButton(
@@ -333,7 +338,7 @@ class _DashBoardState extends State<DashBoard> {
               child: const Text(
                 "Sign Out",
                 style: TextStyle(
-                  color: Color.fromARGB(255, 255, 255, 255),
+                  color: Color.fromARGB(180, 0, 0, 0),
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
                 ),

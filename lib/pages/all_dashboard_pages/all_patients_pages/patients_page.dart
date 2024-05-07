@@ -65,14 +65,14 @@ class _PatientListState extends State<PatientList> {
     super.dispose();
   }
 
-
   void _onSearchChanged() {
     final query = _searchController.text.toLowerCase();
     if (query.isEmpty) {
       setState(() => _searchResults = _patients);
     } else {
-      final searchResults = _patients.where((patient) => 
-        patient.lowerCaseSearchTokens.contains(query)).toList();
+      final searchResults = _patients
+          .where((patient) => patient.lowerCaseSearchTokens.contains(query))
+          .toList();
       setState(() => _searchResults = searchResults);
     }
   }
@@ -119,7 +119,8 @@ class _PatientListState extends State<PatientList> {
             ),
           ],
         ),
-        backgroundColor: const Color.fromARGB(161, 88, 82, 173), //appbar
+        backgroundColor: const Color.fromARGB(160, 165, 96,
+            255), //old: Color.fromARGB(161, 88, 82, 173), //appbar
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
@@ -152,7 +153,8 @@ class _PatientListState extends State<PatientList> {
         ],
       ),
       body: Container(
-        color: const Color.fromRGBO(76, 90, 137, 1), //background
+        color: const Color.fromARGB(246, 244, 236,
+            255), //old: Color.fromRGBO(76, 90, 137, 1), //background
         child: SafeArea(
           child: Column(
             children: [
@@ -162,28 +164,24 @@ class _PatientListState extends State<PatientList> {
                   children: [
                     TextField(
                       controller: _searchController,
-                      style: const TextStyle(color: Colors.white),
-                      cursorColor: const Color.fromARGB(
-                          255, 255, 255, 255), //cursor color
+                      style: const TextStyle(color: Colors.black),
+                      cursorColor: Colors.black, //cursor color
                       decoration: InputDecoration(
                         labelText: 'Search Patients',
-                        labelStyle: const TextStyle(
-                            color: Color.fromARGB(
-                                255, 255, 255, 255)), //text color
+                        labelStyle:
+                            const TextStyle(color: Colors.black), //text color
                         enabledBorder: const UnderlineInputBorder(
                           //underline color
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                         focusedBorder: const UnderlineInputBorder(
                           //underline color when focused
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(255, 255, 255, 255)),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                         suffixIcon: IconButton(
-                          icon: const Icon(Icons.clear, color: Colors.white),
+                          icon: const Icon(Icons.clear, color: Colors.black),
                           onPressed: () {
                             _searchController.clear();
-                    
                           },
                         ),
                       ),
@@ -199,7 +197,7 @@ class _PatientListState extends State<PatientList> {
                     ? const Center(
                         child: Text(
                         'No patients found',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Color.fromARGB(180, 0, 0, 0)),
                       ))
                     : ListView.builder(
                         itemCount: _searchResults.length,
@@ -209,7 +207,8 @@ class _PatientListState extends State<PatientList> {
                                 horizontal: 16, vertical: 8),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 76, 57, 100),
+                                color: const Color.fromARGB(211, 86, 65,
+                                    112), //old: Color.fromARGB(255, 76, 57, 100),
                                 borderRadius: BorderRadius.circular(10),
                                 boxShadow: const [
                                   BoxShadow(
@@ -286,8 +285,10 @@ class _PatientListState extends State<PatientList> {
                                                           .delete()
                                                           .then((_) {
                                                         setState(() {
-                                                        _searchResults.removeAt(index);
-                                                        _patients.removeAt(index);
+                                                          _searchResults
+                                                              .removeAt(index);
+                                                          _patients
+                                                              .removeAt(index);
                                                         });
                                                         Navigator.pop(context);
                                                       });

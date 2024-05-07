@@ -50,14 +50,17 @@ class _TilesState extends State<Tiles> {
             height: widget.height,
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
+              border: Border.all(color: Colors.black54),
               borderRadius: BorderRadius.circular(10),
               color: Colors.black,
               gradient: const LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  Color.fromARGB(255, 6, 74, 83),
-                  Color.fromARGB(255, 99, 25, 148)
+                  Color.fromARGB(
+                      255, 214, 214, 214), //old: Color.fromARGB(255, 6, 74, 83)
+                  Color.fromARGB(
+                      19, 111, 0, 255) //old: Color.fromARGB(255, 99, 25, 148)
                 ],
               ),
             ),
@@ -67,7 +70,7 @@ class _TilesState extends State<Tiles> {
                       textAlign: TextAlign.center,
                       widget.mainText,
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: Color.fromARGB(255, 78, 78, 78),
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
@@ -82,7 +85,7 @@ class _TilesState extends State<Tiles> {
                             textAlign: TextAlign.center,
                             widget.mainText,
                             style: const TextStyle(
-                              color: Colors.white,
+                              color: Color.fromARGB(255, 78, 78, 78),
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),

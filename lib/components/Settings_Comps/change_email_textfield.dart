@@ -37,16 +37,18 @@ class _ChangeEmailTFState extends State<ChangeEmailTF> {
           labelStyle:
               const TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
           hintText: widget.hintText,
-          hintStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+          hintStyle: TextStyle(color: Colors.black.withOpacity(0.7)),
           prefixIcon: const Icon(
             Icons.email,
             color: Colors.black54,
           ),
           focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white), // focused border color
+            borderSide: BorderSide(
+                color: Color.fromARGB(180, 0, 0, 0)), // focused border color
           ),
           enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white), // enabled border color
+            borderSide: BorderSide(
+                color: Color.fromARGB(180, 0, 0, 0)), // enabled border color
           ),
           errorBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(5.0)),

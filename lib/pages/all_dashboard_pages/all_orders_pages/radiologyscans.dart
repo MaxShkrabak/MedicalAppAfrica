@@ -14,7 +14,7 @@ class RadiologyScans extends StatefulWidget {
 class _RadiologyScansState extends State<RadiologyScans> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return /*Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/logo.png'),
@@ -32,74 +32,78 @@ class _RadiologyScansState extends State<RadiologyScans> {
             ],
           ),
         ),
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: const Color.fromARGB(156, 102, 134, 161),
-            title: const Text('Radiology'),
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-          backgroundColor: const Color.fromARGB(156, 102, 133, 161),
-          body: SafeArea(
-            minimum: const EdgeInsets.symmetric(horizontal: 10),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const Divider(
-                    color: Color.fromRGBO(0, 0, 0, 1),
-                    thickness: 2,
-                  ),
-                  Tiles(
-                    onTap: () {
-                      _showOrderDetailsDialog('X-ray', 'Radiology');
-                    },
-                    mainText: 'X-ray',
-                    subText: '',
-                    width: 250,
-                    height: 100,
-                  ),
-                  const SizedBox(height: 7),
-                  Tiles(
-                    onTap: () {
-                      _showOrderDetailsDialog('CT Scan', 'Radiology');
-                    },
-                    mainText: 'CT Scan',
-                    subText: '',
-                    width: 250,
-                    height: 100,
-                  ),
-                  const SizedBox(height: 7),
-                  Tiles(
-                    onTap: () {
-                      _showOrderDetailsDialog('MRI', 'Radiology');
-                    },
-                    mainText: 'MRI',
-                    subText: '',
-                    width: 250,
-                    height: 100,
-                  ),
-                  const SizedBox(height: 7),
-                  Tiles(
-                    onTap: () {
-                      _showOrderDetailsDialog('Other', 'Radiology');
-                    },
-                    mainText: 'Other',
-                    subText: '',
-                    width: 250,
-                    height: 100,
-                  ),
-                  const SizedBox(height: 60),
-                ],
-              ),
+        child: */
+        Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(
+            160, 165, 96, 255), //old: const Color.fromARGB(156, 102, 134, 161),
+        title: const Text('Radiology'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      backgroundColor: const Color.fromARGB(
+          246, 244, 236, 255), //old: const Color.fromARGB(156, 102, 133, 161),
+      body: SafeArea(
+        minimum: const EdgeInsets.symmetric(horizontal: 10),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 12,
+                ),
+                Tiles(
+                  onTap: () {
+                    _showOrderDetailsDialog('X-ray', 'Radiology');
+                  },
+                  mainText: 'X-ray',
+                  subText: '',
+                  width: 250,
+                  height: 100,
+                ),
+                const SizedBox(height: 7),
+                Tiles(
+                  onTap: () {
+                    _showOrderDetailsDialog('CT Scan', 'Radiology');
+                  },
+                  mainText: 'CT Scan',
+                  subText: '',
+                  width: 250,
+                  height: 100,
+                ),
+                const SizedBox(height: 7),
+                Tiles(
+                  onTap: () {
+                    _showOrderDetailsDialog('MRI', 'Radiology');
+                  },
+                  mainText: 'MRI',
+                  subText: '',
+                  width: 250,
+                  height: 100,
+                ),
+                const SizedBox(height: 7),
+                Tiles(
+                  onTap: () {
+                    _showOrderDetailsDialog('Other', 'Radiology');
+                  },
+                  mainText: 'Other',
+                  subText: '',
+                  width: 250,
+                  height: 100,
+                ),
+                const SizedBox(height: 60),
+              ],
             ),
           ),
         ),
       ),
     );
+    //),
+    //);
   }
 
   // ignore: non_constant_identifier_names
@@ -107,9 +111,8 @@ class _RadiologyScansState extends State<RadiologyScans> {
       String areatoScan, String orderDetails, int? selectedInt) async {
     try {
       //Adds the order to users 'orders' sub collection
-      final appointmentRef = await FirebaseFirestore.instance
-          .collection('orders')
-          .add({
+      final appointmentRef =
+          await FirebaseFirestore.instance.collection('orders').add({
         'order details': orderDetails,
         'testing': areatoScan,
         'order type': orderType,
@@ -169,19 +172,18 @@ class _RadiologyScansState extends State<RadiologyScans> {
                 ),
                 const SizedBox(height: 7),
                 DropdownMenu(
-                  hintText: 'Urgency',
-                  width: 130,
-                  onSelected: (int? num) {
-                    setState((){
-                      selectedInt = num;
-                    });
-                  },
-                  dropdownMenuEntries:  [
-                    DropdownMenuEntry(value: 3, label: 'Minor'),
-                    DropdownMenuEntry(value: 2, label: 'Average'),
-                    DropdownMenuEntry(value: 1, label: 'Urgent'),
-                  ]
-                ),
+                    hintText: 'Urgency',
+                    width: 130,
+                    onSelected: (int? num) {
+                      setState(() {
+                        selectedInt = num;
+                      });
+                    },
+                    dropdownMenuEntries: [
+                      DropdownMenuEntry(value: 3, label: 'Minor'),
+                      DropdownMenuEntry(value: 2, label: 'Average'),
+                      DropdownMenuEntry(value: 1, label: 'Urgent'),
+                    ]),
               ],
             ),
             actions: [

@@ -88,10 +88,12 @@ class _ContactsPageState extends State<ContactsPage> {
         ),
       ),
       child: Scaffold(
-        backgroundColor: Colors.white, // White background for visibility
+        backgroundColor: const Color.fromARGB(
+            246, 244, 236, 255), // White background for visibility
         appBar: AppBar(
           title: const Text('Contacts'),
-          backgroundColor: const Color.fromARGB(156, 102, 134, 161),
+          backgroundColor: const Color.fromARGB(160, 165, 96,
+              255), //old: const Color.fromARGB(156, 102, 134, 161),
         ),
         body: SafeArea(
           child: Column(
