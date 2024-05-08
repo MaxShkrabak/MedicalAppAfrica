@@ -31,11 +31,18 @@ class Messaging extends StatelessWidget {
           child: */
         Scaffold(
       appBar: AppBar(
-        title: const Text('              Messaging'),
+        iconTheme: const IconThemeData(color: Colors.white), // back arrow color
+        title: const Padding(
+          padding: EdgeInsets.only(left: 80),
+          child: Text(
+            'Messaging',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
         backgroundColor: const Color.fromARGB(
-            160, 165, 96, 255), //old: Color.fromARGB(156, 102, 134, 161),
+            159, 144, 79, 230), //old: Color.fromARGB(156, 102, 134, 161),
       ),
-      backgroundColor: Color.fromARGB(246, 244, 236, 255),
+      backgroundColor: const Color.fromARGB(246, 244, 236, 255),
       body: SafeArea(
         child: Center(
           child: Column(

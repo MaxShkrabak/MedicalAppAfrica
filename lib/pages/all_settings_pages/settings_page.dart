@@ -23,7 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
           style: TextStyle(color: Colors.white), //color of
         ),
         backgroundColor:
-            const Color.fromARGB(160, 165, 96, 255), //app bar color
+            const Color.fromARGB(159, 144, 79, 230), //app bar color
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           color:
@@ -32,7 +32,7 @@ class _SettingsPageState extends State<SettingsPage> {
             Navigator.pop(context);
           },
         ),
-        titleSpacing: 100, //spacing between back arrow and text
+        titleSpacing: 105, //spacing between back arrow and text
       ),
       body: Scaffold(
         backgroundColor:

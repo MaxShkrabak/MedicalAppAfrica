@@ -27,11 +27,16 @@ class _DashBoardState extends State<DashBoard> {
 
   Future<String> getAccessLevel() async {
     User? user = FirebaseAuth.instance.currentUser;
-    DocumentSnapshot doc = await FirebaseFirestore.instance
-        .collection('accounts')
-        .doc(user!.uid)
-        .get();
-    return doc['access_level'];
+    if (user != null) {
+      DocumentSnapshot doc = await FirebaseFirestore.instance
+          .collection('accounts')
+          .doc(user.uid)
+          .get();
+      return doc['access_level'];
+    } else {
+      //user is null
+      return '';
+    }
   }
 
   @override
@@ -319,7 +324,7 @@ class _DashBoardState extends State<DashBoard> {
                 Navigator.push(
                   context,
                   CupertinoPageRoute(
-                    builder: ((context) => AdminPage()),
+                    builder: ((context) => const AdminPage()),
                   ),
                 );
               },

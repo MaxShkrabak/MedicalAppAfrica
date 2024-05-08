@@ -35,9 +35,17 @@ class InboxPage extends StatelessWidget {
         backgroundColor: const Color.fromARGB(
             246, 244, 236, 255), //old: const Color.fromRGBO(76, 90, 137, 1),
         appBar: AppBar(
-          title: const Text('Inbox'),
-          backgroundColor: const Color.fromARGB(160, 165, 96,
-              255), //old: const Color.fromARGB(156, 102, 134, 161),
+          iconTheme:
+              const IconThemeData(color: Colors.white), // back arrow color
+          title: const Padding(
+            padding: EdgeInsets.only(left: 105),
+            child: Text(
+              'Inbox',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+          backgroundColor: const Color.fromARGB(159, 144, 79,
+              230), //old: const Color.fromARGB(156, 102, 134, 161),
         ),
         body: SafeArea(
           child: FutureBuilder<QuerySnapshot>(

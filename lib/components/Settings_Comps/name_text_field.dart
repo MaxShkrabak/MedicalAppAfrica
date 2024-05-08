@@ -27,7 +27,8 @@ class SettingsNameTextField extends StatelessWidget {
               children: [
                 DecoratedBox(
                   decoration: BoxDecoration(
-                      border: Border.all(color: Color.fromARGB(180, 0, 0, 0)),
+                      border:
+                          Border.all(color: const Color.fromARGB(180, 0, 0, 0)),
                       borderRadius: BorderRadius.circular(5)),
                   child: Padding(
                     padding: const EdgeInsets.only(
@@ -76,7 +77,8 @@ class SettingsNameTextField extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: hintText,
                 hintStyle: TextStyle(
-                    color: Colors.white.withOpacity(0.7)), // hint text color
+                    color: const Color.fromARGB(255, 68, 68, 68)
+                        .withOpacity(0.7)), // hint text color
                 border: const OutlineInputBorder(
                   borderSide: BorderSide(
                       color: Color.fromARGB(180, 0, 0, 0)), // border color

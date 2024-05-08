@@ -33,8 +33,12 @@ class _LabTestsState extends State<LabTests> {
         child: */
         Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(160, 165, 96, 255),
-        title: const Text('Laboratory'),
+        iconTheme: const IconThemeData(color: Colors.white), // back arrow color
+        backgroundColor: const Color.fromARGB(159, 144, 79, 230),
+        title: const Padding(
+          padding: EdgeInsets.only(left: 80),
+          child: Text('Laboratory', style: TextStyle(color: Colors.white)),
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -151,10 +155,9 @@ class _LabTestsState extends State<LabTests> {
               children: [
                 TextField(
                   maxLines: null,
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                   decoration: const InputDecoration(
-                    labelText: 'Patient Name',
-                    border: OutlineInputBorder()),
+                      labelText: 'Patient Name', border: OutlineInputBorder()),
                   onChanged: (value) {
                     patientName = value;
                   },
@@ -162,10 +165,9 @@ class _LabTestsState extends State<LabTests> {
                 const SizedBox(height: 7),
                 TextField(
                   maxLines: null,
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                   decoration: const InputDecoration(
-                    labelText: 'Testing Field',
-                    border: OutlineInputBorder()),
+                      labelText: 'Testing Field', border: OutlineInputBorder()),
                   onChanged: (value) {
                     testingField = value;
                   },
@@ -173,10 +175,9 @@ class _LabTestsState extends State<LabTests> {
                 const SizedBox(height: 7),
                 TextField(
                   maxLines: null,
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                   decoration: const InputDecoration(
-                    labelText: 'Order Details',
-                    border: OutlineInputBorder()),
+                      labelText: 'Order Details', border: OutlineInputBorder()),
                   onChanged: (value) {
                     orderDetails = value;
                   },
@@ -190,7 +191,7 @@ class _LabTestsState extends State<LabTests> {
                         selectedInt = num;
                       });
                     },
-                    dropdownMenuEntries: [
+                    dropdownMenuEntries: const [
                       DropdownMenuEntry(value: 3, label: 'Minor'),
                       DropdownMenuEntry(value: 2, label: 'Average'),
                       DropdownMenuEntry(value: 1, label: 'Urgent'),

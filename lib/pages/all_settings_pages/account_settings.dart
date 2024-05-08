@@ -4,7 +4,6 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:africa_med_app/components/Settings_Comps/name_text_field.dart';
-import 'package:africa_med_app/pages/all_settings_pages/email_change_settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +79,7 @@ class _AccountSettingsState extends State<AccountSettings> {
           style: TextStyle(color: Colors.white), //color of text
         ),
         backgroundColor:
-            const Color.fromARGB(160, 165, 96, 255), //app bar color
+            const Color.fromARGB(159, 144, 79, 230), //app bar color
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           color: Colors.white, //back arrow color
@@ -123,7 +122,8 @@ class _AccountSettingsState extends State<AccountSettings> {
                                 ),
                       const Text(
                         'Edit',
-                        style: TextStyle(color: Color.fromARGB(180, 0, 0, 0)),
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255)),
                       ),
                     ],
                   ),
@@ -163,10 +163,29 @@ class _AccountSettingsState extends State<AccountSettings> {
                   controller: _emailController,
                   isEmailField: true,
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const newEmailPage()));
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Padding(
+                            padding: EdgeInsets.only(left: 60.0),
+                            child: Text('Change Email'),
+                          ),
+                          content: const Text(
+                            'For security reasons: Please contact your Admin to change your email.',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   },
                 ),
                 const SizedBox(height: 10),

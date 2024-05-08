@@ -38,9 +38,15 @@ class _OrderingSystemState extends State<OrderingSystem> {
         child: */
         Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(
-            160, 165, 96, 255), //old: const Color.fromARGB(156, 102, 134, 161),
-        title: const Text('Orders'),
+        backgroundColor: const Color.fromARGB(159, 144, 79, 230),
+        iconTheme: const IconThemeData(color: Colors.white), // back arrow color
+        title: const Padding(
+          padding: EdgeInsets.only(left: 100),
+          child: Text(
+            'Orders',
+            style: TextStyle(color: Colors.white), // title color
+          ),
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {

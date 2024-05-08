@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
 
 class AdminPage extends StatefulWidget {
+  const AdminPage({super.key});
+
   @override
-  _AdminPageState createState() => _AdminPageState();
+  State<AdminPage> createState() => _AdminPageState();
 }
 
 class _AdminPageState extends State<AdminPage> {
@@ -12,9 +14,13 @@ class _AdminPageState extends State<AdminPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Admin Page'),
+        iconTheme: const IconThemeData(color: Colors.white), // back arrow color
+        title: const Padding(
+          padding: EdgeInsets.only(left: 75),
+          child: Text('Admin Page', style: TextStyle(color: Colors.white)),
+        ),
         backgroundColor: const Color.fromARGB(
-            160, 165, 96, 255), //old: const Color.fromARGB(161, 88, 82, 173),
+            159, 144, 79, 230), //old: const Color.fromARGB(161, 88, 82, 173),
       ),
       body: Scaffold(
         backgroundColor: const Color.fromARGB(

@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
-import 'package:flutter/widgets.dart';
 
 class RadiologyScans extends StatefulWidget {
   const RadiologyScans({super.key});
@@ -36,9 +35,16 @@ class _RadiologyScansState extends State<RadiologyScans> {
         child: */
         Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white), // back arrow color
         backgroundColor: const Color.fromARGB(
-            160, 165, 96, 255), //old: const Color.fromARGB(156, 102, 134, 161),
-        title: const Text('Radiology'),
+            159, 144, 79, 230), //old: const Color.fromARGB(156, 102, 134, 161),
+        title: const Padding(
+          padding: EdgeInsets.only(left: 83),
+          child: Text(
+            'Radiology',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -153,10 +159,9 @@ class _RadiologyScansState extends State<RadiologyScans> {
               children: [
                 TextField(
                   maxLines: null,
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                   decoration: const InputDecoration(
-                    labelText: 'Patient Name',
-                    border: OutlineInputBorder()),
+                      labelText: 'Patient Name', border: OutlineInputBorder()),
                   onChanged: (value) {
                     patientName = value;
                   },
@@ -164,11 +169,10 @@ class _RadiologyScansState extends State<RadiologyScans> {
                 const SizedBox(height: 7),
                 TextField(
                   maxLines: null,
-                  style: TextStyle(fontSize: 20),
-                  decoration:
-                      const InputDecoration(
-                        labelText: 'Area of Interest',
-                        border: OutlineInputBorder()),
+                  style: const TextStyle(fontSize: 20),
+                  decoration: const InputDecoration(
+                      labelText: 'Area of Interest',
+                      border: OutlineInputBorder()),
                   onChanged: (value) {
                     areaToScan = value;
                   },
@@ -176,10 +180,9 @@ class _RadiologyScansState extends State<RadiologyScans> {
                 const SizedBox(height: 7),
                 TextField(
                   maxLines: null,
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                   decoration: const InputDecoration(
-                    labelText: 'Order Details',
-                    border: OutlineInputBorder()),
+                      labelText: 'Order Details', border: OutlineInputBorder()),
                   onChanged: (value) {
                     orderDetails = value;
                   },

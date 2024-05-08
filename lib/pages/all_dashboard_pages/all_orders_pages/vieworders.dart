@@ -32,8 +32,13 @@ class _ViewOrdersState extends State<ViewOrders> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(160, 165, 96, 255),
-          title: const Text('View Orders'),
+          iconTheme:
+              const IconThemeData(color: Colors.white), // back arrow color
+          backgroundColor: const Color.fromARGB(159, 144, 79, 230),
+          title: const Padding(
+            padding: EdgeInsets.only(left: 70),
+            child: Text('View Orders', style: TextStyle(color: Colors.white)),
+          ),
           bottom: const TabBar(
             tabs: [
               Tab(text: 'Active'),
@@ -249,8 +254,7 @@ class _ViewOrdersState extends State<ViewOrders> {
                                           fontWeight: FontWeight.w600),
                                     ),
                                     Text(
-                                      'Urgency Grade: ' +
-                                          order.urgency.toString(),
+                                      'Urgency Grade: ${order.urgency}',
                                       style: const TextStyle(
                                           color:
                                               Color.fromARGB(255, 224, 10, 10),

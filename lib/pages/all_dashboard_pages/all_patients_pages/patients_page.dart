@@ -14,7 +14,7 @@ class PatientList extends StatefulWidget {
 class _PatientListState extends State<PatientList> {
   final TextEditingController _searchController = TextEditingController();
 
-  List<Patient> _patients = [];
+  final List<Patient> _patients = [];
   List<Patient> _searchResults = [];
 
   @override
@@ -60,6 +60,7 @@ class _PatientListState extends State<PatientList> {
     });
   }
 
+  @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
@@ -119,8 +120,8 @@ class _PatientListState extends State<PatientList> {
             ),
           ],
         ),
-        backgroundColor: const Color.fromARGB(160, 165, 96,
-            255), //old: Color.fromARGB(161, 88, 82, 173), //appbar
+        backgroundColor: const Color.fromARGB(159, 144, 79,
+            230), //old: Color.fromARGB(161, 88, 82, 173), //appbar
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {

@@ -129,8 +129,13 @@ class _ComposePageState extends State<ComposePage> {
             child: Scaffold(
               backgroundColor: Colors.white, // White background for visibility
               appBar: AppBar(
-                backgroundColor: const Color.fromARGB(156, 102, 134, 161),
-                title: Text('Compose to $firstName $lastName'),
+                iconTheme: const IconThemeData(
+                    color: Colors.white), // back arrow color
+                backgroundColor: const Color.fromARGB(159, 144, 79, 230),
+                title: Text(
+                  'Compose to $firstName $lastName',
+                  style: const TextStyle(color: Colors.white),
+                ),
               ),
               body: SafeArea(
                 child: Column(
