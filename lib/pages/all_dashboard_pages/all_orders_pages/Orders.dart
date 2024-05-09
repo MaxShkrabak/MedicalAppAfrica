@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:africa_med_app/pages/all_dashboard_pages/all_orders_pages/labtests.dart';
 import 'package:africa_med_app/pages/all_dashboard_pages/all_orders_pages/radiologyscans.dart';
 import 'package:africa_med_app/pages/all_dashboard_pages/all_orders_pages/vieworders.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrderingSystem extends StatefulWidget {
   const OrderingSystem({super.key});
@@ -40,11 +41,11 @@ class _OrderingSystemState extends State<OrderingSystem> {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(159, 144, 79, 230),
         iconTheme: const IconThemeData(color: Colors.white), // back arrow color
-        title: const Padding(
-          padding: EdgeInsets.only(left: 100),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 100),
           child: Text(
-            'Orders',
-            style: TextStyle(color: Colors.white), // title color
+            AppLocalizations.of(context)!.orders,
+            style: const TextStyle(color: Colors.white), // title color
           ),
         ),
         leading: IconButton(
@@ -71,7 +72,7 @@ class _OrderingSystemState extends State<OrderingSystem> {
                     ),
                   );
                 },
-                mainText: 'Radiology',
+                mainText: AppLocalizations.of(context)!.radiology,
                 subText: '',
                 width: 400,
                 height: 120,
@@ -86,7 +87,7 @@ class _OrderingSystemState extends State<OrderingSystem> {
                     ),
                   );
                 },
-                mainText: 'Laboratory',
+                mainText: AppLocalizations.of(context)!.lab_title,
                 subText: '',
                 width: 400,
                 height: 120,
@@ -101,7 +102,7 @@ class _OrderingSystemState extends State<OrderingSystem> {
                     ),
                   );
                 },
-                mainText: 'View Orders',
+                mainText: AppLocalizations.of(context)!.view_orders,
                 subText: '',
                 width: 400,
                 height: 120,

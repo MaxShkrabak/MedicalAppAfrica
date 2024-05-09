@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RadiologyScans extends StatefulWidget {
   const RadiologyScans({super.key});
@@ -38,11 +39,11 @@ class _RadiologyScansState extends State<RadiologyScans> {
         iconTheme: const IconThemeData(color: Colors.white), // back arrow color
         backgroundColor: const Color.fromARGB(
             159, 144, 79, 230), //old: const Color.fromARGB(156, 102, 134, 161),
-        title: const Padding(
-          padding: EdgeInsets.only(left: 83),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 83),
           child: Text(
-            'Radiology',
-            style: TextStyle(color: Colors.white),
+            AppLocalizations.of(context)!.radiology,
+            style: const TextStyle(color: Colors.white),
           ),
         ),
         leading: IconButton(
@@ -67,7 +68,7 @@ class _RadiologyScansState extends State<RadiologyScans> {
                   onTap: () {
                     _showOrderDetailsDialog('X-ray', 'Radiology');
                   },
-                  mainText: 'X-ray',
+                  mainText: AppLocalizations.of(context)!.x_ray,
                   subText: '',
                   width: 250,
                   height: 100,
@@ -77,7 +78,7 @@ class _RadiologyScansState extends State<RadiologyScans> {
                   onTap: () {
                     _showOrderDetailsDialog('CT Scan', 'Radiology');
                   },
-                  mainText: 'CT Scan',
+                  mainText: AppLocalizations.of(context)!.ct_scan,
                   subText: '',
                   width: 250,
                   height: 100,
@@ -87,7 +88,7 @@ class _RadiologyScansState extends State<RadiologyScans> {
                   onTap: () {
                     _showOrderDetailsDialog('MRI', 'Radiology');
                   },
-                  mainText: 'MRI',
+                  mainText: AppLocalizations.of(context)!.mri,
                   subText: '',
                   width: 250,
                   height: 100,
@@ -97,7 +98,7 @@ class _RadiologyScansState extends State<RadiologyScans> {
                   onTap: () {
                     _showOrderDetailsDialog('Other', 'Radiology');
                   },
-                  mainText: 'Other',
+                  mainText: AppLocalizations.of(context)!.other,
                   subText: '',
                   width: 250,
                   height: 100,
@@ -131,8 +132,9 @@ class _RadiologyScansState extends State<RadiologyScans> {
 
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Center(child: Text('Order added successfully!')),
+        SnackBar(
+          content:
+              Center(child: Text(AppLocalizations.of(context)!.order_success)),
         ),
       );
 
@@ -153,15 +155,16 @@ class _RadiologyScansState extends State<RadiologyScans> {
       builder: (BuildContext context) {
         return SingleChildScrollView(
           child: AlertDialog(
-            title: const Text('Radiology Order Details'),
+            title: Text(AppLocalizations.of(context)!.radiology_details),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
                   maxLines: null,
                   style: const TextStyle(fontSize: 20),
-                  decoration: const InputDecoration(
-                      labelText: 'Patient Name', border: OutlineInputBorder()),
+                  decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.patient_name,
+                      border: const OutlineInputBorder()),
                   onChanged: (value) {
                     patientName = value;
                   },
@@ -170,9 +173,9 @@ class _RadiologyScansState extends State<RadiologyScans> {
                 TextField(
                   maxLines: null,
                   style: const TextStyle(fontSize: 20),
-                  decoration: const InputDecoration(
-                      labelText: 'Area of Interest',
-                      border: OutlineInputBorder()),
+                  decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.area_of_interest,
+                      border: const OutlineInputBorder()),
                   onChanged: (value) {
                     areaToScan = value;
                   },
@@ -181,25 +184,32 @@ class _RadiologyScansState extends State<RadiologyScans> {
                 TextField(
                   maxLines: null,
                   style: const TextStyle(fontSize: 20),
-                  decoration: const InputDecoration(
-                      labelText: 'Order Details', border: OutlineInputBorder()),
+                  decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.order_details,
+                      border: const OutlineInputBorder()),
                   onChanged: (value) {
                     orderDetails = value;
                   },
                 ),
                 const SizedBox(height: 7),
                 DropdownMenu(
-                    hintText: 'Urgency',
+                    hintText: AppLocalizations.of(context)!.urgency,
                     width: 130,
                     onSelected: (int? num) {
                       setState(() {
                         selectedInt = num;
                       });
                     },
-                    dropdownMenuEntries: const [
-                      DropdownMenuEntry(value: 3, label: 'Minor'),
-                      DropdownMenuEntry(value: 2, label: 'Average'),
-                      DropdownMenuEntry(value: 1, label: 'Urgent'),
+                    dropdownMenuEntries: [
+                      DropdownMenuEntry(
+                          value: 3,
+                          label: AppLocalizations.of(context)!.urgency_type1),
+                      DropdownMenuEntry(
+                          value: 2,
+                          label: AppLocalizations.of(context)!.urgency_type2),
+                      DropdownMenuEntry(
+                          value: 1,
+                          label: AppLocalizations.of(context)!.urgency_type3),
                     ]),
               ],
             ),
@@ -208,7 +218,7 @@ class _RadiologyScansState extends State<RadiologyScans> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('Cancel'),
+                child: Text(AppLocalizations.of(context)!.cancel_button),
               ),
               TextButton(
                 onPressed: () {
@@ -216,7 +226,7 @@ class _RadiologyScansState extends State<RadiologyScans> {
                       orderDetails, selectedInt);
                   Navigator.of(context).pop();
                 },
-                child: const Text('Confirm'),
+                child: Text(AppLocalizations.of(context)!.confirm_button),
               ),
             ],
           ),

@@ -125,9 +125,9 @@ class _DashBoardState extends State<DashBoard> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Welcome back,',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.dash_welcome,
+                    style: const TextStyle(
                       color: Color.fromARGB(180, 0, 0, 0),
                       fontWeight: FontWeight.bold,
                       fontSize: 25,
@@ -177,9 +177,9 @@ class _DashBoardState extends State<DashBoard> {
                     const SizedBox(
                       height: 6,
                     ),
-                    const Text(
-                      "Settings",
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context)!.settings,
+                      style: const TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0), fontSize: 12),
                     )
                   ],
@@ -296,7 +296,7 @@ class _DashBoardState extends State<DashBoard> {
                       ),
                     );
                   },
-                  mainText: "Messaging",
+                  mainText: AppLocalizations.of(context)!.messaging,
                   subText: '',
                   height: 120,
                   width: 170),
@@ -311,7 +311,7 @@ class _DashBoardState extends State<DashBoard> {
                         ),
                       );
                     },
-                    mainText: "Orders",
+                    mainText: AppLocalizations.of(context)!.orders,
                     subText: '',
                     height: 120,
                     width: 170)

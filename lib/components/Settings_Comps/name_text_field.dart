@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsNameTextField extends StatelessWidget {
   final String hintText;
@@ -44,9 +45,9 @@ class SettingsNameTextField extends StatelessWidget {
                                 fontSize: 16)),
                         TextButton(
                           onPressed: onTap,
-                          child: const Text(
-                            "Change Email",
-                            style: TextStyle(
+                          child: Text(
+                            AppLocalizations.of(context)!.change_email,
+                            style: const TextStyle(
                                 color: Color.fromARGB(255, 65, 195, 255),
                                 fontSize: 11.5),
                           ),

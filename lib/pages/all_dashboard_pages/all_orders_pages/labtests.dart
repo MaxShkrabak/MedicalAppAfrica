@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LabTests extends StatefulWidget {
   const LabTests({super.key});
@@ -35,9 +36,10 @@ class _LabTestsState extends State<LabTests> {
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white), // back arrow color
         backgroundColor: const Color.fromARGB(159, 144, 79, 230),
-        title: const Padding(
-          padding: EdgeInsets.only(left: 80),
-          child: Text('Laboratory', style: TextStyle(color: Colors.white)),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 80),
+          child: Text(AppLocalizations.of(context)!.lab_title,
+              style: const TextStyle(color: Colors.white)),
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -61,7 +63,7 @@ class _LabTestsState extends State<LabTests> {
                   onTap: () {
                     _showOrderDetailsDialog('Blood Test', "Laboratory");
                   },
-                  mainText: 'Blood Tests',
+                  mainText: AppLocalizations.of(context)!.blood_test,
                   subText: '',
                   width: 250,
                   height: 100,
@@ -71,7 +73,7 @@ class _LabTestsState extends State<LabTests> {
                   onTap: () {
                     _showOrderDetailsDialog('Urine Sample', "Laboratory");
                   },
-                  mainText: 'Urine Sample',
+                  mainText: AppLocalizations.of(context)!.urine_sample,
                   subText: '',
                   width: 250,
                   height: 100,
@@ -81,7 +83,7 @@ class _LabTestsState extends State<LabTests> {
                   onTap: () {
                     _showOrderDetailsDialog('Stool Sample', 'Laboratory');
                   },
-                  mainText: 'Stool Sample',
+                  mainText: AppLocalizations.of(context)!.stool_sample,
                   subText: '',
                   width: 250,
                   height: 100,
@@ -91,7 +93,7 @@ class _LabTestsState extends State<LabTests> {
                   onTap: () {
                     _showOrderDetailsDialog('Other', 'Laboratory');
                   },
-                  mainText: 'Other',
+                  mainText: AppLocalizations.of(context)!.other,
                   subText: '',
                   width: 250,
                   height: 100,
@@ -125,8 +127,11 @@ class _LabTestsState extends State<LabTests> {
 
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Center(child: Text('Order added successfully!')),
+        SnackBar(
+          content: Center(
+              child: Text(
+            AppLocalizations.of(context)!.order_success,
+          )),
         ),
       );
 
@@ -149,15 +154,18 @@ class _LabTestsState extends State<LabTests> {
       builder: (BuildContext context) {
         return SingleChildScrollView(
           child: AlertDialog(
-            title: const Text('Laboratory Order Details'),
+            title: Text(
+              AppLocalizations.of(context)!.lab_order_details,
+            ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
                   maxLines: null,
                   style: const TextStyle(fontSize: 20),
-                  decoration: const InputDecoration(
-                      labelText: 'Patient Name', border: OutlineInputBorder()),
+                  decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.patient_name,
+                      border: OutlineInputBorder()),
                   onChanged: (value) {
                     patientName = value;
                   },
@@ -166,8 +174,9 @@ class _LabTestsState extends State<LabTests> {
                 TextField(
                   maxLines: null,
                   style: const TextStyle(fontSize: 20),
-                  decoration: const InputDecoration(
-                      labelText: 'Testing Field', border: OutlineInputBorder()),
+                  decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.testing_field,
+                      border: const OutlineInputBorder()),
                   onChanged: (value) {
                     testingField = value;
                   },
@@ -176,25 +185,34 @@ class _LabTestsState extends State<LabTests> {
                 TextField(
                   maxLines: null,
                   style: const TextStyle(fontSize: 20),
-                  decoration: const InputDecoration(
-                      labelText: 'Order Details', border: OutlineInputBorder()),
+                  decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.order_details,
+                      border: const OutlineInputBorder()),
                   onChanged: (value) {
                     orderDetails = value;
                   },
                 ),
                 const SizedBox(height: 7),
                 DropdownMenu(
-                    hintText: 'Urgency',
+                    hintText: AppLocalizations.of(context)!.urgency,
                     width: 130,
                     onSelected: (int? num) {
                       setState(() {
                         selectedInt = num;
                       });
                     },
-                    dropdownMenuEntries: const [
-                      DropdownMenuEntry(value: 3, label: 'Minor'),
-                      DropdownMenuEntry(value: 2, label: 'Average'),
-                      DropdownMenuEntry(value: 1, label: 'Urgent'),
+                    dropdownMenuEntries: [
+                      DropdownMenuEntry(
+                          value: 3,
+                          label: AppLocalizations.of(context)!.urgency_type1),
+                      DropdownMenuEntry(
+                        value: 2,
+                        label: AppLocalizations.of(context)!.urgency_type2,
+                      ),
+                      DropdownMenuEntry(
+                        value: 1,
+                        label: AppLocalizations.of(context)!.urgency_type3,
+                      ),
                     ]),
               ],
             ),
@@ -203,7 +221,7 @@ class _LabTestsState extends State<LabTests> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('Cancel'),
+                child: Text(AppLocalizations.of(context)!.cancel_button),
               ),
               TextButton(
                 onPressed: () {
@@ -211,7 +229,7 @@ class _LabTestsState extends State<LabTests> {
                       orderDetails, selectedInt);
                   Navigator.of(context).pop();
                 },
-                child: const Text('Confirm'),
+                child: Text(AppLocalizations.of(context)!.confirm_button),
               ),
             ],
           ),

@@ -20,9 +20,9 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Settings',
-          style: TextStyle(color: Colors.white), //color of
+        title: Text(
+          AppLocalizations.of(context)!.settings,
+          style: const TextStyle(color: Colors.white), //color of
         ),
         backgroundColor:
             const Color.fromARGB(159, 144, 79, 230), //app bar color
@@ -64,7 +64,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                     );
                   },
-                  mainText: 'Account Settings',
+                  mainText: AppLocalizations.of(context)!.account_settings,
                   subText: '',
                   width: 250,
                   height: 60,
@@ -82,7 +82,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                     );
                   },
-                  mainText: 'Language',
+                  mainText: AppLocalizations.of(context)!.language,
                   width: 250,
                   height: 60,
                   subText: '',
@@ -102,7 +102,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         DropdownMenuItem(child: Text('العربية'), value: 'ar'),
                       ],
                     )),*/
-                Text(AppLocalizations.of(context)!.hello),
+                Text(AppLocalizations.of(context)!.language),
                 const SizedBox(height: 10),
                 TextButton(
                   onPressed: () {
