@@ -1,0 +1,42 @@
+{
+
+    "language": "Language",
+    "@language":{
+        "description": "Curr language"
+    },
+    "hello": "hello!",
+    "@hello": {
+        "description": "hello"
+    },
+    "welcome_back": "Welcome Back!",
+    "@welcome_back": {
+        "description": "Welcome back msg on login page"
+    },
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    "new": "Welcome Back!",
+    "@welcome_back": {
+        "description": "Welcome back msg on login page"
+    },
+    "new": "Welcome Back!",
+    "@welcome_back": {
+        "description": "Welcome back msg on login page"
+    },
+    "new": "Welcome Back!",
+    "@welcome_back": {
+        "description": "Welcome back msg on login page"
+    },
+}

@@ -1,7 +1,9 @@
+import 'package:africa_med_app/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
 import 'package:africa_med_app/pages/all_settings_pages/account_settings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -11,7 +13,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  //List<String> languages = ['English', 'Russian', 'Ugandan'];
+  //List<String> languages = ['English', 'Arabic'];
   //String? selectedLang = 'English';
 
   @override
@@ -87,17 +89,38 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
 
                 const SizedBox(height: 15),
-                /* SizedBox(
-                  width: 250,
-                  child: DropdownButton<String>(
-                    value: selectedLang,
-                    items: languages
-                        .map((item) => DropdownMenuItem<String>(
-                            value: item, child: Text(item)))
-                        .toList(),
-                    onChanged: (item) => setState(() => selectedLang = item),
-                  ),
-                ),*/
+                /*SizedBox(
+                    width: 250,
+                    child: DropdownButton(
+                      onChanged: (v) => setState(() {
+                        MyApp.setLocale(context, Locale(v.toString(), ""));
+                      }),
+                      value: AppLocalizations.of(context)!
+                          .def_lang
+                          .toString(), // change this line with your way to get current locale to select it as default in dropdown
+                      items: const [
+                        DropdownMenuItem(child: Text('العربية'), value: 'ar'),
+                      ],
+                    )),*/
+                Text(AppLocalizations.of(context)!.hello),
+                const SizedBox(height: 10),
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      MyApp.setLocale(context, const Locale("ar", ""));
+                    });
+                  },
+                  child: const Text("Ar"),
+                ),
+                const SizedBox(height: 10),
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      MyApp.setLocale(context, const Locale("en", ""));
+                    });
+                  },
+                  child: const Text("En"),
+                )
               ],
             ),
           ),
