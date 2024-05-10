@@ -1,0 +1,350 @@
+{
+
+    "language": "Language",
+    "@language":{
+        "description": "Language text"
+    },
+    "welcome_back": "Welcome Back!",
+    "@welcome_back": {
+        "description": "Welcome back msg on login page"
+    },
+
+
+
+    "lab_title": "Laboratory",
+    "@lab_title": {
+        "description": "Lab page title"
+    }, 
+    "blood_test": "Blood Tests",
+    "@blood_test": {
+        "description": "Blood tests button text"
+    },
+    "urine_sample": "Urine Sample",
+    "@urin_sample": {
+        "description": "Urin sample button text"
+    },
+    "stool_sample": "Stool Sample",
+    "@stool_sample": {
+        "description": "Stool sample button text"
+    },
+    "other": "Other",
+    "@other": {
+        "description": "Other button text"
+    },
+    "order_success": "Order added successfully!",
+    "@order_success": {
+        "description": "Success popup"
+    },
+    "lab_order_details": "Laboratory Order Details",
+    "@lab_order_details": {
+        "description": "Lab order details popup"
+    },
+    "patient_name": "Patient Name",
+    "@patient_name": {
+        "description": "Patient name textfield"
+    },
+    "testing_field": "Testing Field",
+    "@testing_field": {
+        "description": "Testing fields textfield"
+    },
+    "order_details": "Order Details",
+    "@order_details": {
+        "description": "Order details textfield"
+    },
+    "urgency": "Urgency",
+    "@urgency": {
+        "description": ""
+    },
+    "urgency_type1": "Minor",
+    "@urgency_type1": {
+        "description": ""
+    },
+    "urgency_type2": "Average",
+    "@urgency_type2": {
+        "description": ""
+    },
+    "urgency_type3": "Urgent",
+    "@urgency_type3": {
+        "description": ""
+    },
+    "cancel_button": "Cancel",
+    "@cancel_button": {
+        "description": ""
+    },
+    "confirm_button": "Confirm",
+    "@confirm_button": {
+        "description": ""
+    },
+
+
+
+    "orders": "Orders",
+    "@orders": {
+        "description": ""
+    },
+    "radiology": "Radiology",
+    "@radiology": {
+        "description": ""
+    },
+    "view_orders": "View Orders",
+    "@view_orders": {
+        "description": ""
+    },
+
+    "x_ray": "X-ray",
+    "@x_ray": {
+        "description": ""
+    },
+    "ct_scan": "CT Scan",
+    "@ct_scan": {
+        "description": ""
+    },
+    "mri": "MRI",
+    "@mri": {
+        "description": ""
+    },
+    "radiology_details": "Radiology Order Details",
+    "@radiology_details": {
+        "description": ""
+    },
+    "area_of_interest": "Area of Interest",
+    "@area_of_interest": {
+        "description": ""
+    },
+    
+
+    "active": "Active",
+    "@active": {
+        "description": ""
+    },
+    "completed": "Completed",
+    "@completed": {
+        "description": ""
+    },
+
+    "patient_dialogue": "Patient: {pat_string}",
+    "@patient_dialogue": {
+        "description": "",
+        "placeholders": {
+            "pat_string": {
+                "type": "String"
+            }
+        }
+    },
+    "department": "Department: {dep_string}",
+    "@department": {
+        "description": "",
+        "placeholders": {
+            "dep_string": {
+                "type": "String"
+            }
+        }
+    },
+    "testing": "Testing: {test_string}",
+    "@testing": {
+        "description": "",
+        "placeholders": {
+            "test_string": {
+                "type": "String"
+            }
+        }
+    },
+    "test_info": "Test Info: {test_info_string}",
+    "@test_info": {
+        "description": "",
+        "placeholders": {
+            "test_info_string": {
+                "type": "String"
+            }
+        }
+    },
+    "urgency_grade": "Urgency Grade: {urg_string}",
+    "@urgency_grade": {
+        "description": "",
+        "placeholders": {
+            "urg_string": {
+                "type": "String"
+            }
+        }
+    },
+    "complete_order": "Complete Order",
+    "@complete_order": {
+        "description": ""
+    },
+    "mark_complete": "Mark this Order as complete?",
+    "@mark_complete": {
+        "description": ""
+    },
+    "confirm_delete": "Are you sure you want to delete this order?",
+    "@confirm_delete": {
+        "description": ""
+    },
+    "delete_order": "Delete Order",
+    "@delete_order": {
+        "description": ""
+    },
+
+    "account_settings": "Account Settings",
+    "@account_settings": {
+        "description": ""
+    },
+    "edit": "Edit",
+    "@edit": {
+        "description": ""
+    },
+    "access_role": "Access Role: {access_string}",
+    "@access_role": {
+        "description": "",
+        "placeholders": {
+            "access_string": {
+                "type": "String"
+            }
+        }
+    },
+    "first_name": "First Name",
+    "@first_name": {
+        "description": ""
+    },
+    "last_name": "Last Name",
+    "@last_name": {
+        "description": ""
+    },
+    "email": "Email",
+    "@email": {
+        "description": ""
+    },
+    "change_email": "Change Email",
+    "@change_email": {
+        "description": ""
+    },
+    "email_popup": "For security reasons: Please contact your Administrator to change your email",
+    "@email_popup": {
+        "description": ""
+    },
+    "okay": "OK",
+    "@okay": {
+        "description": ""
+    },
+    "phone_number": "Phone Number",
+    "@phone_number": {
+        "description": ""
+    },
+    "error": "Error",
+    "@error": {
+        "description": ""
+    },
+    "enter_name": "Please enter your first name.",
+    "@enter_name": {
+        "description": ""
+    },
+    "enter_last": "Please enter your last name.",
+    "@enter_last": {
+        "description": ""
+    },
+    "enter_phone": "Please enter a valid phone number.",
+    "@enter_phone": {
+        "description": ""
+    },
+    "enter_email": "Please enter a valid email address.",
+    "@enter_email": {
+        "description": ""
+    },
+    "save": "Save",
+    "@save": {
+        "description": ""
+    },
+    "gallery": "Gallery",
+    "@gallery": {
+        "description": ""
+    },
+    "camera": "Camera",
+    "@camera": {
+        "description": ""
+    },
+    "change_success": "Changes were saved successfully.",
+    "@change_success": {
+        "description": ""
+    },
+    "settings": "Settings",
+    "@settings": {
+        "description": ""
+    },
+    "change_success": "Changes were saved successfully.",
+    "@change_success": {
+        "description": ""
+    },
+    "dash_welcome": "Welcome back,",
+    "@dash_welcome": {
+        "description": ""
+    },
+
+
+    "compose_to": "Compose to {First_n_last}",
+    "@compose_to": {
+        "description": "",
+        "placeholders": {
+            "First_n_last": {
+                "type": "String"
+            }
+        }
+    },
+    "type_message": "Type your message here",
+    "@type_message": {
+        "description": ""
+    },
+    "select_image": "Select Image",
+    "@select_image": {
+        "description": ""
+    },
+    "send": "Send",
+    "@send": {
+        "description": ""
+    },
+    "contacts": "Contacts",
+    "@contacts": {
+        "description": ""
+    },
+    "search_contact": "Search Contacts",
+    "@search_contact": {
+        "description": ""
+    },
+    "no_contacts": "No contacts found",
+    "@no_contacts": {
+        "description": ""
+    },
+    "inbox": "Inbox",
+    "@inbox": {
+        "description": ""
+    },
+    "delete_swipe": "Are you sure you want to delete this item?",
+    "@delete_swipe": {
+        "description": ""
+    },
+    "view_message": "View messages",
+    "@view_message": {
+        "description": ""
+    },
+    "sent": "Sent",
+    "@sent": {
+        "description": ""
+    },
+    "view_sent": "View sent messages",
+    "@view_sent": {
+        "description": ""
+    },
+    "view_contacts": "View Contacts",
+    "@view_contacts": {
+        "description": ""
+    },
+    "messaging": "Messaging",
+    "@messaging": {
+        "description": ""
+    },
+    "delete": "Delete",
+    "@messaging": {
+        "description": ""
+    }
+    
+    
+
+}

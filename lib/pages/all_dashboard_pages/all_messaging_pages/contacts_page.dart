@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'compose_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ContactsPage extends StatefulWidget {
   const ContactsPage({super.key});
@@ -91,9 +92,15 @@ class _ContactsPageState extends State<ContactsPage> {
         backgroundColor: const Color.fromARGB(
             246, 244, 236, 255), // White background for visibility
         appBar: AppBar(
-          title: const Text('Contacts'),
-          backgroundColor: const Color.fromARGB(160, 165, 96,
-              255), //old: const Color.fromARGB(156, 102, 134, 161),
+          iconTheme:
+              const IconThemeData(color: Colors.white), // back arrow color
+          title: Padding(
+            padding: const EdgeInsets.only(left: 85),
+            child: Text(AppLocalizations.of(context)!.contacts,
+                style: TextStyle(color: Colors.white)),
+          ),
+          backgroundColor: const Color.fromARGB(159, 144, 79,
+              230), //old: const Color.fromARGB(156, 102, 134, 161),
         ),
         body: SafeArea(
           child: Column(
@@ -104,7 +111,7 @@ class _ContactsPageState extends State<ContactsPage> {
                   controller: _searchController,
                   onChanged: _onSearchTextChanged,
                   decoration: InputDecoration(
-                    labelText: 'Search Contacts',
+                    labelText: AppLocalizations.of(context)!.search_contact,
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.clear),
                       onPressed: () {
@@ -117,7 +124,8 @@ class _ContactsPageState extends State<ContactsPage> {
               ),
               Expanded(
                 child: _docs.isEmpty
-                    ? const Center(child: Text('No contacts found'))
+                    ? Center(
+                        child: Text(AppLocalizations.of(context)!.no_contacts))
                     : ListView.builder(
                         itemCount: _docs.length,
                         itemBuilder: (context, index) {

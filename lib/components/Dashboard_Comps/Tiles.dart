@@ -60,7 +60,7 @@ class _TilesState extends State<Tiles> {
                   Color.fromARGB(
                       255, 214, 214, 214), //old: Color.fromARGB(255, 6, 74, 83)
                   Color.fromARGB(
-                      19, 111, 0, 255) //old: Color.fromARGB(255, 99, 25, 148)
+                      36, 111, 0, 255) //old: Color.fromARGB(255, 99, 25, 148)
                 ],
               ),
             ),

@@ -4,12 +4,12 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:africa_med_app/components/Settings_Comps/name_text_field.dart';
-import 'package:africa_med_app/pages/all_settings_pages/email_change_settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AccountSettings extends StatefulWidget {
   const AccountSettings({super.key});
@@ -75,12 +75,12 @@ class _AccountSettingsState extends State<AccountSettings> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: const Text(
-          'Account Settings',
-          style: TextStyle(color: Colors.white), //color of text
+        title: Text(
+          AppLocalizations.of(context)!.account_settings,
+          style: const TextStyle(color: Colors.white), //color of text
         ),
         backgroundColor:
-            const Color.fromARGB(160, 165, 96, 255), //app bar color
+            const Color.fromARGB(159, 144, 79, 230), //app bar color
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           color: Colors.white, //back arrow color
@@ -121,9 +121,10 @@ class _AccountSettingsState extends State<AccountSettings> {
                                   backgroundImage: AssetImage(
                                       "assets/Anonymous_profile.jpg"),
                                 ),
-                      const Text(
-                        'Edit',
-                        style: TextStyle(color: Color.fromARGB(180, 0, 0, 0)),
+                      Text(
+                        AppLocalizations.of(context)!.edit,
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255)),
                       ),
                     ],
                   ),
@@ -132,7 +133,8 @@ class _AccountSettingsState extends State<AccountSettings> {
 
                 //displays users access role
                 Text(
-                  'Access Role: ${userRole ?? ''}',
+                  AppLocalizations.of(context)!
+                      .access_role(userRole ?? "Isn't assigned."),
                   style: const TextStyle(color: Color.fromARGB(180, 0, 0, 0)),
                 ),
                 const SizedBox(height: 20),
@@ -143,14 +145,14 @@ class _AccountSettingsState extends State<AccountSettings> {
                   children: [
                     Expanded(
                       child: SettingsNameTextField(
-                        hintText: "Name",
+                        hintText: AppLocalizations.of(context)!.first_name,
                         controller: _nameController,
                       ),
                     ),
                     const SizedBox(width: 10), //gap between first and last name
                     Expanded(
                       child: SettingsNameTextField(
-                        hintText: "Last Name",
+                        hintText: AppLocalizations.of(context)!.last_name,
                         controller: _lastNameController,
                       ),
                     ),
@@ -159,20 +161,40 @@ class _AccountSettingsState extends State<AccountSettings> {
                 const SizedBox(height: 10),
                 //users email
                 SettingsNameTextField(
-                  hintText: "Email",
+                  hintText: AppLocalizations.of(context)!.email,
                   controller: _emailController,
                   isEmailField: true,
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const newEmailPage()));
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Padding(
+                            padding: const EdgeInsets.only(left: 60.0),
+                            child: Text(
+                                AppLocalizations.of(context)!.change_email),
+                          ),
+                          content: Text(
+                            AppLocalizations.of(context)!.email_popup,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(AppLocalizations.of(context)!.okay),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   },
                 ),
                 const SizedBox(height: 10),
                 //users phone number
                 SettingsNameTextField(
-                  hintText: "Phone Number",
+                  hintText: AppLocalizations.of(context)!.phone_number,
                   controller: _phoneNumberController,
                   isPhoneNumberField: true,
                 ),
@@ -189,15 +211,15 @@ class _AccountSettingsState extends State<AccountSettings> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: const Text('Error'),
+                            title: Text(AppLocalizations.of(context)!.error),
                             content:
-                                const Text('Please enter your first name.'),
+                                Text(AppLocalizations.of(context)!.enter_name),
                             actions: [
                               TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: const Text('OK'),
+                                child: Text(AppLocalizations.of(context)!.okay),
                               ),
                             ],
                           );
@@ -208,14 +230,15 @@ class _AccountSettingsState extends State<AccountSettings> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: const Text('Error'),
-                            content: const Text('Please enter your last name.'),
+                            title: Text(AppLocalizations.of(context)!.error),
+                            content:
+                                Text(AppLocalizations.of(context)!.enter_last),
                             actions: [
                               TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: const Text('OK'),
+                                child: Text(AppLocalizations.of(context)!.okay),
                               ),
                             ],
                           );
@@ -233,15 +256,16 @@ class _AccountSettingsState extends State<AccountSettings> {
                           context: context,
                           builder: (context) {
                             return AlertDialog(
-                              title: const Text('Error'),
-                              content: const Text(
-                                  'Please enter a valid phone number.'),
+                              title: Text(AppLocalizations.of(context)!.error),
+                              content: Text(
+                                  AppLocalizations.of(context)!.enter_phone),
                               actions: [
                                 TextButton(
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: const Text('OK'),
+                                  child:
+                                      Text(AppLocalizations.of(context)!.okay),
                                 ),
                               ],
                             );
@@ -254,15 +278,15 @@ class _AccountSettingsState extends State<AccountSettings> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: const Text('Error'),
-                            content: const Text(
-                                'Please enter a valid email address.'),
+                            title: Text(AppLocalizations.of(context)!.error),
+                            content:
+                                Text(AppLocalizations.of(context)!.enter_email),
                             actions: [
                               TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: const Text('OK'),
+                                child: Text(AppLocalizations.of(context)!.okay),
                               ),
                             ],
                           );
@@ -270,7 +294,7 @@ class _AccountSettingsState extends State<AccountSettings> {
                       );
                     }
                   },
-                  child: const Text('Save'),
+                  child: Text(AppLocalizations.of(context)!.save),
                 ),
               ],
             ),
@@ -298,14 +322,14 @@ class _AccountSettingsState extends State<AccountSettings> {
                     onTap: () {
                       _pickImageFromGallery();
                     },
-                    child: const SizedBox(
+                    child: SizedBox(
                       child: Column(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.image,
                             size: 70,
                           ),
-                          Text("Gallery")
+                          Text(AppLocalizations.of(context)!.gallery)
                         ],
                       ),
                     ),
@@ -316,14 +340,14 @@ class _AccountSettingsState extends State<AccountSettings> {
                     onTap: () {
                       _pickImageFromCamera();
                     },
-                    child: const SizedBox(
+                    child: SizedBox(
                       child: Column(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.camera_alt,
                             size: 70,
                           ),
-                          Text("Camera")
+                          Text(AppLocalizations.of(context)!.camera)
                         ],
                       ),
                     ),
@@ -419,8 +443,8 @@ class _AccountSettingsState extends State<AccountSettings> {
 
   void showSuccessMessage(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Changes were saved successfully.'),
+      SnackBar(
+        content: Text(AppLocalizations.of(context)!.change_success),
       ),
     );
   }

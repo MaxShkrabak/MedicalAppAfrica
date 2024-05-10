@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsNameTextField extends StatelessWidget {
   final String hintText;
@@ -27,7 +28,8 @@ class SettingsNameTextField extends StatelessWidget {
               children: [
                 DecoratedBox(
                   decoration: BoxDecoration(
-                      border: Border.all(color: Color.fromARGB(180, 0, 0, 0)),
+                      border:
+                          Border.all(color: const Color.fromARGB(180, 0, 0, 0)),
                       borderRadius: BorderRadius.circular(5)),
                   child: Padding(
                     padding: const EdgeInsets.only(
@@ -43,9 +45,9 @@ class SettingsNameTextField extends StatelessWidget {
                                 fontSize: 16)),
                         TextButton(
                           onPressed: onTap,
-                          child: const Text(
-                            "Change Email",
-                            style: TextStyle(
+                          child: Text(
+                            AppLocalizations.of(context)!.change_email,
+                            style: const TextStyle(
                                 color: Color.fromARGB(255, 65, 195, 255),
                                 fontSize: 11.5),
                           ),
@@ -76,7 +78,8 @@ class SettingsNameTextField extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: hintText,
                 hintStyle: TextStyle(
-                    color: Colors.white.withOpacity(0.7)), // hint text color
+                    color: const Color.fromARGB(255, 68, 68, 68)
+                        .withOpacity(0.7)), // hint text color
                 border: const OutlineInputBorder(
                   borderSide: BorderSide(
                       color: Color.fromARGB(180, 0, 0, 0)), // border color

@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ComposePage extends StatefulWidget {
   final String uid;
@@ -129,8 +130,14 @@ class _ComposePageState extends State<ComposePage> {
             child: Scaffold(
               backgroundColor: Colors.white, // White background for visibility
               appBar: AppBar(
-                backgroundColor: const Color.fromARGB(156, 102, 134, 161),
-                title: Text('Compose to $firstName $lastName'),
+                iconTheme: const IconThemeData(
+                    color: Colors.white), // back arrow color
+                backgroundColor: const Color.fromARGB(159, 144, 79, 230),
+                title: Text(
+                  AppLocalizations.of(context)!
+                      .compose_to('$firstName $lastName'),
+                  style: const TextStyle(color: Colors.white),
+                ),
               ),
               body: SafeArea(
                 child: Column(
@@ -139,8 +146,8 @@ class _ComposePageState extends State<ComposePage> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextField(
                         controller: _messageController,
-                        decoration: const InputDecoration(
-                          hintText: 'Type your message here',
+                        decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context)!.type_message,
                         ),
                         maxLines: 10,
                       ),
@@ -156,7 +163,7 @@ class _ComposePageState extends State<ComposePage> {
                       onPressed: () {
                         _getImage();
                       },
-                      child: const Text('Select Image'),
+                      child: Text(AppLocalizations.of(context)!.select_image),
                     ),
                     ElevatedButton(
                       onPressed: () {
@@ -166,7 +173,7 @@ class _ComposePageState extends State<ComposePage> {
                           _messageController.text,
                         );
                       },
-                      child: const Text('Send'),
+                      child: Text(AppLocalizations.of(context)!.send),
                     ),
                   ],
                 ),

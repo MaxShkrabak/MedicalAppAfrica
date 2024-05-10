@@ -34,7 +34,7 @@ class AppointmentsPage extends StatelessWidget {
           ),
         ),
         backgroundColor: const Color.fromARGB(
-            160, 165, 96, 255), //old: const Color.fromARGB(161, 88, 82, 173),
+            159, 144, 79, 230), //old: const Color.fromARGB(161, 88, 82, 173),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,

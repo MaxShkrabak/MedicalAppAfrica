@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DashBoard extends StatefulWidget {
   const DashBoard({super.key, required this.updateIsUserRegistered});
@@ -27,11 +28,16 @@ class _DashBoardState extends State<DashBoard> {
 
   Future<String> getAccessLevel() async {
     User? user = FirebaseAuth.instance.currentUser;
-    DocumentSnapshot doc = await FirebaseFirestore.instance
-        .collection('accounts')
-        .doc(user!.uid)
-        .get();
-    return doc['access_level'];
+    if (user != null) {
+      DocumentSnapshot doc = await FirebaseFirestore.instance
+          .collection('accounts')
+          .doc(user.uid)
+          .get();
+      return doc['access_level'];
+    } else {
+      //user is null
+      return '';
+    }
   }
 
   @override
@@ -119,9 +125,9 @@ class _DashBoardState extends State<DashBoard> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Welcome back,',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.dash_welcome,
+                    style: const TextStyle(
                       color: Color.fromARGB(180, 0, 0, 0),
                       fontWeight: FontWeight.bold,
                       fontSize: 25,
@@ -171,9 +177,9 @@ class _DashBoardState extends State<DashBoard> {
                     const SizedBox(
                       height: 6,
                     ),
-                    const Text(
-                      "Settings",
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context)!.settings,
+                      style: const TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0), fontSize: 12),
                     )
                   ],
@@ -290,7 +296,7 @@ class _DashBoardState extends State<DashBoard> {
                       ),
                     );
                   },
-                  mainText: "Messaging",
+                  mainText: AppLocalizations.of(context)!.messaging,
                   subText: '',
                   height: 120,
                   width: 170),
@@ -305,7 +311,7 @@ class _DashBoardState extends State<DashBoard> {
                         ),
                       );
                     },
-                    mainText: "Orders",
+                    mainText: AppLocalizations.of(context)!.orders,
                     subText: '',
                     height: 120,
                     width: 170)
@@ -319,7 +325,7 @@ class _DashBoardState extends State<DashBoard> {
                 Navigator.push(
                   context,
                   CupertinoPageRoute(
-                    builder: ((context) => AdminPage()),
+                    builder: ((context) => const AdminPage()),
                   ),
                 );
               },

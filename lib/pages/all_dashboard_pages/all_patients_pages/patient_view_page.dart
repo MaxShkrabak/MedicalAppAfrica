@@ -31,8 +31,8 @@ class _PatientViewPageState extends State<PatientViewPage> {
   // Fetch Image method
 
   Future<void> _uploadImage() async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image == null) {
       return;
     }
@@ -141,7 +141,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                 ],
               ),
               body: Container(
-                color: Color.fromARGB(246, 244, 236, 255),
+                color: const Color.fromARGB(246, 244, 236, 255),
                 child: ListView(
                   children: <Widget>[
                     Padding(

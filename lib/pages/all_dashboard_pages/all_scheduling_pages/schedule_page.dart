@@ -42,9 +42,9 @@ class _ScheduleState extends State<Schedule> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(
-            160, 165, 96, 255), //old: const Color.fromARGB(161, 88, 82, 173),
+            159, 144, 79, 230), //old: const Color.fromARGB(161, 88, 82, 173),
         title: const Padding(
-          padding: EdgeInsets.only(left: 80),
+          padding: EdgeInsets.only(left: 90),
           child: Text(
             'Schedule',
             style: TextStyle(color: Colors.white),

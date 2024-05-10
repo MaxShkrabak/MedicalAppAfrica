@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Order {
   final String patientName;
@@ -32,12 +33,22 @@ class _ViewOrdersState extends State<ViewOrders> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(160, 165, 96, 255),
-          title: const Text('View Orders'),
-          bottom: const TabBar(
+          iconTheme:
+              const IconThemeData(color: Colors.white), // back arrow color
+          backgroundColor: const Color.fromARGB(159, 144, 79, 230),
+          title: Padding(
+            padding: const EdgeInsets.only(left: 70),
+            child: Text(AppLocalizations.of(context)!.view_orders,
+                style: const TextStyle(color: Colors.white)),
+          ),
+          bottom: TabBar(
             tabs: [
-              Tab(text: 'Active'),
-              Tab(text: 'Completed'),
+              Tab(
+                text: AppLocalizations.of(context)!.active,
+              ),
+              Tab(
+                text: AppLocalizations.of(context)!.completed,
+              ),
             ],
           ),
         ),
@@ -100,7 +111,8 @@ class _ViewOrdersState extends State<ViewOrders> {
                             Expanded(
                               child: ListTile(
                                 title: Text(
-                                  'Patient: ${order.patientName}',
+                                  AppLocalizations.of(context)!
+                                      .patient_dialogue(order.patientName),
                                   style: const TextStyle(
                                     color: Color.fromARGB(255, 143, 226, 247),
                                   ),
@@ -109,28 +121,33 @@ class _ViewOrdersState extends State<ViewOrders> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Department: ${order.department}',
+                                      AppLocalizations.of(context)!
+                                          .department(order.department),
                                       style: const TextStyle(
                                           color: Color.fromARGB(
                                               255, 143, 226, 247),
                                           fontWeight: FontWeight.w600),
                                     ),
                                     Text(
-                                      'Testing: ${order.testing}',
+                                      AppLocalizations.of(context)!
+                                          .testing(order.testing),
                                       style: const TextStyle(
                                           color:
                                               Color.fromARGB(255, 143, 226, 2),
                                           fontWeight: FontWeight.w600),
                                     ),
                                     Text(
-                                      'Test Info: ${order.testInfo}',
+                                      AppLocalizations.of(context)!
+                                          .test_info(order.testInfo),
                                       style: const TextStyle(
                                           color:
                                               Color.fromARGB(255, 143, 226, 2),
                                           fontWeight: FontWeight.w600),
                                     ),
                                     Text(
-                                      'Urgency Grade: ${order.urgency.toString()}',
+                                      AppLocalizations.of(context)!
+                                          .urgency_grade(
+                                              order.urgency.toString()),
                                       style: const TextStyle(
                                           color:
                                               Color.fromARGB(255, 255, 75, 75),
@@ -219,7 +236,8 @@ class _ViewOrdersState extends State<ViewOrders> {
                             Expanded(
                               child: ListTile(
                                 title: Text(
-                                  order.patientName,
+                                  AppLocalizations.of(context)!
+                                      .patient_dialogue(order.patientName),
                                   style: const TextStyle(
                                     color: Color.fromARGB(255, 143, 226, 247),
                                   ),
@@ -228,32 +246,36 @@ class _ViewOrdersState extends State<ViewOrders> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      order.department,
+                                      AppLocalizations.of(context)!
+                                          .department(order.department),
                                       style: const TextStyle(
                                           color: Color.fromARGB(
                                               255, 143, 226, 247),
                                           fontWeight: FontWeight.w600),
                                     ),
                                     Text(
-                                      order.testing,
+                                      AppLocalizations.of(context)!
+                                          .testing(order.testing),
                                       style: const TextStyle(
                                           color:
                                               Color.fromARGB(255, 143, 226, 2),
                                           fontWeight: FontWeight.w600),
                                     ),
                                     Text(
-                                      order.testInfo,
+                                      AppLocalizations.of(context)!
+                                          .test_info(order.testInfo),
                                       style: const TextStyle(
                                           color:
                                               Color.fromARGB(255, 143, 226, 2),
                                           fontWeight: FontWeight.w600),
                                     ),
                                     Text(
-                                      'Urgency Grade: ' +
-                                          order.urgency.toString(),
+                                      AppLocalizations.of(context)!
+                                          .urgency_grade(
+                                              order.urgency.toString()),
                                       style: const TextStyle(
                                           color:
-                                              Color.fromARGB(255, 224, 10, 10),
+                                              Color.fromARGB(255, 255, 75, 75),
                                           fontWeight: FontWeight.w600),
                                     ),
                                   ],
@@ -295,23 +317,23 @@ class _ViewOrdersState extends State<ViewOrders> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Complete Order'),
-          content: const SingleChildScrollView(
+          title: Text(AppLocalizations.of(context)!.complete_order),
+          content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Mark this order as complete?'),
+                Text(AppLocalizations.of(context)!.mark_complete),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(context)!.cancel_button),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: const Text('Confirm'),
+              child: Text(AppLocalizations.of(context)!.confirm_button),
               onPressed: () {
                 updateStatus(order);
                 Navigator.of(context).pop();
@@ -352,23 +374,23 @@ Future<void> _showCancelConfirmationDialog(
     barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('Delete Order'),
-        content: const SingleChildScrollView(
+        title: Text(AppLocalizations.of(context)!.delete_order), //delete_order,
+        content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              Text('Are you sure you want to delete this order?'),
+              Text(AppLocalizations.of(context)!.confirm_delete),
             ],
           ),
         ),
         actions: <Widget>[
           TextButton(
-            child: const Text('Cancel'),
+            child: Text(AppLocalizations.of(context)!.cancel_button),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
           TextButton(
-            child: const Text('Confirm'),
+            child: Text(AppLocalizations.of(context)!.confirm_button),
             onPressed: () {
               _cancelOrder(order);
               Navigator.of(context).pop();

@@ -1,7 +1,9 @@
+import 'package:africa_med_app/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
 import 'package:africa_med_app/pages/all_settings_pages/account_settings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -11,19 +13,19 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  //List<String> languages = ['English', 'Russian', 'Ugandan'];
+  //List<String> languages = ['English', 'Arabic'];
   //String? selectedLang = 'English';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Settings',
-          style: TextStyle(color: Colors.white), //color of
+        title: Text(
+          AppLocalizations.of(context)!.settings,
+          style: const TextStyle(color: Colors.white), //color of
         ),
         backgroundColor:
-            const Color.fromARGB(160, 165, 96, 255), //app bar color
+            const Color.fromARGB(159, 144, 79, 230), //app bar color
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           color:
@@ -32,7 +34,7 @@ class _SettingsPageState extends State<SettingsPage> {
             Navigator.pop(context);
           },
         ),
-        titleSpacing: 100, //spacing between back arrow and text
+        titleSpacing: 105, //spacing between back arrow and text
       ),
       body: Scaffold(
         backgroundColor:
@@ -62,7 +64,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                     );
                   },
-                  mainText: 'Account Settings',
+                  mainText: AppLocalizations.of(context)!.account_settings,
                   subText: '',
                   width: 250,
                   height: 60,
@@ -80,24 +82,45 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                     );
                   },
-                  mainText: 'Language',
+                  mainText: AppLocalizations.of(context)!.language,
                   width: 250,
                   height: 60,
                   subText: '',
                 ),
 
                 const SizedBox(height: 15),
-                /* SizedBox(
-                  width: 250,
-                  child: DropdownButton<String>(
-                    value: selectedLang,
-                    items: languages
-                        .map((item) => DropdownMenuItem<String>(
-                            value: item, child: Text(item)))
-                        .toList(),
-                    onChanged: (item) => setState(() => selectedLang = item),
-                  ),
-                ),*/
+                /*SizedBox(
+                    width: 250,
+                    child: DropdownButton(
+                      onChanged: (v) => setState(() {
+                        MyApp.setLocale(context, Locale(v.toString(), ""));
+                      }),
+                      value: AppLocalizations.of(context)!
+                          .def_lang
+                          .toString(), // change this line with your way to get current locale to select it as default in dropdown
+                      items: const [
+                        DropdownMenuItem(child: Text('العربية'), value: 'ar'),
+                      ],
+                    )),*/
+                Text(AppLocalizations.of(context)!.language),
+                const SizedBox(height: 10),
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      MyApp.setLocale(context, const Locale("ar", ""));
+                    });
+                  },
+                  child: const Text("Ar"),
+                ),
+                const SizedBox(height: 10),
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      MyApp.setLocale(context, const Locale("en", ""));
+                    });
+                  },
+                  child: const Text("En"),
+                )
               ],
             ),
           ),

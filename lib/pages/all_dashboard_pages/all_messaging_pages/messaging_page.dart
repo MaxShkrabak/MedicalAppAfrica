@@ -4,6 +4,7 @@ import 'inbox_page.dart';
 import 'sent_page.dart';
 import 'contacts_page.dart';
 import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Messaging extends StatelessWidget {
   const Messaging({super.key});
@@ -31,11 +32,18 @@ class Messaging extends StatelessWidget {
           child: */
         Scaffold(
       appBar: AppBar(
-        title: const Text('              Messaging'),
+        iconTheme: const IconThemeData(color: Colors.white), // back arrow color
+        title: Padding(
+          padding: const EdgeInsets.only(left: 80),
+          child: Text(
+            AppLocalizations.of(context)!.messaging,
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
         backgroundColor: const Color.fromARGB(
-            160, 165, 96, 255), //old: Color.fromARGB(156, 102, 134, 161),
+            159, 144, 79, 230), //old: Color.fromARGB(156, 102, 134, 161),
       ),
-      backgroundColor: Color.fromARGB(246, 244, 236, 255),
+      backgroundColor: const Color.fromARGB(246, 244, 236, 255),
       body: SafeArea(
         child: Center(
           child: Column(
@@ -50,8 +58,8 @@ class Messaging extends StatelessWidget {
                     ),
                   );
                 },
-                mainText: 'Inbox',
-                subText: 'View messages',
+                mainText: AppLocalizations.of(context)!.inbox,
+                subText: AppLocalizations.of(context)!.view_message,
                 width: 400,
                 height: 120,
               ),
@@ -65,8 +73,8 @@ class Messaging extends StatelessWidget {
                     ),
                   );
                 },
-                mainText: 'Sent',
-                subText: 'View sent messages',
+                mainText: AppLocalizations.of(context)!.sent,
+                subText: AppLocalizations.of(context)!.view_sent,
                 width: 400,
                 height: 120,
               ),
@@ -80,8 +88,8 @@ class Messaging extends StatelessWidget {
                     ),
                   );
                 },
-                mainText: 'Contacts',
-                subText: 'View contacts',
+                mainText: AppLocalizations.of(context)!.contacts,
+                subText: AppLocalizations.of(context)!.view_contacts,
                 width: 400,
                 height: 120,
               ),

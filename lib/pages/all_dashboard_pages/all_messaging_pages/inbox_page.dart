@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'message_tile.dart';
 
@@ -35,9 +36,17 @@ class InboxPage extends StatelessWidget {
         backgroundColor: const Color.fromARGB(
             246, 244, 236, 255), //old: const Color.fromRGBO(76, 90, 137, 1),
         appBar: AppBar(
-          title: const Text('Inbox'),
-          backgroundColor: const Color.fromARGB(160, 165, 96,
-              255), //old: const Color.fromARGB(156, 102, 134, 161),
+          iconTheme:
+              const IconThemeData(color: Colors.white), // back arrow color
+          title: Padding(
+            padding: const EdgeInsets.only(left: 105),
+            child: Text(
+              AppLocalizations.of(context)!.inbox,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+          backgroundColor: const Color.fromARGB(159, 144, 79,
+              230), //old: const Color.fromARGB(156, 102, 134, 161),
         ),
         body: SafeArea(
           child: FutureBuilder<QuerySnapshot>(
@@ -70,19 +79,22 @@ class InboxPage extends StatelessWidget {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: const Text("Confirm"),
-                              content: const Text(
-                                  "Are you sure you want to delete this item?"),
+                              title: Text(
+                                  AppLocalizations.of(context)!.confirm_button),
+                              content: Text(
+                                  AppLocalizations.of(context)!.delete_swipe),
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () =>
                                       Navigator.of(context).pop(true),
-                                  child: const Text("DELETE"),
+                                  child: Text(
+                                      AppLocalizations.of(context)!.delete),
                                 ),
                                 TextButton(
                                   onPressed: () =>
                                       Navigator.of(context).pop(false),
-                                  child: const Text("CANCEL"),
+                                  child: Text(AppLocalizations.of(context)!
+                                      .cancel_button),
                                 ),
                               ],
                             );
