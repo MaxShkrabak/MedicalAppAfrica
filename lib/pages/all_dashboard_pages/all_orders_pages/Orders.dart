@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,7 +10,7 @@ import 'package:africa_med_app/pages/all_dashboard_pages/all_orders_pages/viewor
 
 class OrderingSystem extends StatefulWidget {
   const OrderingSystem({super.key});
-
+  
   @override
   State<OrderingSystem> createState() => _OrderingSystemState();
 }
@@ -36,7 +37,19 @@ class _OrderingSystemState extends State<OrderingSystem> {
           ),
         ),
         child: */
-        Scaffold(
+
+    FutureBuilder<List<int>>(
+       future: Future.wait([_getActiveCount(), _getCompleteCount()]),
+       builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator(); // or any loading indicator
+          } else if (snapshot.hasError) {
+           return Text('Error: ${snapshot.error}');
+          } else {
+            int? active = snapshot.data?[0];
+            int? complete = snapshot.data?[1];
+                
+             return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(
             160, 165, 96, 255), //old: const Color.fromARGB(156, 102, 134, 161),
@@ -96,7 +109,7 @@ class _OrderingSystemState extends State<OrderingSystem> {
                   );
                 },
                 mainText: 'View Orders',
-                subText: '',
+                subText: active.toString() + " Active \n" + complete.toString() + ' Complete',
                 width: 400,
                 height: 120,
               ),
@@ -106,7 +119,14 @@ class _OrderingSystemState extends State<OrderingSystem> {
         ),
       ),
     );
-    //),
-    //);
+                  }}
+        );
+  }}
+  Future<int> _getActiveCount() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('orders').where('status', isEqualTo: "active").get();
+    return querySnapshot.size;
   }
-}
+  Future<int> _getCompleteCount() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('orders').where('status', isEqualTo: "complete").get();
+    return querySnapshot.size;
+  }
