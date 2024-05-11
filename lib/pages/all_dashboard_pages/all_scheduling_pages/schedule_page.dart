@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:africa_med_app/pages/all_dashboard_pages/all_patients_pages/Patient.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Schedule extends StatefulWidget {
-  const Schedule({super.key});
+  const Schedule({super.key, this.patient});
+
+  final Patient? patient;
 
   @override
   State<Schedule> createState() => _ScheduleState();
@@ -326,6 +329,11 @@ class _ScheduleState extends State<Schedule> {
         'date': appointmentDateTime,
         'timeSlot': timeSlot,
         'meetingDetails': meetingDetails,
+        if(widget.patient != null) ...{
+          'patientName': widget.patient!.firstName + ' ' + widget.patient!.lastName,
+          'patientimageURL': widget.patient!.imageURL,
+          'patientUID': widget.patient!.uid,
+        }
       });
 
       // Updates availability status to false

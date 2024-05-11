@@ -5,8 +5,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Patient.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:africa_med_app/pages/all_dashboard_pages/all_scheduling_pages/schedule_page.dart';
 import 'dart:io';
 import 'package:path/path.dart' show basename;
+
+
+
 
 class PatientViewPage extends StatefulWidget {
   const PatientViewPage({super.key, required this.uid});
@@ -53,6 +57,8 @@ class _PatientViewPageState extends State<PatientViewPage> {
       _patient.imageURL = url;
     });
   }
+
+
 
   Future<Patient> fetchPatient(String uid) async {
     DocumentSnapshot documentSnapshot =
@@ -348,6 +354,21 @@ class _PatientViewPageState extends State<PatientViewPage> {
                         child: const Text('Upload Image'),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Push the schdule_page to the navigator
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Schedule(patient: _patient),
+                            ),
+                          );
+                        },
+                        child: const Text('Schedule Appointment'),
+                      ),
+                    )
                   ],
                 ),
               ),
