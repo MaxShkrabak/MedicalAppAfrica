@@ -4,8 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:africa_med_app/pages/all_dashboard_pages/all_orders_pages/labtests.dart';
-import 'package:africa_med_app/pages/all_dashboard_pages/all_orders_pages/radiologyscans.dart';
+import 'package:africa_med_app/pages/all_dashboard_pages/all_orders_pages/patientQuery.dart';
 import 'package:africa_med_app/pages/all_dashboard_pages/all_orders_pages/vieworders.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -75,37 +74,25 @@ class _OrderingSystemState extends State<OrderingSystem> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              
               const SizedBox(height: 12),
               Tiles(
                 onTap: () {
                   Navigator.push(
                     context,
                     CupertinoPageRoute(
-                      builder: ((context) => const RadiologyScans()),
+                      builder: ((context) => DocumentListScreen(collectionName: 'patients',)),
                     ),
                   );
                 },
-                mainText: AppLocalizations.of(context)!.radiology,
+                mainText: 'New Order',
                 subText: '',
                 width: 400,
                 height: 120,
               ),
+
               const SizedBox(height: 7),
-              Tiles(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: ((context) => const LabTests()),
-                    ),
-                  );
-                },
-                mainText: AppLocalizations.of(context)!.lab_title,
-                subText: '',
-                width: 400,
-                height: 120,
-              ),
-              const SizedBox(height: 7),
+
               Tiles(
                 onTap: () {
                   Navigator.push(
@@ -120,7 +107,7 @@ class _OrderingSystemState extends State<OrderingSystem> {
                 width: 400,
                 height: 120,
               ),
-              const SizedBox(height: 80),
+              
             ],
           ),
         ),

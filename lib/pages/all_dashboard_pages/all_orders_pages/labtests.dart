@@ -4,7 +4,8 @@ import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LabTests extends StatefulWidget {
-  const LabTests({super.key});
+  final DocumentSnapshot document;
+  const LabTests({super.key,required this.document});
 
   @override
   State<LabTests> createState() => _LabTestsState();
@@ -61,7 +62,7 @@ class _LabTestsState extends State<LabTests> {
                 ),
                 Tiles(
                   onTap: () {
-                    _showOrderDetailsDialog('Blood Test', "Laboratory");
+                    _showOrderDetailsDialog(widget.document,'Blood Test', "Laboratory");
                   },
                   mainText: AppLocalizations.of(context)!.blood_test,
                   subText: '',
@@ -71,7 +72,7 @@ class _LabTestsState extends State<LabTests> {
                 const SizedBox(height: 7),
                 Tiles(
                   onTap: () {
-                    _showOrderDetailsDialog('Urine Sample', "Laboratory");
+                    _showOrderDetailsDialog(widget.document,'Urine Sample', "Laboratory");
                   },
                   mainText: AppLocalizations.of(context)!.urine_sample,
                   subText: '',
@@ -81,7 +82,7 @@ class _LabTestsState extends State<LabTests> {
                 const SizedBox(height: 7),
                 Tiles(
                   onTap: () {
-                    _showOrderDetailsDialog('Stool Sample', 'Laboratory');
+                    _showOrderDetailsDialog(widget.document,'Stool Sample', 'Laboratory');
                   },
                   mainText: AppLocalizations.of(context)!.stool_sample,
                   subText: '',
@@ -91,7 +92,7 @@ class _LabTestsState extends State<LabTests> {
                 const SizedBox(height: 7),
                 Tiles(
                   onTap: () {
-                    _showOrderDetailsDialog('Other', 'Laboratory');
+                    _showOrderDetailsDialog(widget.document,'Other', 'Laboratory');
                   },
                   mainText: AppLocalizations.of(context)!.other,
                   subText: '',
@@ -144,8 +145,8 @@ class _LabTestsState extends State<LabTests> {
   }
 
   //asks user for order details
-  void _showOrderDetailsDialog(String orderType, String department) {
-    String patientName = '';
+  void _showOrderDetailsDialog(DocumentSnapshot document, String orderType, String department) {
+    String patientName = document.get('firstName') + ' ' + document.get('lastName');
     String orderDetails = '';
     String testingField = '';
     int? selectedInt;
@@ -160,16 +161,6 @@ class _LabTestsState extends State<LabTests> {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                TextField(
-                  maxLines: null,
-                  style: const TextStyle(fontSize: 20),
-                  decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context)!.patient_name,
-                      border: OutlineInputBorder()),
-                  onChanged: (value) {
-                    patientName = value;
-                  },
-                ),
                 const SizedBox(height: 7),
                 TextField(
                   maxLines: null,

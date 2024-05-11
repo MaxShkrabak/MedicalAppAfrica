@@ -6,7 +6,8 @@ import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RadiologyScans extends StatefulWidget {
-  const RadiologyScans({super.key});
+  final DocumentSnapshot document;
+  const RadiologyScans({super.key, required this.document});
 
   @override
   State<RadiologyScans> createState() => _RadiologyScansState();
@@ -66,7 +67,7 @@ class _RadiologyScansState extends State<RadiologyScans> {
                 ),
                 Tiles(
                   onTap: () {
-                    _showOrderDetailsDialog('X-ray', 'Radiology');
+                    _showOrderDetailsDialog(widget.document, 'X-ray', 'Radiology');
                   },
                   mainText: AppLocalizations.of(context)!.x_ray,
                   subText: '',
@@ -76,7 +77,7 @@ class _RadiologyScansState extends State<RadiologyScans> {
                 const SizedBox(height: 7),
                 Tiles(
                   onTap: () {
-                    _showOrderDetailsDialog('CT Scan', 'Radiology');
+                    _showOrderDetailsDialog(widget.document,'CT Scan', 'Radiology');
                   },
                   mainText: AppLocalizations.of(context)!.ct_scan,
                   subText: '',
@@ -86,7 +87,7 @@ class _RadiologyScansState extends State<RadiologyScans> {
                 const SizedBox(height: 7),
                 Tiles(
                   onTap: () {
-                    _showOrderDetailsDialog('MRI', 'Radiology');
+                    _showOrderDetailsDialog(widget.document, 'MRI', 'Radiology');
                   },
                   mainText: AppLocalizations.of(context)!.mri,
                   subText: '',
@@ -96,7 +97,7 @@ class _RadiologyScansState extends State<RadiologyScans> {
                 const SizedBox(height: 7),
                 Tiles(
                   onTap: () {
-                    _showOrderDetailsDialog('Other', 'Radiology');
+                    _showOrderDetailsDialog(widget.document, 'Other', 'Radiology');
                   },
                   mainText: AppLocalizations.of(context)!.other,
                   subText: '',
@@ -145,8 +146,8 @@ class _RadiologyScansState extends State<RadiologyScans> {
   }
 
   //asks user for order details
-  void _showOrderDetailsDialog(String orderType, String department) {
-    String patientName = '';
+  void _showOrderDetailsDialog(DocumentSnapshot document, String orderType, String department) {
+    String patientName = document.get('firstName') + ' ' + document.get('lastName');
     String orderDetails = '';
     String areaToScan = '';
     int? selectedInt;
@@ -159,16 +160,7 @@ class _RadiologyScansState extends State<RadiologyScans> {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                TextField(
-                  maxLines: null,
-                  style: const TextStyle(fontSize: 20),
-                  decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context)!.patient_name,
-                      border: const OutlineInputBorder()),
-                  onChanged: (value) {
-                    patientName = value;
-                  },
-                ),
+                
                 const SizedBox(height: 7),
                 TextField(
                   maxLines: null,
@@ -234,4 +226,5 @@ class _RadiologyScansState extends State<RadiologyScans> {
       },
     );
   }
+  
 }
