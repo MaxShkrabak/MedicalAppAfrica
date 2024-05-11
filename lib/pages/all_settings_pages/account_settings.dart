@@ -8,8 +8,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:path/path.dart' show basename;
+
 
 class AccountSettings extends StatefulWidget {
   const AccountSettings({super.key});
@@ -21,6 +23,7 @@ class AccountSettings extends StatefulWidget {
 class _AccountSettingsState extends State<AccountSettings> {
   Uint8List? _image;
   String? imageUrl;
+  String? uid;
   String? userRole;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
@@ -37,7 +40,7 @@ class _AccountSettingsState extends State<AccountSettings> {
   //fetches users details stored in firebase
   Future<void> fetchUserData() async {
     try {
-      String uid = FirebaseAuth.instance.currentUser!.uid;
+      uid = FirebaseAuth.instance.currentUser!.uid;
       DocumentSnapshot<Map<String, dynamic>> userData = await FirebaseFirestore
           .instance
           .collection('accounts')
@@ -68,6 +71,27 @@ class _AccountSettingsState extends State<AccountSettings> {
   bool isValidPhoneNumber(String phoneNumber) {
     final phoneRegex = RegExp(r'^\(\d{3}\) \d{3}-\d{4}$');
     return phoneRegex.hasMatch(phoneNumber);
+  }
+
+  Future<void> _uploadImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image == null) {
+      return;
+    }
+    final File file = File(image.path);
+    final String fileName = basename(file.path);
+    final Reference ref = FirebaseStorage.instance.ref().child(fileName);
+    await ref.putFile(file);
+    final String url = await ref.getDownloadURL();
+    //Also set the patients field to the new image URL in the firestore
+    await FirebaseFirestore.instance
+        .collection('accounts')
+        .doc(uid)
+        .update({'imageURL': url});
+    setState(() {
+      imageUrl = url;
+    });
   }
 
   @override
@@ -320,7 +344,7 @@ class _AccountSettingsState extends State<AccountSettings> {
                 Expanded(
                   child: InkWell(
                     onTap: () {
-                      _pickImageFromGallery();
+                      _uploadImage();
                     },
                     child: SizedBox(
                       child: Column(
@@ -338,7 +362,7 @@ class _AccountSettingsState extends State<AccountSettings> {
                 Expanded(
                   child: InkWell(
                     onTap: () {
-                      _pickImageFromCamera();
+                      ();
                     },
                     child: SizedBox(
                       child: Column(
@@ -361,65 +385,11 @@ class _AccountSettingsState extends State<AccountSettings> {
     );
   }
 
-  // Function to pick image from gallery
-  Future _pickImageFromGallery() async {
-    final returnImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (returnImage == null) return;
-    setState(() {
-      _image = File(returnImage.path).readAsBytesSync();
-    });
-  }
 
-  // Function to pick image from camera
-  Future _pickImageFromCamera() async {
-    final returnImage =
-        await ImagePicker().pickImage(source: ImageSource.camera);
-    if (returnImage == null) return;
-    setState(() {
-      _image = File(returnImage.path).readAsBytesSync();
-    });
-  }
+  
+  
 
-  // Function to upload image to Firebase Storage
-  Future<void> uploadImageToFirebase() async {
-    try {
-      if (_image == null) return;
 
-      final firebase_storage.Reference ref = firebase_storage
-          .FirebaseStorage.instance
-          .ref()
-          .child('images')
-          .child('image.jpg');
-
-      await ref.putData(_image!);
-
-      // Get the download URL for the uploaded image
-      String downloadURL = await ref.getDownloadURL();
-
-      // Update the UI to display the uploaded image
-      setState(() {
-        imageUrl = downloadURL;
-      });
-
-      // Update the user's document in Firestore with the image URL
-      updateUserImageUrlInFirestore(downloadURL);
-    } catch (e) {
-      print('Error uploading image: $e');
-    }
-  }
-
-  // Function to update user's document in Firestore with image URL
-  Future<void> updateUserImageUrlInFirestore(String imageUrl) async {
-    try {
-      String uid = FirebaseAuth.instance.currentUser!.uid;
-      await FirebaseFirestore.instance.collection('accounts').doc(uid).update({
-        'imageURL': imageUrl,
-      });
-    } catch (error) {
-      print('Error updating user image URL in Firestore: $error');
-    }
-  }
 
   //Updates users new data in firestore
   void saveUserData() {
@@ -432,7 +402,7 @@ class _AccountSettingsState extends State<AccountSettings> {
     }).then((_) {
       print("Data updated successfully!");
       if (_image != null) {
-        uploadImageToFirebase();
+        ();
       }
       // Shows success message
       showSuccessMessage(context);

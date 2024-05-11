@@ -5,16 +5,24 @@ import 'package:intl/intl.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'schedule_page.dart';
 import 'dart:async';
+import 'package:africa_med_app/pages/all_dashboard_pages/all_patients_pages/patient_view_page.dart';
+
 
 class Appointment {
   final DateTime dateTime;
   final String meetingDetails;
   final String timeSlot;
+  final String? patientName;
+  final String? patientUID;
+  final String? patientimageURL;
 
   Appointment(
       {required this.dateTime,
       required this.meetingDetails,
-      required this.timeSlot});
+      required this.timeSlot, 
+      this.patientName, 
+      this.patientimageURL,
+      this.patientUID});
 }
 
 class AppointmentsPage extends StatelessWidget {
@@ -95,6 +103,9 @@ class AppointmentsPage extends StatelessWidget {
                   dateTime: (data['date'] as Timestamp).toDate(),
                   meetingDetails: data['meetingDetails'] ?? '',
                   timeSlot: data['timeSlot'] ?? '',
+                  patientName: data['patientName'] ?? '',
+                  patientimageURL: data['patientimageURL'] ?? '',
+                  patientUID: data['patientUID'] ?? '',
                 );
               }).toList();
 
@@ -162,6 +173,31 @@ class AppointmentsPage extends StatelessWidget {
                                   ),
                                 ],
                               ),
+                              trailing: appointment.patientName != ''
+                                ? InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => PatientViewPage(uid: appointment.patientUID!),
+                                        ),
+                                      );
+                                    },
+                                    child: Column(
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundImage: NetworkImage(appointment.patientimageURL!),
+                                        ),
+                                        Text(appointment.patientName!,
+                                          style: const TextStyle(
+                                            color: Color.fromARGB(255, 143, 226,
+                                                247), //color of meeting details
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                )
+                                : null,
                             ),
                           ),
                           //cancel appointment icon
