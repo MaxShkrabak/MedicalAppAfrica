@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'patient.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddPatientPage extends StatefulWidget {
   final Function updatePatientsCallback;
@@ -48,9 +48,9 @@ class _AddPatientPageState extends State<AddPatientPage> {
   final TextEditingController _caregiverController = TextEditingController();
   //mask text input formatter for phone numbers
   final MaskTextInputFormatter phoneFormatter = MaskTextInputFormatter(
-    mask: '(###) ###-####', 
+    mask: '(###) ###-####',
     filter: {"#": RegExp(r'[0-9]')},
-    );
+  );
 
   signUp(BuildContext context) async {
     final String firstName = _firstNameController.text;
@@ -76,9 +76,8 @@ class _AddPatientPageState extends State<AddPatientPage> {
     final String pastMedications = _pastMedicationsController.text;
     final String caregiver = _caregiverController.text;
 
-
     final String patient = '$firstName $middleName $lastName';
-    
+
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     DocumentReference ref = await firestore.collection('patients').add({
       'lowerCaseSearchTokens':
@@ -104,13 +103,10 @@ class _AddPatientPageState extends State<AddPatientPage> {
       'currentMedications': currentMedications,
       'pastMedications': pastMedications,
       'caregiver': caregiver,
-      
     });
-    
 
     // Create a new patient object
     final Patient newPatient = Patient(
-
       uid: ref.id,
       lowerCaseSearchTokens:
           '${firstName.toLowerCase()} ${middleName.toLowerCase()} ${lastName.toLowerCase()}',
@@ -169,12 +165,15 @@ class _AddPatientPageState extends State<AddPatientPage> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Add Patient'),
-          bottom: const TabBar(
+          title: Padding(
+            padding: const EdgeInsets.only(left: 75),
+            child: Text(AppLocalizations.of(context)!.add_patient),
+          ),
+          bottom: TabBar(
             tabs: [
-              Tab(text: 'Personal Info'),
-              Tab(text: 'Contact Info'),
-              Tab(text: 'Medical Info'),
+              Tab(text: AppLocalizations.of(context)!.personal_info),
+              Tab(text: AppLocalizations.of(context)!.contact_info),
+              Tab(text: AppLocalizations.of(context)!.med_info),
             ],
           ),
         ),
@@ -189,42 +188,42 @@ class _AddPatientPageState extends State<AddPatientPage> {
                     AddPatientTFs(
                         onlyChars: true,
                         controller: _firstNameController,
-                        hintText: "Enter First Name"),
+                        hintText: AppLocalizations.of(context)!.first_name),
                     const SizedBox(height: 12),
                     AddPatientTFs(
                         onlyChars: true,
                         controller: _middleNameController,
-                        hintText: "Enter Middle Name"),
+                        hintText: AppLocalizations.of(context)!.middle_name),
                     const SizedBox(height: 12),
                     AddPatientTFs(
                         onlyChars: true,
                         controller: _lastNameController,
-                        hintText: "Enter Last Name"),
+                        hintText: AppLocalizations.of(context)!.last_name),
                     const SizedBox(height: 12),
                     AddPatientTFs(
                         onlyChars: false,
                         controller: _dobController,
-                        hintText: "Date of Birth (YYYY/MM/DD)"),
+                        hintText: AppLocalizations.of(context)!.dob),
                     const SizedBox(height: 12),
                     AddPatientTFs(
                         onlyChars: true,
                         controller: _bloodGroupController,
-                        hintText: "Enter Blood Group"),
+                        hintText: AppLocalizations.of(context)!.blood_group),
                     const SizedBox(height: 12),
                     AddPatientTFs(
                         onlyChars: true,
                         controller: _rhFactorController,
-                        hintText: "Enter RH factor"),
+                        hintText: AppLocalizations.of(context)!.rh_fact),
                     const SizedBox(height: 12),
                     AddPatientTFs(
                         onlyChars: true,
                         controller: _maritalStatusController,
-                        hintText: "Enter Marital Status"),
+                        hintText: AppLocalizations.of(context)!.marrital),
                     const SizedBox(height: 12),
                     AddPatientTFs(
                         onlyChars: true,
                         controller: _preferredLanguageController,
-                        hintText: "Enter Preferred Language"),
+                        hintText: AppLocalizations.of(context)!.pref_language),
                     const SizedBox(height: 16),
                     // forward button that takes care to avoid issues with DefaultTabController context bugs
                     Builder(
@@ -235,7 +234,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                             onPressed: () {
                               DefaultTabController.of(context)!.animateTo(1);
                             },
-                            child: const Text('Next'),
+                            child: Text(AppLocalizations.of(context)!.next_but),
                           ),
                         );
                       },
@@ -253,44 +252,45 @@ class _AddPatientPageState extends State<AddPatientPage> {
                       onlyChars: false,
                       controller: _homePhoneController,
                       maskFormatters: [phoneFormatter],
-                      hintText: "Enter Home Phone"),
+                      hintText: AppLocalizations.of(context)!.home_num),
                   const SizedBox(height: 12),
                   AddPatientTFs(
                       onlyChars: false,
                       controller: _phoneController,
                       maskFormatters: [phoneFormatter],
-                      hintText: "Enter Phone Number"),
+                      hintText: AppLocalizations.of(context)!.phone_number),
                   const SizedBox(height: 12),
                   AddPatientTFs(
                       onlyChars: false,
                       controller: _emailController,
-                      hintText: "Enter Email Address"),
+                      hintText: AppLocalizations.of(context)!.email_address),
                   const SizedBox(height: 24),
-                  const Text(
-                    'Emergency Contact',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  Text(
+                    AppLocalizations.of(context)!.emergency_con,
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 12),
                   AddPatientTFs(
                       onlyChars: true,
                       controller: _emergencyFirstNameController,
-                      hintText: "Enter First Name"),
+                      hintText: AppLocalizations.of(context)!.first_name),
                   const SizedBox(height: 12),
                   AddPatientTFs(
                       onlyChars: true,
                       controller: _emergencyLastNameController,
-                      hintText: "Enter Last Name"),
+                      hintText: AppLocalizations.of(context)!.last_name),
                   const SizedBox(height: 12),
                   AddPatientTFs(
                       onlyChars: true,
                       controller: _relationshipController,
-                      hintText: "Enter Relationship"),
+                      hintText: AppLocalizations.of(context)!.relation),
                   const SizedBox(height: 12),
                   AddPatientTFs(
                       onlyChars: false,
                       controller: _emergencyPhoneController,
                       maskFormatters: [phoneFormatter],
-                      hintText: "Enter Phone Number"),
+                      hintText: AppLocalizations.of(context)!.phone_number),
                   const SizedBox(height: 16),
                   //forward and back buttons
                   Builder(
@@ -302,13 +302,13 @@ class _AddPatientPageState extends State<AddPatientPage> {
                             onPressed: () {
                               DefaultTabController.of(context)!.animateTo(0);
                             },
-                            child: const Text('Back'),
+                            child: Text(AppLocalizations.of(context)!.back_but),
                           ),
                           ElevatedButton(
                             onPressed: () {
                               DefaultTabController.of(context)!.animateTo(2);
                             },
-                            child: const Text('Next'),
+                            child: Text(AppLocalizations.of(context)!.next_but),
                           ),
                         ],
                       );
@@ -325,32 +325,32 @@ class _AddPatientPageState extends State<AddPatientPage> {
                   AddPatientTFs(
                       onlyChars: true,
                       controller: _knownMedicalIllnessesController,
-                      hintText: "Enter Known Medical Illnesses"),
+                      hintText: AppLocalizations.of(context)!.known_ill),
                   const SizedBox(height: 12),
                   AddPatientTFs(
                       onlyChars: true,
                       controller: _previousMedicalIllnessesController,
-                      hintText: "Enter Previous Medical Illnesses"),
+                      hintText: AppLocalizations.of(context)!.prev_ill),
                   const SizedBox(height: 12),
                   AddPatientTFs(
                       onlyChars: true,
                       controller: _allergiesController,
-                      hintText: "Enter Known Allergies"),
+                      hintText: AppLocalizations.of(context)!.allergies),
                   const SizedBox(height: 12),
                   AddPatientTFs(
                       onlyChars: true,
                       controller: _currentMedicationsController,
-                      hintText: "Enter Current Medications"),
+                      hintText: AppLocalizations.of(context)!.curr_medi),
                   const SizedBox(height: 12),
                   AddPatientTFs(
                       onlyChars: true,
                       controller: _pastMedicationsController,
-                      hintText: "Enter Past Medications"),
+                      hintText: AppLocalizations.of(context)!.past_medi),
                   const SizedBox(height: 60),
                   AddPatientTFs(
                       onlyChars: true,
                       controller: _caregiverController,
-                      hintText: "Signing as Primary Caregiver:"),
+                      hintText: AppLocalizations.of(context)!.signature),
                   const SizedBox(height: 16),
                   Align(
                     alignment: Alignment.bottomRight,
@@ -365,9 +365,9 @@ class _AddPatientPageState extends State<AddPatientPage> {
 
                           signUp(context);
                         },
-                        child: const Text(
-                          'Finish',
-                          style: TextStyle(color: Colors.white),
+                        child: Text(
+                          AppLocalizations.of(context)!.finish,
+                          style: const TextStyle(color: Colors.white),
                         ),
                       ),
                     ),

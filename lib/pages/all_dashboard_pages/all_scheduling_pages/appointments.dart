@@ -6,7 +6,7 @@ import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'schedule_page.dart';
 import 'dart:async';
 import 'package:africa_med_app/pages/all_dashboard_pages/all_patients_pages/patient_view_page.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Appointment {
   final DateTime dateTime;
@@ -19,8 +19,8 @@ class Appointment {
   Appointment(
       {required this.dateTime,
       required this.meetingDetails,
-      required this.timeSlot, 
-      this.patientName, 
+      required this.timeSlot,
+      this.patientName,
       this.patientimageURL,
       this.patientUID});
 }
@@ -34,11 +34,11 @@ class AppointmentsPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Padding(
-          padding: EdgeInsets.only(left: 62),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 62),
           child: Text(
-            'Appointments',
-            style: TextStyle(color: Colors.white),
+            AppLocalizations.of(context)!.appointments,
+            style: const TextStyle(color: Colors.white),
           ),
         ),
         backgroundColor: const Color.fromARGB(
@@ -158,9 +158,10 @@ class AppointmentsPage extends StatelessWidget {
                                   ),
                                   //for displaying counter for limited amount of appointments
                                   CountdownTimer(
-                                    endWidget: const Text(
-                                      "On-Going meeting or Completed.",
-                                      style: TextStyle(color: Colors.red),
+                                    endWidget: Text(
+                                      AppLocalizations.of(context)!
+                                          .ongoing_meet,
+                                      style: const TextStyle(color: Colors.red),
                                     ),
                                     endTime: appointment
                                         .dateTime.millisecondsSinceEpoch,
@@ -174,30 +175,37 @@ class AppointmentsPage extends StatelessWidget {
                                 ],
                               ),
                               trailing: appointment.patientName != ''
-                                ? InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => PatientViewPage(uid: appointment.patientUID!),
-                                        ),
-                                      );
-                                    },
-                                    child: Column(
-                                      children: [
-                                        CircleAvatar(
-                                          backgroundImage: NetworkImage(appointment.patientimageURL!),
-                                        ),
-                                        Text(appointment.patientName!,
-                                          style: const TextStyle(
-                                            color: Color.fromARGB(255, 143, 226,
-                                                247), //color of meeting details
+                                  ? InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                PatientViewPage(
+                                                    uid: appointment
+                                                        .patientUID!),
                                           ),
-                                        ),
-                                      ],
-                                    )
-                                )
-                                : null,
+                                        );
+                                      },
+                                      child: Column(
+                                        children: [
+                                          CircleAvatar(
+                                            backgroundImage: NetworkImage(
+                                                appointment.patientimageURL!),
+                                          ),
+                                          Text(
+                                            appointment.patientName!,
+                                            style: const TextStyle(
+                                              color: Color.fromARGB(
+                                                  255,
+                                                  143,
+                                                  226,
+                                                  247), //color of meeting details
+                                            ),
+                                          ),
+                                        ],
+                                      ))
+                                  : null,
                             ),
                           ),
                           //cancel appointment icon
@@ -236,23 +244,23 @@ class AppointmentsPage extends StatelessWidget {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Cancel Appointment'),
-          content: const SingleChildScrollView(
+          title: Text(AppLocalizations.of(context)!.cancel_app),
+          content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Are you sure you want to cancel this appointment?'),
+                Text(AppLocalizations.of(context)!.conf_cancel_app),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(context)!.cancel_button),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: const Text('Yes, Cancel'),
+              child: Text(AppLocalizations.of(context)!.yes_cancel),
               onPressed: () {
                 _cancelAppointment(appointment, userId);
                 Navigator.of(context).pop();

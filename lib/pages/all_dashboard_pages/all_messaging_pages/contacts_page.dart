@@ -97,7 +97,7 @@ class _ContactsPageState extends State<ContactsPage> {
           title: Padding(
             padding: const EdgeInsets.only(left: 85),
             child: Text(AppLocalizations.of(context)!.contacts,
-                style: TextStyle(color: Colors.white)),
+                style: const TextStyle(color: Colors.white)),
           ),
           backgroundColor: const Color.fromARGB(159, 144, 79,
               230), //old: const Color.fromARGB(156, 102, 134, 161),

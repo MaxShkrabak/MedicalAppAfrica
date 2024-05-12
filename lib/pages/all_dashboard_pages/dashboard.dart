@@ -223,7 +223,7 @@ class _DashBoardState extends State<DashBoard> {
                 ),
               );
             },
-            mainText: 'Patients',
+            mainText: AppLocalizations.of(context)!.patients,
             subText: '',
             width: 400,
             height: 120,
@@ -259,7 +259,8 @@ class _DashBoardState extends State<DashBoard> {
                           ),
                         );
                       },
-                      mainText: "Appointments\nNext up: ",
+                      mainText:
+                          AppLocalizations.of(context)!.appointment_nextup,
                       subText: DateFormat('MMMM d, y - HH:mm')
                           .format(nextAppointment.dateTime.toLocal()),
                       width: 400,
@@ -341,9 +342,9 @@ class _DashBoardState extends State<DashBoard> {
               onPressed: () {
                 signUserOut();
               },
-              child: const Text(
-                "Sign Out",
-                style: TextStyle(
+              child: Text(
+                AppLocalizations.of(context)!.sign_out,
+                style: const TextStyle(
                   color: Color.fromARGB(180, 0, 0, 0),
                   fontSize: 32,
                   fontWeight: FontWeight.bold,

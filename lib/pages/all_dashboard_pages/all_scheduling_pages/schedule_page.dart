@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:africa_med_app/pages/all_dashboard_pages/all_patients_pages/Patient.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Schedule extends StatefulWidget {
   const Schedule({super.key, this.patient});
@@ -46,11 +47,11 @@ class _ScheduleState extends State<Schedule> {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(
             159, 144, 79, 230), //old: const Color.fromARGB(161, 88, 82, 173),
-        title: const Padding(
-          padding: EdgeInsets.only(left: 90),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 90),
           child: Text(
-            'Schedule',
-            style: TextStyle(color: Colors.white),
+            AppLocalizations.of(context)!.schedule_title,
+            style: const TextStyle(color: Colors.white),
           ),
         ),
         leading: IconButton(
@@ -166,8 +167,9 @@ class _ScheduleState extends State<Schedule> {
                         _showMeetingDetailsDialog(timeSlot);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('This time slot is already taken'),
+                          SnackBar(
+                            content: Text(
+                                AppLocalizations.of(context)!.timeslot_taken),
                           ),
                         );
                       }
@@ -275,13 +277,13 @@ class _ScheduleState extends State<Schedule> {
       builder: (BuildContext context) {
         return SingleChildScrollView(
           child: AlertDialog(
-            title: const Text('Meeting Details'),
+            title: Text(AppLocalizations.of(context)!.meet_details),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
-                  decoration:
-                      const InputDecoration(labelText: 'Meeting Details'),
+                  decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.meet_details),
                   onChanged: (value) {
                     meetingDetails = value;
                   },
@@ -293,14 +295,14 @@ class _ScheduleState extends State<Schedule> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('Cancel'),
+                child: Text(AppLocalizations.of(context)!.cancel_button),
               ),
               TextButton(
                 onPressed: () {
                   _scheduleAppointment(timeSlot, meetingDetails);
                   Navigator.of(context).pop();
                 },
-                child: const Text('Confirm'),
+                child: Text(AppLocalizations.of(context)!.confirm_button),
               ),
             ],
           ),
@@ -329,8 +331,9 @@ class _ScheduleState extends State<Schedule> {
         'date': appointmentDateTime,
         'timeSlot': timeSlot,
         'meetingDetails': meetingDetails,
-        if(widget.patient != null) ...{
-          'patientName': widget.patient!.firstName + ' ' + widget.patient!.lastName,
+        if (widget.patient != null) ...{
+          'patientName':
+              '${widget.patient!.firstName} ${widget.patient!.lastName}',
           'patientimageURL': widget.patient!.imageURL,
           'patientUID': widget.patient!.uid,
         }
@@ -341,10 +344,10 @@ class _ScheduleState extends State<Schedule> {
         _timeSlotAvailabilityMap[_selectedDay]![timeSlot] = false;
       });
 
-      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Center(child: Text('Appointment scheduled successfully!')),
+        SnackBar(
+          content: Center(
+              child: Text(AppLocalizations.of(context)!.schedule_success)),
         ),
       );
 

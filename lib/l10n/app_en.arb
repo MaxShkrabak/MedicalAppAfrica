@@ -111,6 +111,23 @@
     "@area_of_interest": {
         "description": ""
     },
+    "new_order": "New Order",
+    "active_complete": "{active} Active \n {complete} Complete",
+    "@active_complete": {
+        "placeholders": {
+            "active":{
+                "type": "String"
+            },
+            "complete":{
+                "type": "String"
+            }
+        }
+    },
+
+    "select_patient": "Select a Patient",
+    "select_department": "Select Testing Department",
+    "no_docs": "No documents found.",
+
     
 
     "active": "Active",
@@ -341,9 +358,75 @@
         "description": ""
     },
     "delete": "Delete",
-    "@messaging": {
-        "description": ""
-    }
+    "sign_out": "Sign Out",
+
+
+    "add_patient": "Add Patient",
+    "med_info": "Medical Info",
+    "known_ill": "Known Medical Illnesses",
+    "prev_ill": "Previous Medical Illnesses",
+    "allergies": "Known Allergies",
+    "curr_medi": "Current Medications",
+    "past_medi": "Past Medications",
+    "signature": "Signature of Primary Caregiver",
+    "finish": "Finish",
+
+
+    "contact_info": "Contact Info",
+    "home_num": "Home Phone Number",
+    "email_address": "Email Address",
+    "relation": "Relationship",
+    "emergency_con": "Emergency Contact",
+    "back_but": "Back",
+    "next_but": "Next",
+
+
+    "personal_info": "Personal Info",
+    "middle_name": "Middle Name",
+    "dob": "Date of Birth (YYYY/MM/DD)",
+    "blood_group": "Blood Group",
+    "rh_fact": "RH Factor",
+    "marrital": "Marital Status",
+    "pref_language": "Preferred Language",
+    "date_of_birth": "Date of Birth",
+    
+
+    "patient_view": "View Patient",
+    "emer_first": "Emergency First Name",
+    "emer_last": "Emergency Last Name",
+    "emer_phone": "Emergency Phone",
+    "upload_image": "Upload Patient Image",
+    "schedule_app": "Schedule Appointment",
+    "no_data": "No data",
+
+    "patients": "Patients",
+    "search_patient": "Search Patients",
+    "prim_care": "Primary Caregiver",
+    "none": "None",
+    "none_found": "No patients found",
+    "conf_delete": "Confirm Delete",
+    "confirm_delete_patient": "Are you sure you want to delete this patient?",
+
+    "appointments": "Appointments",
+    "ongoing_meet": "On-Going meeting or Completed",
+    "cancel_app": "Cancel Appointment",
+    "conf_cancel_app": "Are you sure you want to cancel this appointment?",
+    "yes_cancel": "Yes, Cancel",
+    
+    "schedule_title": "Schedule",
+    "timeslot_taken": "This time slot is already taken",
+    "meet_details": "Meeting Details",
+    "schedule_success": "Appointment scheduled successfully!",
+
+    "appointment_nextup": "Appointments\nNext up:"
+    
+    
+
+
+
+    
+
+
     
     
 

@@ -10,22 +10,20 @@ import 'package:flutter/cupertino.dart';
 class DocumentListScreen extends StatelessWidget {
   final String collectionName;
 
-  DocumentListScreen({required this.collectionName});
+  const DocumentListScreen({super.key, required this.collectionName});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          iconTheme:
-              const IconThemeData(color: Colors.white), // back arrow color
-          backgroundColor: const Color.fromARGB(159, 144, 79, 230),
-          title: Padding(
-            padding: const EdgeInsets.only(left: 55),
-            child: Text('Select a Patient',
-                style: const TextStyle(color: Colors.white)),
-          ),
-
+        iconTheme: const IconThemeData(color: Colors.white), // back arrow color
+        backgroundColor: const Color.fromARGB(159, 144, 79, 230),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 55),
+          child: Text(AppLocalizations.of(context)!.select_patient,
+              style: const TextStyle(color: Colors.white)),
         ),
+      ),
       body: DocumentList(collectionName: collectionName),
     );
   }
@@ -34,7 +32,7 @@ class DocumentListScreen extends StatelessWidget {
 class DocumentList extends StatelessWidget {
   final String collectionName;
 
-  DocumentList({required this.collectionName});
+  const DocumentList({super.key, required this.collectionName});
 
   @override
   Widget build(BuildContext context) {
@@ -48,26 +46,28 @@ class DocumentList extends StatelessWidget {
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
 
         if (snapshot.data!.docs.isEmpty) {
           return Center(
-            child: Text('No documents found.'),
+            child: Text(AppLocalizations.of(context)!.no_docs),
           );
         }
 
         return ListView(
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
             return ListTile(
-              title: Text(document.get('firstName') + ' ' + document.get('lastName')),
+              title: Text(
+                  document.get('firstName') + ' ' + document.get('lastName')),
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DocumentDetailScreen(document: document),
+                    builder: (context) =>
+                        DocumentDetailScreen(document: document),
                   ),
                 );
               },
@@ -82,60 +82,57 @@ class DocumentList extends StatelessWidget {
 class DocumentDetailScreen extends StatelessWidget {
   final DocumentSnapshot document;
 
-  DocumentDetailScreen({required this.document});
+  const DocumentDetailScreen({super.key, required this.document});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          iconTheme:
-              const IconThemeData(color: Colors.white), // back arrow color
-          backgroundColor: const Color.fromARGB(159, 144, 79, 230),
-          title: Padding(
-            padding: const EdgeInsets.only(left: 5),
-            child: Text('Select Testing Department',
-                style: const TextStyle(color: Colors.white)),
-          ),
+        iconTheme: const IconThemeData(color: Colors.white), // back arrow color
+        backgroundColor: const Color.fromARGB(159, 144, 79, 230),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 5),
+          child: Text(AppLocalizations.of(context)!.select_department,
+              style: const TextStyle(color: Colors.white)),
         ),
+      ),
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
             const SizedBox(height: 7),
             Tiles(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: ((context) =>  RadiologyScans(document: document)),
-                    ),
-                  );
-                },
-                mainText: AppLocalizations.of(context)!.radiology,
-                subText: '',
-                width: 400,
-                height: 120,
-              ),
-              const SizedBox(height: 7),
-              Tiles(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: ((context) =>  LabTests(document: document)),
-                    ),
-                  );
-                },
-                mainText: AppLocalizations.of(context)!.lab_title,
-                subText: '',
-                width: 400,
-                height: 120,
-              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: ((context) => RadiologyScans(document: document)),
+                  ),
+                );
+              },
+              mainText: AppLocalizations.of(context)!.radiology,
+              subText: '',
+              width: 400,
+              height: 120,
+            ),
+            const SizedBox(height: 7),
+            Tiles(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: ((context) => LabTests(document: document)),
+                  ),
+                );
+              },
+              mainText: AppLocalizations.of(context)!.lab_title,
+              subText: '',
+              width: 400,
+              height: 120,
+            ),
           ],
         ),
       ),
     );
   }
-  
 }
-

@@ -67,7 +67,8 @@ class _RadiologyScansState extends State<RadiologyScans> {
                 ),
                 Tiles(
                   onTap: () {
-                    _showOrderDetailsDialog(widget.document, 'X-ray', 'Radiology');
+                    _showOrderDetailsDialog(
+                        widget.document, 'X-ray', 'Radiology');
                   },
                   mainText: AppLocalizations.of(context)!.x_ray,
                   subText: '',
@@ -77,7 +78,8 @@ class _RadiologyScansState extends State<RadiologyScans> {
                 const SizedBox(height: 7),
                 Tiles(
                   onTap: () {
-                    _showOrderDetailsDialog(widget.document,'CT Scan', 'Radiology');
+                    _showOrderDetailsDialog(
+                        widget.document, 'CT Scan', 'Radiology');
                   },
                   mainText: AppLocalizations.of(context)!.ct_scan,
                   subText: '',
@@ -87,7 +89,8 @@ class _RadiologyScansState extends State<RadiologyScans> {
                 const SizedBox(height: 7),
                 Tiles(
                   onTap: () {
-                    _showOrderDetailsDialog(widget.document, 'MRI', 'Radiology');
+                    _showOrderDetailsDialog(
+                        widget.document, 'MRI', 'Radiology');
                   },
                   mainText: AppLocalizations.of(context)!.mri,
                   subText: '',
@@ -97,7 +100,8 @@ class _RadiologyScansState extends State<RadiologyScans> {
                 const SizedBox(height: 7),
                 Tiles(
                   onTap: () {
-                    _showOrderDetailsDialog(widget.document, 'Other', 'Radiology');
+                    _showOrderDetailsDialog(
+                        widget.document, 'Other', 'Radiology');
                   },
                   mainText: AppLocalizations.of(context)!.other,
                   subText: '',
@@ -135,6 +139,7 @@ class _RadiologyScansState extends State<RadiologyScans> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content:
+              // ignore: use_build_context_synchronously
               Center(child: Text(AppLocalizations.of(context)!.order_success)),
         ),
       );
@@ -146,8 +151,10 @@ class _RadiologyScansState extends State<RadiologyScans> {
   }
 
   //asks user for order details
-  void _showOrderDetailsDialog(DocumentSnapshot document, String orderType, String department) {
-    String patientName = document.get('firstName') + ' ' + document.get('lastName');
+  void _showOrderDetailsDialog(
+      DocumentSnapshot document, String orderType, String department) {
+    String patientName =
+        document.get('firstName') + ' ' + document.get('lastName');
     String orderDetails = '';
     String areaToScan = '';
     int? selectedInt;
@@ -160,7 +167,6 @@ class _RadiologyScansState extends State<RadiologyScans> {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                
                 const SizedBox(height: 7),
                 TextField(
                   maxLines: null,
@@ -226,5 +232,4 @@ class _RadiologyScansState extends State<RadiologyScans> {
       },
     );
   }
-  
 }

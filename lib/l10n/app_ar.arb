@@ -1,7 +1,8 @@
 {
     "hello": "مرحبًا",
-    "welcome_back": "مرحبًا بعودتك!",
+    "welcome_back": "!مرحباً بعودتك",
     "dash_welcome": "،مرحبًا بعودتك",
+    "sign_out": "تسجيل الخروج",
     "first_name": "الاسم الأول",
     "last_name": "اسم العائلة",
     "email": "بريد إلكتروني",
@@ -73,8 +74,14 @@
     "mri": "التصوير بالرنين المغناطيسي",
     "radiology_details": "تفاصيل طلب الأشعة",
     "area_of_interest": "مجال الاهتمام",
+    "new_order": "طلبية جديدة",
+    "active_complete": "{active} نشط \n {complete} مكتمل",
 
-    "order_success": "تمت إضافة الطلب بنجاح!",
+    "select_patient": "اختر مريضاً",
+    "select_department": "اختر قسم الاختبارات",
+    "no_docs": ".لم يتم العثور على أي مستندات",
+
+    "order_success": "!تمت إضافة الطلب بنجاح",
     "lab_order_details": "تفاصيل طلب المختبر",
     "patient_name": "اسم المريض",
     "testing_field": "مجال الاختبار",
@@ -82,6 +89,61 @@
     "urgency": "الاستعجال",
     "urgency_type1": "صغير",
     "urgency_type2": "متوسط",
-    "urgency_type3": "عاجل"
+    "urgency_type3": "عاجل",
     
+    "add_patient": "إضافة مريض",
+    "med_info": "معلومات طبية",
+    "known_ill": "الأمراض الطبية المعروفة",
+    "prev_ill": "الأمراض الطبية السابقة",
+    "allergies": "الحساسية المعروفة",
+    "curr_medi": "الأدوية الحالية",
+    "past_medi": "أدخل الأدوية السابقة",
+    "signature": "الأدوية السابقة",
+    "finish": "مكتمل",
+
+    "contact_info": "معلومات الاتصال",
+    "home_num": "رقم هاتف المنزل",
+    "email_address": "عنوان البريد الإلكتروني",
+    "relation": "العلاقة",
+    "emergency_con": "الاتصال في حالات الطوارئ",
+    "back_but": "رجوع",
+    "next_but": "التالي",
+
+    "personal_info": "معلومات شخصية",
+    "middle_name": "الاسم الأوسط",
+    "dob": "(YYYY/MM/DD)تاريخ الميلاد",
+    "blood_group": "فصيلة الدم",
+    "rh_fact": "عامل ريسوس",
+    "marrital": "الحالة الاجتماعية",
+    "pref_language": "اللغة المفضلة",
+    "date_of_birth": "تاريخ الميلاد",
+
+    "patient_view": "عرض المريض",
+    "emer_first": "الاسم الأول للطوارئ",
+    "emer_last": "الاسم الأخير للطوارئ",
+    "emer_phone": "هاتف الطوارئ",
+    "upload_image": "تحميل صورة المريض",
+    "schedule_app": "جدولة المواعيد",
+    "no_data": "لا توجد بيانات",
+
+    "patients": "المرضى",
+    "search_patient": "البحث عن المرضى",
+    "prim_care": "مقدم الرعاية الأساسي",
+    "none": "لا يوجد",
+    "none_found": "لم يتم العثور على مرضى",
+    "conf_delete": "تأكيد الحذف",
+    "confirm_delete_patient": "هل أنت متأكد أنك تريد حذف هذا المريض؟",
+
+    "appointments": "التعيينات",
+    "ongoing_meet": "اجتماع جارٍ أو مكتمل",
+    "cancel_app": "إلغاء الموعد",
+    "conf_cancel_app": "هل أنت متأكد من رغبتك في إلغاء هذا الموعد؟",
+    "yes_cancel": "نعم، إلغاء",
+
+    "schedule_title": "جدول",
+    "timeslot_taken": "هذه الفترة الزمنية محجوزة بالفعل",
+    "meet_details": "تفاصيل الاجتماع",
+    "schedule_success": "!تم تحديد الموعد بنجاح",
+
+    "appointment_nextup": "التعيينات\n:التالي"
 }

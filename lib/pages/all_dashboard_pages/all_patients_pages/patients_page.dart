@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'patient_view_page.dart';
 import 'patient.dart';
 import 'add_patient_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PatientList extends StatefulWidget {
   const PatientList({super.key});
@@ -108,14 +109,14 @@ class _PatientListState extends State<PatientList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Row(
+        title: Row(
           children: [
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                   left: 90.0), //space between text and back button
               child: Text(
-                'Patients',
-                style: TextStyle(color: Colors.white),
+                AppLocalizations.of(context)!.patients,
+                style: const TextStyle(color: Colors.white),
               ),
             ),
           ],
@@ -168,7 +169,7 @@ class _PatientListState extends State<PatientList> {
                       style: const TextStyle(color: Colors.black),
                       cursorColor: Colors.black, //cursor color
                       decoration: InputDecoration(
-                        labelText: 'Search Patients',
+                        labelText: AppLocalizations.of(context)!.search_patient,
                         labelStyle:
                             const TextStyle(color: Colors.black), //text color
                         enabledBorder: const UnderlineInputBorder(
@@ -195,10 +196,11 @@ class _PatientListState extends State<PatientList> {
               ),
               Expanded(
                 child: _searchResults.isEmpty
-                    ? const Center(
+                    ? Center(
                         child: Text(
-                        'No patients found',
-                        style: TextStyle(color: Color.fromARGB(180, 0, 0, 0)),
+                        AppLocalizations.of(context)!.none_found,
+                        style: const TextStyle(
+                            color: Color.fromARGB(180, 0, 0, 0)),
                       ))
                     : ListView.builder(
                         itemCount: _searchResults.length,
@@ -233,9 +235,10 @@ class _PatientListState extends State<PatientList> {
                                   children: [
                                     Column(
                                       children: [
-                                        const Text(
-                                          "Primary Caregiver",
-                                          style: TextStyle(
+                                        Text(
+                                          AppLocalizations.of(context)!
+                                              .prim_care,
+                                          style: const TextStyle(
                                               color: Color.fromARGB(
                                                   255, 149, 247, 152),
                                               fontSize: 13,
@@ -263,16 +266,21 @@ class _PatientListState extends State<PatientList> {
                                           context: context,
                                           builder: (BuildContext context) {
                                             return AlertDialog(
-                                              title:
-                                                  const Text('Confirm Delete'),
-                                              content: const Text(
-                                                  'Are you sure you want to delete this patient?'),
+                                              title: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .conf_delete),
+                                              content: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .confirm_delete_patient),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () {
                                                     Navigator.pop(context);
                                                   },
-                                                  child: const Text('Cancel'),
+                                                  child: Text(
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .cancel_button),
                                                 ),
                                                 TextButton(
                                                   onPressed: () {
@@ -298,7 +306,10 @@ class _PatientListState extends State<PatientList> {
                                                       //"Path is empty: $e");
                                                     }
                                                   },
-                                                  child: const Text('Delete'),
+                                                  child: Text(
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .delete),
                                                 ),
                                               ],
                                             );

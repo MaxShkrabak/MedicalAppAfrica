@@ -8,9 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:africa_med_app/pages/all_dashboard_pages/all_scheduling_pages/schedule_page.dart';
 import 'dart:io';
 import 'package:path/path.dart' show basename;
-
-
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PatientViewPage extends StatefulWidget {
   const PatientViewPage({super.key, required this.uid});
@@ -57,8 +55,6 @@ class _PatientViewPageState extends State<PatientViewPage> {
       _patient.imageURL = url;
     });
   }
-
-
 
   Future<Patient> fetchPatient(String uid) async {
     DocumentSnapshot documentSnapshot =
@@ -126,9 +122,9 @@ class _PatientViewPageState extends State<PatientViewPage> {
             return Scaffold(
               appBar: AppBar(
                 titleSpacing: 85.0, // Space between back arrow and title
-                title: const Text(
-                  'Patient View',
-                  style: TextStyle(color: Colors.white),
+                title: Text(
+                  AppLocalizations.of(context)!.patient_view,
+                  style: const TextStyle(color: Colors.white),
                 ),
                 backgroundColor: const Color.fromARGB(161, 88, 82, 173),
                 iconTheme: const IconThemeData(color: Colors.white),
@@ -168,7 +164,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       ),
                     ),
                     _buildEditableTile(
-                      title: 'First Name',
+                      title: AppLocalizations.of(context)!.first_name,
                       value: _patient.firstName,
                       onChanged: (value) {
                         setState(() {
@@ -177,7 +173,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       },
                     ),
                     _buildEditableTile(
-                      title: 'Middle Name',
+                      title: AppLocalizations.of(context)!.middle_name,
                       value: _patient.middleName,
                       onChanged: (value) {
                         setState(() {
@@ -186,7 +182,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       },
                     ),
                     _buildEditableTile(
-                      title: 'Last Name',
+                      title: AppLocalizations.of(context)!.last_name,
                       value: _patient.lastName,
                       onChanged: (value) {
                         setState(() {
@@ -195,7 +191,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       },
                     ),
                     _buildEditableTile(
-                      title: 'Date of Birth',
+                      title: AppLocalizations.of(context)!.date_of_birth,
                       value: _patient.dob,
                       onChanged: (value) {
                         setState(() {
@@ -204,7 +200,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       },
                     ),
                     _buildEditableTile(
-                      title: 'Blood Group',
+                      title: AppLocalizations.of(context)!.blood_group,
                       value: _patient.bloodGroup,
                       onChanged: (value) {
                         setState(() {
@@ -213,7 +209,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       },
                     ),
                     _buildEditableTile(
-                      title: 'Rh Factor',
+                      title: AppLocalizations.of(context)!.rh_fact,
                       value: _patient.rhFactor,
                       onChanged: (value) {
                         setState(() {
@@ -222,7 +218,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       },
                     ),
                     _buildEditableTile(
-                      title: 'Marital Status',
+                      title: AppLocalizations.of(context)!.marrital,
                       value: _patient.maritalStatus,
                       onChanged: (value) {
                         setState(() {
@@ -231,7 +227,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       },
                     ),
                     _buildEditableTile(
-                      title: 'Preferred Language',
+                      title: AppLocalizations.of(context)!.pref_language,
                       value: _patient.preferredLanguage,
                       onChanged: (value) {
                         setState(() {
@@ -240,7 +236,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       },
                     ),
                     _buildEditableTile(
-                      title: 'Home Phone',
+                      title: AppLocalizations.of(context)!.home_num,
                       value: _patient.homePhone,
                       onChanged: (value) {
                         setState(() {
@@ -249,7 +245,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       },
                     ),
                     _buildEditableTile(
-                      title: 'Phone',
+                      title: AppLocalizations.of(context)!.phone_number,
                       value: _patient.phone,
                       onChanged: (value) {
                         setState(() {
@@ -258,7 +254,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       },
                     ),
                     _buildEditableTile(
-                      title: 'Email',
+                      title: AppLocalizations.of(context)!.email_address,
                       value: _patient.email,
                       onChanged: (value) {
                         setState(() {
@@ -267,7 +263,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       },
                     ),
                     _buildEditableTile(
-                      title: 'Emergency First Name',
+                      title: AppLocalizations.of(context)!.emer_first,
                       value: _patient.emergencyFirstName,
                       onChanged: (value) {
                         setState(() {
@@ -276,7 +272,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       },
                     ),
                     _buildEditableTile(
-                      title: 'Emergency Last Name',
+                      title: AppLocalizations.of(context)!.emer_last,
                       value: _patient.emergencyLastName,
                       onChanged: (value) {
                         setState(() {
@@ -285,7 +281,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       },
                     ),
                     _buildEditableTile(
-                      title: 'Relationship',
+                      title: AppLocalizations.of(context)!.relation,
                       value: _patient.relationship,
                       onChanged: (value) {
                         setState(() {
@@ -294,7 +290,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       },
                     ),
                     _buildEditableTile(
-                      title: 'Emergency Phone',
+                      title: AppLocalizations.of(context)!.emer_phone,
                       value: _patient.emergencyPhone,
                       onChanged: (value) {
                         setState(() {
@@ -303,7 +299,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       },
                     ),
                     _buildEditableTile(
-                      title: 'Known Medical Illnesses',
+                      title: AppLocalizations.of(context)!.known_ill,
                       value: _patient.knownMedicalIllnesses,
                       onChanged: (value) {
                         setState(() {
@@ -312,7 +308,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       },
                     ),
                     _buildEditableTile(
-                      title: 'Previous Medical Illnesses',
+                      title: AppLocalizations.of(context)!.prev_ill,
                       value: _patient.previousMedicalIllnesses,
                       onChanged: (value) {
                         setState(() {
@@ -321,7 +317,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       },
                     ),
                     _buildEditableTile(
-                      title: 'Allergies',
+                      title: AppLocalizations.of(context)!.allergies,
                       value: _patient.allergies,
                       onChanged: (value) {
                         setState(() {
@@ -330,7 +326,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       },
                     ),
                     _buildEditableTile(
-                      title: 'Current Medications',
+                      title: AppLocalizations.of(context)!.curr_medi,
                       value: _patient.currentMedications,
                       onChanged: (value) {
                         setState(() {
@@ -339,7 +335,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       },
                     ),
                     _buildEditableTile(
-                      title: 'Past Medications',
+                      title: AppLocalizations.of(context)!.past_medi,
                       value: _patient.pastMedications,
                       onChanged: (value) {
                         setState(() {
@@ -351,7 +347,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       padding: const EdgeInsets.all(16.0),
                       child: ElevatedButton(
                         onPressed: _uploadImage,
-                        child: const Text('Upload Image'),
+                        child: Text(AppLocalizations.of(context)!.upload_image),
                       ),
                     ),
                     Padding(
@@ -366,7 +362,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
                             ),
                           );
                         },
-                        child: const Text('Schedule Appointment'),
+                        child: Text(AppLocalizations.of(context)!.schedule_app),
                       ),
                     )
                   ],
@@ -374,7 +370,7 @@ class _PatientViewPageState extends State<PatientViewPage> {
               ),
             );
           } else {
-            return const Text('No data');
+            return Text(AppLocalizations.of(context)!.no_data);
           }
         } else {
           return const CircularProgressIndicator();
