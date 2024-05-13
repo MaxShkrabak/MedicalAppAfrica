@@ -53,6 +53,9 @@
     "stool_sample": "عينة براز",
     "other": "آخر",
 
+
+    "admin": "مدير ",
+
     "orders": "طلبات",
     "radiology": "الأشعة",
     "view_orders": "عرض الطلبات",

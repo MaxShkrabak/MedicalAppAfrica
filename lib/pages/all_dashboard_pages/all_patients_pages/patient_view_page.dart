@@ -30,11 +30,73 @@ class _PatientViewPageState extends State<PatientViewPage> {
     _patientFuture = fetchPatient(widget.uid);
   }
 
-  // Fetch Image method
+  void selectCamera() {
+    _uploadImage(true); // Camera option
+  }
 
-  Future<void> _uploadImage() async {
+  void showImagePickerOption(BuildContext context) {
+   showModalBottomSheet(
+     backgroundColor: Colors.blue[100],
+     context: context,
+     builder: (builder) {
+       return Padding(
+         padding: const EdgeInsets.all(18.0),
+         child: SizedBox(
+           width: MediaQuery.of(context).size.width,
+           height: MediaQuery.of(context).size.height / 4.5,
+           child: Row(
+             children: [
+               Expanded(
+                 child: InkWell(
+                   onTap: () {
+                     _uploadImage(false); // Gallery option
+                   },
+                   child: SizedBox(
+                     child: Column(
+                       children: [
+                         const Icon(
+                           Icons.image,
+                           size: 70,
+                         ),
+                         Text(AppLocalizations.of(context)!.gallery)
+                       ],
+                     ),
+                   ),
+                 ),
+               ),
+               Expanded(
+                 child: InkWell(
+                   onTap: selectCamera, // Select from camera option
+                   child: SizedBox(
+                     child: Column(
+                       children: [
+                         const Icon(
+                           Icons.camera_alt,
+                           size: 70,
+                         ),
+                         Text(AppLocalizations.of(context)!.camera)
+                       ],
+                     ),
+                   ),
+                 ),
+               ),
+             ],
+           ),
+         ),
+       );
+     },
+   );
+  }
+
+  Future<void> _uploadImage(bool isCamera) async {
     final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    final ImageSource? source = isCamera ? ImageSource.camera : ImageSource.gallery;
+
+    if (source == null) {
+      return;
+    }
+
+    final XFile? image = await picker.pickImage(source: source);
     if (image == null) {
       return;
     }
@@ -341,7 +403,9 @@ class _PatientViewPageState extends State<PatientViewPage> {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: ElevatedButton(
-                        onPressed: _uploadImage,
+                        onPressed: () {
+                          showImagePickerOption(context);
+                        },
                         child: Text(AppLocalizations.of(context)!.upload_image),
                       ),
                     ),

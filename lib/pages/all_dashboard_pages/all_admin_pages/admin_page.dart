@@ -1,6 +1,9 @@
 // Admin page, where you can generate and delete access codes in the database
 import 'package:flutter/material.dart';
 import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class AdminPage extends StatefulWidget {
   const AdminPage({super.key});
@@ -10,6 +13,113 @@ class AdminPage extends StatefulWidget {
 }
 
 class _AdminPageState extends State<AdminPage> {
+  String? _selectedAccessLevel;
+  String? _selectedCode;
+
+
+  // Generate Access Code
+  // Pop up a dialog asking for the 6 digit numeric code and the access level (defined by strings like "Admin", "Doctor", "Nurse", and "Physician Assistant")
+   void generateAccessCode() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Generate Access Code'),
+          content: Column(
+            children: <Widget>[
+              const Text('Enter the 6 digit numeric code:'),
+              TextField(
+                onChanged: (value) {
+                  _selectedCode = value;
+                  // access code
+                },
+              ),
+              DropdownButton<String>(
+                value: _selectedAccessLevel,
+                hint: const Text('Select Access Level'),
+                items: <String>['Doctor', 'Nurse', 'Physician Assistant', 'Admin'].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedAccessLevel = newValue;
+                  });
+                },
+              ),
+              
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // generate access code
+                _uploadAccessCode(_selectedCode, _selectedAccessLevel);
+                Navigator.of(context).pop();
+              },
+              child: const Text('Generate'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // Upload Access Code
+  void _uploadAccessCode(String? code, String? accessLevel) async {
+    try {
+      await FirebaseFirestore.instance.collection('access_codes').doc(code).set({
+        'Level': accessLevel,
+      });
+      print('Access code uploaded successfully');
+    } catch (e) {
+      print('Failed to upload access code: $e');
+    }
+  }
+
+  // Delete Access Code
+  // Pop up a list of access codes and allow deletion of one
+  void deleteAccessCode() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete Access Code'),
+          content: Column(
+            children: <Widget>[
+              const Text('Select the access code to delete:'),
+              // list of access codes
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // delete access code
+                Navigator.of(context).pop();
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,22 +139,13 @@ class _AdminPageState extends State<AdminPage> {
           minimum: const EdgeInsets.symmetric(horizontal: 10),
           child: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+
                 const SizedBox(height: 20),
-                Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.7),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Text('bing bong ding dong'),
-                ),
-                const SizedBox(height: 7),
                 // Generate Access Code button
                 Tiles(
-                  onTap: () {},
+                  onTap: () {generateAccessCode();},
                   width: 250,
                   height: 120,
                   mainText: 'Generate Access Code',
@@ -53,7 +154,7 @@ class _AdminPageState extends State<AdminPage> {
                 const SizedBox(height: 15),
                 // Delete Access Code button
                 Tiles(
-                  onTap: () {},
+                  onTap: () {deleteAccessCode();},
                   width: 250,
                   height: 60,
                   mainText: 'Delete Access Code',

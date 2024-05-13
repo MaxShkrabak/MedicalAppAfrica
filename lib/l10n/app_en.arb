@@ -81,12 +81,18 @@
         "description": ""
     },
 
+    "admin": "Admin",
+    "@admin": {
+        "description": ""
+    },
+
 
 
     "orders": "Orders",
     "@orders": {
         "description": ""
     },
+
     "radiology": "Radiology",
     "@radiology": {
         "description": ""

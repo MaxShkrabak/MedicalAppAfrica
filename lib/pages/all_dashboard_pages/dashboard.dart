@@ -330,7 +330,7 @@ class _DashBoardState extends State<DashBoard> {
                   ),
                 );
               },
-              mainText: "Admin",
+              mainText: AppLocalizations.of(context)!.admin,
               subText: '',
               height: 120,
               width: 400,
