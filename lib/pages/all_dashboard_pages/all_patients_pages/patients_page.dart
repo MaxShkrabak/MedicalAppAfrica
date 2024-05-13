@@ -80,33 +80,19 @@ class _PatientListState extends State<PatientList> {
   }
 
   void updatePatientsCallback(Patient patient) {
-    FirebaseFirestore.instance
-        .collection('patients')
-        .doc(patient.uid)
-        .set(patient.toMap()) // set method to update the document
-        .then((_) {
-      setState(() {
-        int index = _patients.indexWhere((p) => p.uid == patient.uid);
-        if (index != -1) {
-          _patients[index] = patient;
-        }
-        index = _searchResults.indexWhere((p) => p.uid == patient.uid);
-        if (index != -1) {
-          _searchResults[index] = patient;
-        }
-      });
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => PatientViewPage(
-            uid: patient.uid,
-          ),
-        ),
-      );
-    }).catchError((error) {
-      // Handle error
+    setState(() {
+      _patients.add(patient);
+      _searchResults.add(patient);
     });
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PatientViewPage(
+          uid: patient.uid,
+        ),
+      ),
+    );
   }
 
   @override
