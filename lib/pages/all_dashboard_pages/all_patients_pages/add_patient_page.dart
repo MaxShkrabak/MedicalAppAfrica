@@ -76,7 +76,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
     final String pastMedications = _pastMedicationsController.text;
     final String caregiver = _caregiverController.text;
 
-    final String patient = '$firstName $middleName $lastName';
+    //final String patient = '$firstName $middleName $lastName';
 
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     DocumentReference ref = await firestore.collection('patients').add({
@@ -232,7 +232,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                           alignment: Alignment.bottomRight,
                           child: ElevatedButton(
                             onPressed: () {
-                              DefaultTabController.of(context)!.animateTo(1);
+                              DefaultTabController.of(context).animateTo(1);
                             },
                             child: Text(AppLocalizations.of(context)!.next_but),
                           ),
@@ -300,13 +300,13 @@ class _AddPatientPageState extends State<AddPatientPage> {
                         children: [
                           ElevatedButton(
                             onPressed: () {
-                              DefaultTabController.of(context)!.animateTo(0);
+                              DefaultTabController.of(context).animateTo(0);
                             },
                             child: Text(AppLocalizations.of(context)!.back_but),
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              DefaultTabController.of(context)!.animateTo(2);
+                              DefaultTabController.of(context).animateTo(2);
                             },
                             child: Text(AppLocalizations.of(context)!.next_but),
                           ),

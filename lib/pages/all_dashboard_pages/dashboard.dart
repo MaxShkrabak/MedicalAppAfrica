@@ -277,7 +277,7 @@ class _DashBoardState extends State<DashBoard> {
                       ),
                     );
                   },
-                  mainText: "Appointments",
+                  mainText: AppLocalizations.of(context)!.appointments,
                   subText: '',
                   width: 400,
                   height: 120,

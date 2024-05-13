@@ -151,15 +151,10 @@ class _PatientViewPageState extends State<PatientViewPage> {
                       child: Center(
                         child: CircleAvatar(
                           radius: 50.0,
-                          backgroundImage: _patient.imageURL != null
+                          backgroundImage: _patient.imageURL != ''
                               ? NetworkImage(_patient.imageURL!)
-                              : null,
-                          child: _patient.imageURL == null
-                              ? const Icon(
-                                  Icons.person,
-                                  size: 50.0,
-                                )
-                              : null,
+                              : const AssetImage('assets/Anonymous_profile.jpg')
+                                  as ImageProvider<Object>,
                         ),
                       ),
                     ),

@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:africa_med_app/pages/all_dashboard_pages/all_orders_pages/patientQuery.dart';
+import 'package:africa_med_app/pages/all_dashboard_pages/all_orders_pages/patient_query.dart';
 import 'package:africa_med_app/pages/all_dashboard_pages/all_orders_pages/vieworders.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

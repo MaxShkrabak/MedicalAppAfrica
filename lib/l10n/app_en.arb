@@ -1,8 +1,13 @@
 {
 
+
     "language": "Language",
     "@language":{
         "description": "Language text"
+    },
+    "locale": "en",
+    "@language":{
+        "description": "default language"
     },
     "welcome_back": "Welcome Back!",
     "@welcome_back": {

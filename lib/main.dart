@@ -26,6 +26,7 @@ class MyApp extends StatefulWidget {
     var prefs = await SharedPreferences.getInstance();
     prefs.setString('languageCode', newLocale.languageCode);
 
+    // ignore: invalid_use_of_protected_member
     state?.setState(() {
       state._locale = newLocale;
     });

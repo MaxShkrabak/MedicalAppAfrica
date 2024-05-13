@@ -72,55 +72,21 @@ class _SettingsPageState extends State<SettingsPage> {
                 const SizedBox(
                   height: 25,
                 ),
-                // Language button
-                Tiles(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                        builder: ((context) => const AccountSettings()),
-                      ),
-                    );
-                  },
-                  mainText: AppLocalizations.of(context)!.language,
-                  width: 250,
-                  height: 60,
-                  subText: '',
-                ),
 
-                const SizedBox(height: 15),
-                /*SizedBox(
+                SizedBox(
                     width: 250,
                     child: DropdownButton(
                       onChanged: (v) => setState(() {
                         MyApp.setLocale(context, Locale(v.toString(), ""));
                       }),
                       value: AppLocalizations.of(context)!
-                          .def_lang
+                          .locale
                           .toString(), // change this line with your way to get current locale to select it as default in dropdown
                       items: const [
-                        DropdownMenuItem(child: Text('العربية'), value: 'ar'),
+                        DropdownMenuItem(value: "en", child: Text("English")),
+                        DropdownMenuItem(value: 'ar', child: Text("Arabic")),
                       ],
-                    )),*/
-                Text(AppLocalizations.of(context)!.language),
-                const SizedBox(height: 10),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      MyApp.setLocale(context, const Locale("ar", ""));
-                    });
-                  },
-                  child: const Text("Ar"),
-                ),
-                const SizedBox(height: 10),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      MyApp.setLocale(context, const Locale("en", ""));
-                    });
-                  },
-                  child: const Text("En"),
-                )
+                    )),
               ],
             ),
           ),

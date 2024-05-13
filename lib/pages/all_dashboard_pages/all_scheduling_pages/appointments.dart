@@ -190,8 +190,14 @@ class AppointmentsPage extends StatelessWidget {
                                       child: Column(
                                         children: [
                                           CircleAvatar(
-                                            backgroundImage: NetworkImage(
-                                                appointment.patientimageURL!),
+                                            backgroundImage: appointment
+                                                        .patientimageURL !=
+                                                    ''
+                                                ? NetworkImage(appointment
+                                                    .patientimageURL!)
+                                                : const AssetImage(
+                                                        'assets/Anonymous_profile.jpg')
+                                                    as ImageProvider<Object>,
                                           ),
                                           Text(
                                             appointment.patientName!,

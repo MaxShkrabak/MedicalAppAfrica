@@ -1,3 +1,4 @@
+// Add the necessary imports
 // ignore_for_file: avoid_print
 
 import 'dart:io';
@@ -11,7 +12,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:path/path.dart' show basename;
-
 
 class AccountSettings extends StatefulWidget {
   const AccountSettings({super.key});
@@ -34,10 +34,9 @@ class _AccountSettingsState extends State<AccountSettings> {
   @override
   void initState() {
     super.initState();
-    fetchUserData(); //calls method to fetch user data
+    fetchUserData();
   }
 
-  //fetches users details stored in firebase
   Future<void> fetchUserData() async {
     try {
       uid = FirebaseAuth.instance.currentUser!.uid;
@@ -48,7 +47,6 @@ class _AccountSettingsState extends State<AccountSettings> {
           .get();
 
       setState(() {
-        //populates text fields with user data
         _nameController.text = userData['first_name'] ?? '';
         _lastNameController.text = userData['last_name'] ?? '';
         _emailController.text = userData['email'] ?? '';
@@ -61,21 +59,21 @@ class _AccountSettingsState extends State<AccountSettings> {
     }
   }
 
-  //checks if email is valid
   bool isValidEmail(String email) {
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     return emailRegex.hasMatch(email);
   }
 
-  //checks if phone number is valid
   bool isValidPhoneNumber(String phoneNumber) {
     final phoneRegex = RegExp(r'^\(\d{3}\) \d{3}-\d{4}$');
     return phoneRegex.hasMatch(phoneNumber);
   }
 
-  Future<void> _uploadImage() async {
+  Future<void> _uploadImage(bool isCamera) async {
     final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await picker.pickImage(
+      source: isCamera ? ImageSource.camera : ImageSource.gallery,
+    );
     if (image == null) {
       return;
     }
@@ -84,7 +82,6 @@ class _AccountSettingsState extends State<AccountSettings> {
     final Reference ref = FirebaseStorage.instance.ref().child(fileName);
     await ref.putFile(file);
     final String url = await ref.getDownloadURL();
-    //Also set the patients field to the new image URL in the firestore
     await FirebaseFirestore.instance
         .collection('accounts')
         .doc(uid)
@@ -94,6 +91,64 @@ class _AccountSettingsState extends State<AccountSettings> {
     });
   }
 
+  void selectCamera() {
+    _uploadImage(true); // Camera option
+  }
+
+  void showImagePickerOption(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: Colors.blue[100],
+      context: context,
+      builder: (builder) {
+        return Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 4.5,
+            child: Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      _uploadImage(false); // Gallery option
+                    },
+                    child: SizedBox(
+                      child: Column(
+                        children: [
+                          const Icon(
+                            Icons.image,
+                            size: 70,
+                          ),
+                          Text(AppLocalizations.of(context)!.gallery)
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: InkWell(
+                    onTap: selectCamera, // Select from camera option
+                    child: SizedBox(
+                      child: Column(
+                        children: [
+                          const Icon(
+                            Icons.camera_alt,
+                            size: 70,
+                          ),
+                          Text(AppLocalizations.of(context)!.camera)
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,21 +156,19 @@ class _AccountSettingsState extends State<AccountSettings> {
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context)!.account_settings,
-          style: const TextStyle(color: Colors.white), //color of text
+          style: const TextStyle(color: Colors.white),
         ),
-        backgroundColor:
-            const Color.fromARGB(159, 144, 79, 230), //app bar color
+        backgroundColor: const Color.fromARGB(159, 144, 79, 230),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          color: Colors.white, //back arrow color
+          color: Colors.white,
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        titleSpacing: 60, //spacer between back button and text
+        titleSpacing: 60,
       ),
-      backgroundColor:
-          const Color.fromARGB(246, 244, 236, 255), //background color
+      backgroundColor: const Color.fromARGB(246, 244, 236, 255),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
@@ -154,16 +207,12 @@ class _AccountSettingsState extends State<AccountSettings> {
                   ),
                 ),
                 const SizedBox(height: 10),
-
-                //displays users access role
                 Text(
                   AppLocalizations.of(context)!
                       .access_role(userRole ?? "Isn't assigned."),
                   style: const TextStyle(color: Color.fromARGB(180, 0, 0, 0)),
                 ),
                 const SizedBox(height: 20),
-
-                //displays users name and last in textfields on same row
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -173,7 +222,7 @@ class _AccountSettingsState extends State<AccountSettings> {
                         controller: _nameController,
                       ),
                     ),
-                    const SizedBox(width: 10), //gap between first and last name
+                    const SizedBox(width: 10),
                     Expanded(
                       child: SettingsNameTextField(
                         hintText: AppLocalizations.of(context)!.last_name,
@@ -183,7 +232,6 @@ class _AccountSettingsState extends State<AccountSettings> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                //users email
                 SettingsNameTextField(
                   hintText: AppLocalizations.of(context)!.email,
                   controller: _emailController,
@@ -216,20 +264,16 @@ class _AccountSettingsState extends State<AccountSettings> {
                   },
                 ),
                 const SizedBox(height: 10),
-                //users phone number
                 SettingsNameTextField(
                   hintText: AppLocalizations.of(context)!.phone_number,
                   controller: _phoneNumberController,
                   isPhoneNumberField: true,
                 ),
-                //moves the save button down
                 const SizedBox(
                   height: 180,
                 ),
-                //save button
                 ElevatedButton(
                   onPressed: () {
-                    //checks if first or last name fields are empty and pops error if they are
                     if (_nameController.text.isEmpty) {
                       showDialog(
                         context: context,
@@ -268,14 +312,12 @@ class _AccountSettingsState extends State<AccountSettings> {
                           );
                         },
                       );
-                      //checks if phone and email fields are valid and not empty, if fine lets user save data
                     } else if (_emailController.text.isNotEmpty &&
                         isValidEmail(_emailController.text)) {
                       if (_phoneNumberController.text.isNotEmpty &&
                           isValidPhoneNumber(_phoneNumberController.text)) {
                         saveUserData();
                       } else {
-                        //displays error message if phone # is invalid or empty
                         showDialog(
                           context: context,
                           builder: (context) {
@@ -297,7 +339,6 @@ class _AccountSettingsState extends State<AccountSettings> {
                         );
                       }
                     } else {
-                      // Displays error message if email is invalid or empty
                       showDialog(
                         context: context,
                         builder: (context) {
@@ -328,70 +369,6 @@ class _AccountSettingsState extends State<AccountSettings> {
     );
   }
 
-  // Function to show image picker options
-  void showImagePickerOption(BuildContext context) {
-    showModalBottomSheet(
-      backgroundColor: Colors.blue[100],
-      context: context,
-      builder: (builder) {
-        return Padding(
-          padding: const EdgeInsets.all(18.0),
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 4.5,
-            child: Row(
-              children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      _uploadImage();
-                    },
-                    child: SizedBox(
-                      child: Column(
-                        children: [
-                          const Icon(
-                            Icons.image,
-                            size: 70,
-                          ),
-                          Text(AppLocalizations.of(context)!.gallery)
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      ();
-                    },
-                    child: SizedBox(
-                      child: Column(
-                        children: [
-                          const Icon(
-                            Icons.camera_alt,
-                            size: 70,
-                          ),
-                          Text(AppLocalizations.of(context)!.camera)
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-
-  
-  
-
-
-
-  //Updates users new data in firestore
   void saveUserData() {
     String uid = FirebaseAuth.instance.currentUser!.uid;
     FirebaseFirestore.instance.collection('accounts').doc(uid).update({
@@ -404,7 +381,6 @@ class _AccountSettingsState extends State<AccountSettings> {
       if (_image != null) {
         ();
       }
-      // Shows success message
       showSuccessMessage(context);
     }).catchError((error) {
       print("Failed to update user data: $error");
