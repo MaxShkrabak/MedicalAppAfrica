@@ -63,27 +63,30 @@ class _ScheduleState extends State<Schedule> {
         ),
       ),
       body: Scaffold(
-        backgroundColor: const Color.fromRGBO(76, 90, 137, 1),
+        backgroundColor: const Color.fromARGB(246, 244, 236, 255),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TableCalendar(
               rowHeight: 50,
               calendarStyle: CalendarStyle(
-                defaultTextStyle: const TextStyle(color: Colors.white),
-                weekendTextStyle:
-                    TextStyle(color: Colors.white.withOpacity(0.3)),
+                defaultTextStyle:
+                    const TextStyle(color: Color.fromARGB(255, 48, 48, 48)),
+                weekendTextStyle: TextStyle(
+                    color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.3)),
                 selectedTextStyle: const TextStyle(
-                    color: Colors.white), // Set selected text color to white
-                withinRangeTextStyle: const TextStyle(color: Colors.white),
+                    color: Color.fromARGB(
+                        255, 0, 0, 0)), // Set selected text color to white
+                withinRangeTextStyle: const TextStyle(color: Colors.black),
+                todayTextStyle: const TextStyle(color: Colors.black),
                 todayDecoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 152, 96, 204),
+                    color: Color.fromARGB(181, 171, 128, 211),
                     shape: BoxShape.circle),
                 rangeStartTextStyle: const TextStyle(color: Colors.grey),
                 outsideDaysVisible: false,
                 selectedDecoration: const BoxDecoration(
                   color: Color.fromARGB(
-                      255, 77, 126, 218), // selected day background
+                      255, 168, 115, 218), // selected day background
                   shape: BoxShape.circle,
                 ),
               ),
@@ -91,17 +94,17 @@ class _ScheduleState extends State<Schedule> {
                   formatButtonVisible: false,
                   titleCentered: true,
                   titleTextStyle: TextStyle(
-                      color: Colors.white,
+                      color: Color.fromARGB(255, 73, 73, 73),
                       fontSize: 30,
                       fontWeight: FontWeight.bold),
                   leftChevronIcon: Icon(
                     Icons.chevron_left,
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 73, 73, 73),
                     size: 30,
                   ),
                   rightChevronIcon: Icon(
                     Icons.chevron_right,
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 73, 73, 73),
                     size: 30,
                   )),
               locale: 'en_US',
@@ -122,16 +125,16 @@ class _ScheduleState extends State<Schedule> {
               },
               daysOfWeekStyle: DaysOfWeekStyle(
                 weekdayStyle: const TextStyle(
-                  color: Colors.white, // color of weekday names
+                  color: Color.fromARGB(255, 0, 0, 0), // color of weekday names
                 ),
                 weekendStyle: TextStyle(
-                  color: Colors.white.withOpacity(0.3),
+                  color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.3),
                 ),
               ),
             ),
             const Divider(
               thickness: 3,
-              color: Colors.grey,
+              color: Color.fromARGB(255, 44, 44, 44),
             ),
             const SizedBox(height: 10),
             Padding(
@@ -141,7 +144,7 @@ class _ScheduleState extends State<Schedule> {
                   child: Text(
                     DateFormat('MMMM d, y').format(_selectedDay),
                     style: const TextStyle(
-                        color: Colors.white,
+                        color: Color.fromARGB(255, 37, 37, 37),
                         fontSize: 18,
                         fontWeight: FontWeight.bold),
                   ),
@@ -159,8 +162,8 @@ class _ScheduleState extends State<Schedule> {
                           .containsKey(timeSlot) &&
                       _timeSlotAvailabilityMap[_selectedDay]![timeSlot]!;
                   final color = isAvailable
-                      ? const Color.fromARGB(158, 76, 175, 79)
-                      : const Color.fromARGB(144, 244, 67, 54);
+                      ? const Color.fromARGB(255, 59, 156, 63)
+                      : const Color.fromARGB(255, 201, 61, 51);
                   return GestureDetector(
                     onTap: () {
                       if (isAvailable) {

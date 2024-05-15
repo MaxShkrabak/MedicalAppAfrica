@@ -18,7 +18,7 @@
     "forgotPassword": "Forgot Password?",
     "login": "Login",
     "newToTheApp": "New to the app?",
-    "registerNow": "Register Now",
+    "registerNow": " Register Now",
 
 
 
@@ -450,9 +450,15 @@
     "meet_details": "Meeting Details",
     "schedule_success": "Appointment scheduled successfully!",
 
-    "appointment_nextup": "Appointments\nNext up:"
+    "appointment_nextup": "Appointments\nNext up:",
     
-    
+    "reset_link": "Password reset link has been sent! Check your email.",
+    "email_exist": "This email doesn't seem to exist in our database.",
+    "forgot_pass_title": "Forgot Password",
+    "enter_associated_email": "Enter the email address associated with your account and we'll send you a link to reset your password.",
+    "forgot_enter_email": "Enter Email",
+
+    "wrong_email_or_pass": "The email or password you entered is incorrect. Please try again."
 
 
 

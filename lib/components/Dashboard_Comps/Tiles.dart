@@ -58,9 +58,9 @@ class _TilesState extends State<Tiles> {
                 end: Alignment.bottomRight,
                 colors: [
                   Color.fromARGB(
-                      255, 214, 214, 214), //old: Color.fromARGB(255, 6, 74, 83)
+                      255, 238, 237, 237), //old: Color.fromARGB(255, 6, 74, 83)
                   Color.fromARGB(
-                      36, 111, 0, 255) //old: Color.fromARGB(255, 99, 25, 148)
+                      32, 67, 157, 216) //old: Color.fromARGB(255, 99, 25, 148)
                 ],
               ),
             ),
@@ -94,7 +94,7 @@ class _TilesState extends State<Tiles> {
                             textAlign: TextAlign.center,
                             widget.subText,
                             style: const TextStyle(
-                              color: Color.fromARGB(255, 190, 255, 37),
+                              color: Color.fromARGB(255, 51, 160, 47),
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),

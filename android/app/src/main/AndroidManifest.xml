@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:label="africa_med_app"
+        android:label="Medical App"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -26,9 +27,8 @@ class _ForgotPasswordState extends State<ForgotPasswordPage> {
         // ignore: use_build_context_synchronously
         context: context,
         builder: (context) {
-          return const AlertDialog(
-            content:
-                Text('Password reset link has been sent! Check your email.'),
+          return AlertDialog(
+            content: Text(AppLocalizations.of(context)!.reset_link),
           );
         },
       );
@@ -39,8 +39,8 @@ class _ForgotPasswordState extends State<ForgotPasswordPage> {
         // ignore: use_build_context_synchronously
         context: context,
         builder: (context) {
-          return const AlertDialog(
-            content: Text('This email doesn\'t seem to exist in our database.'),
+          return AlertDialog(
+            content: Text(AppLocalizations.of(context)!.email_exist),
           );
         },
       );
@@ -69,13 +69,17 @@ class _ForgotPasswordState extends State<ForgotPasswordPage> {
         ),
         child: Scaffold(
           appBar: AppBar(
-            title: GradientText(
-              ' Forgot Password',
-              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
-              colors: const [
-                Colors.blue,
-                Colors.black45,
-              ],
+            title: Padding(
+              padding: const EdgeInsets.only(left: 29),
+              child: GradientText(
+                AppLocalizations.of(context)!.forgot_pass_title,
+                style:
+                    const TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
+                colors: const [
+                  Colors.blue,
+                  Colors.black45,
+                ],
+              ),
             ),
             backgroundColor: Colors.white.withOpacity(0.9),
           ),
@@ -87,11 +91,10 @@ class _ForgotPasswordState extends State<ForgotPasswordPage> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      const Text(
-                        'Enter the email address associated with your account and we'
-                        'll send you a link to reset your password.',
+                      Text(
+                        AppLocalizations.of(context)!.enter_associated_email,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                         ),
@@ -108,11 +111,12 @@ class _ForgotPasswordState extends State<ForgotPasswordPage> {
                             Expanded(
                               child: TextField(
                                 controller: _emailController,
-                                decoration: const InputDecoration(
-                                  hintText: "Enter Email",
+                                decoration: InputDecoration(
+                                  hintText: AppLocalizations.of(context)!
+                                      .forgot_enter_email,
                                   border: InputBorder.none,
                                   contentPadding:
-                                      EdgeInsets.symmetric(vertical: 15),
+                                      const EdgeInsets.symmetric(vertical: 15),
                                 ),
                               ),
                             ),

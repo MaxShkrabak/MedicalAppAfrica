@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/logo.png'),
+          image: AssetImage('assets/client_logo.png'),
           fit: BoxFit.cover,
         ),
       ),
@@ -152,26 +152,32 @@ class _LoginPageState extends State<LoginPage> {
                     RegisterButton(
                         updateIsUserRegistered: widget.updateIsUserRegistered),
                     const SizedBox(height: 12),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        TextButton(
-
-                          child: Text('EN'),
-                          style: ButtonStyle(foregroundColor: MaterialStateProperty.all(Colors.black)),
-                          onPressed: () {
-                            MyApp.setLocale(context, Locale('en', ''));
-                          },
-                        ),
-                        TextButton(
-                          child: Text('AR'),
-                          style: ButtonStyle(foregroundColor: MaterialStateProperty.all(Colors.black)),
-                          onPressed: () {
-                            MyApp.setLocale(context, Locale('ar', ''));
-                          },
-                        ),
-                      ],
-                    ),
+                    SizedBox(
+                        width: 80,
+                        child: DropdownButton(
+                          iconDisabledColor: Colors.white,
+                          iconEnabledColor: Colors.white,
+                          dropdownColor:
+                              const Color.fromARGB(255, 78, 157, 247),
+                          onChanged: (v) => setState(() {
+                            MyApp.setLocale(context, Locale(v.toString(), ""));
+                          }),
+                          value: AppLocalizations.of(context)!
+                              .locale
+                              .toString(), // change this line with your way to get current locale to select it as default in dropdown
+                          items: const [
+                            DropdownMenuItem(
+                                value: "en",
+                                child: Text(
+                                  "English",
+                                  style: TextStyle(color: Colors.white),
+                                )),
+                            DropdownMenuItem(
+                                value: 'ar',
+                                child: Text("Arabic",
+                                    style: TextStyle(color: Colors.white))),
+                          ],
+                        )),
                   ],
                 ),
               ),

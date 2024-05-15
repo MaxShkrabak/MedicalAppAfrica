@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void wrongCredentialsMessage(BuildContext context) {
   showDialog(
@@ -10,9 +11,9 @@ void wrongCredentialsMessage(BuildContext context) {
         backgroundColor: const Color.fromARGB(255, 192, 191, 191),
         title: Column(
           children: [
-            const Text(
-              'The email or password you entered is incorrect. Please try again.',
-              style: TextStyle(color: Colors.black, fontSize: 14.0),
+            Text(
+              AppLocalizations.of(context)!.wrong_email_or_pass,
+              style: const TextStyle(color: Colors.black, fontSize: 14.0),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 15.0),
@@ -31,9 +32,9 @@ void wrongCredentialsMessage(BuildContext context) {
                   backgroundColor: MaterialStateProperty.all<Color>(
                       const Color.fromARGB(255, 14, 101, 182)),
                 ),
-                child: const Text(
-                  'OK',
-                  style: TextStyle(
+                child: Text(
+                  AppLocalizations.of(context)!.okay,
+                  style: const TextStyle(
                     color: Color.fromARGB(255, 255, 255, 255),
                     fontSize: 16.0,
                   ),

@@ -8,9 +8,14 @@ class LogoComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
+        Container(
           height: 145,
-          child: Image.asset('assets/logo.png'),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/client_logo.png'),
+              fit: BoxFit.scaleDown,
+            ),
+          ),
         ),
         const SizedBox(height: 20),
         Text(

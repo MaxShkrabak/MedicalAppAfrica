@@ -35,62 +35,63 @@ class _PatientViewPageState extends State<PatientViewPage> {
   }
 
   void showImagePickerOption(BuildContext context) {
-   showModalBottomSheet(
-     backgroundColor: Colors.blue[100],
-     context: context,
-     builder: (builder) {
-       return Padding(
-         padding: const EdgeInsets.all(18.0),
-         child: SizedBox(
-           width: MediaQuery.of(context).size.width,
-           height: MediaQuery.of(context).size.height / 4.5,
-           child: Row(
-             children: [
-               Expanded(
-                 child: InkWell(
-                   onTap: () {
-                     _uploadImage(false); // Gallery option
-                   },
-                   child: SizedBox(
-                     child: Column(
-                       children: [
-                         const Icon(
-                           Icons.image,
-                           size: 70,
-                         ),
-                         Text(AppLocalizations.of(context)!.gallery)
-                       ],
-                     ),
-                   ),
-                 ),
-               ),
-               Expanded(
-                 child: InkWell(
-                   onTap: selectCamera, // Select from camera option
-                   child: SizedBox(
-                     child: Column(
-                       children: [
-                         const Icon(
-                           Icons.camera_alt,
-                           size: 70,
-                         ),
-                         Text(AppLocalizations.of(context)!.camera)
-                       ],
-                     ),
-                   ),
-                 ),
-               ),
-             ],
-           ),
-         ),
-       );
-     },
-   );
+    showModalBottomSheet(
+      backgroundColor: Colors.blue[100],
+      context: context,
+      builder: (builder) {
+        return Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 4.5,
+            child: Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      _uploadImage(false); // Gallery option
+                    },
+                    child: SizedBox(
+                      child: Column(
+                        children: [
+                          const Icon(
+                            Icons.image,
+                            size: 70,
+                          ),
+                          Text(AppLocalizations.of(context)!.gallery)
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: InkWell(
+                    onTap: selectCamera, // Select from camera option
+                    child: SizedBox(
+                      child: Column(
+                        children: [
+                          const Icon(
+                            Icons.camera_alt,
+                            size: 70,
+                          ),
+                          Text(AppLocalizations.of(context)!.camera)
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   Future<void> _uploadImage(bool isCamera) async {
     final ImagePicker picker = ImagePicker();
-    final ImageSource? source = isCamera ? ImageSource.camera : ImageSource.gallery;
+    final ImageSource? source =
+        isCamera ? ImageSource.camera : ImageSource.gallery;
 
     if (source == null) {
       return;
@@ -188,7 +189,8 @@ class _PatientViewPageState extends State<PatientViewPage> {
                   AppLocalizations.of(context)!.patient_view,
                   style: const TextStyle(color: Colors.white),
                 ),
-                backgroundColor: const Color.fromARGB(161, 88, 82, 173),
+                backgroundColor: const Color.fromARGB(159, 144, 79,
+                    230), //old: const Color.fromARGB(161, 88, 82, 173),
                 iconTheme: const IconThemeData(color: Colors.white),
                 actions: [
                   IconButton(
