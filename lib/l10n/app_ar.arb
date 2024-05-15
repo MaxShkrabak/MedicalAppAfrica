@@ -2,11 +2,16 @@
     "locale": "ar",
     "hello": "مرحبًا",
     "welcome_back": "!مرحباً بعودتك",
+    "login": "تسجيل الدخول ",
+    "newToTheApp": "هل انت جديد؟",
+    "registerNow": "سجل الان",
+    "forgotPassword": "هل نسيت كلمة السر؟ ",
     "dash_welcome": "،مرحبًا بعودتك",
     "sign_out": "تسجيل الخروج",
     "first_name": "الاسم الأول",
     "last_name": "اسم العائلة",
     "email": "بريد إلكتروني",
+    "password": "كلمة المرور",
     "phone_number": "رقم التليفون",
     
 
@@ -55,6 +60,19 @@
 
 
     "admin": "مدير ",
+    "adminPageTitle": "صفحة الإدارة ",
+
+    "Doctor": "طبيب", 
+    "Nurse": "ممرضة",
+    "Physician Assistant": "مساعد الطبيب",
+
+    "selectAccessCodeToDelete": "حدد رمز الوصول المراد حذفه",
+    "enterAccessCode": "أدخل رمز الوصول الرقمي المكون من 6 أرقام",
+    "selectAccessLevel": "حدد مستوى الوصول",
+    "generateButton": "إنشاء رموز الوصول",
+    "cancelButton": "يلغي",
+    "deleteButton": "حذف رموز الوصول",
+    "delete": "يمسح ",
 
     "orders": "طلبات",
     "radiology": "الأشعة",

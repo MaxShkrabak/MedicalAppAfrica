@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:africa_med_app/components/Dashboard_Comps/tiles.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 
 class AdminPage extends StatefulWidget {
@@ -16,6 +18,8 @@ class _AdminPageState extends State<AdminPage> {
   String? _selectedAccessLevel;
   String? _selectedCode;
 
+  List<String> accessCodes = [];
+
 
   // Generate Access Code
   // Pop up a dialog asking for the 6 digit numeric code and the access level (defined by strings like "Admin", "Doctor", "Nurse", and "Physician Assistant")
@@ -24,10 +28,10 @@ class _AdminPageState extends State<AdminPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Generate Access Code'),
+          title: Text(AppLocalizations.of(context)!.generateButton),
           content: Column(
             children: <Widget>[
-              const Text('Enter the 6 digit numeric code:'),
+              Text(AppLocalizations.of(context)!.enterAccessCode),
               TextField(
                 onChanged: (value) {
                   _selectedCode = value;
@@ -36,8 +40,13 @@ class _AdminPageState extends State<AdminPage> {
               ),
               DropdownButton<String>(
                 value: _selectedAccessLevel,
-                hint: const Text('Select Access Level'),
-                items: <String>['Doctor', 'Nurse', 'Physician Assistant', 'Admin'].map<DropdownMenuItem<String>>((String value) {
+                hint: Text( AppLocalizations.of(context)!.selectAccessLevel),
+                items: <String>[
+                  AppLocalizations.of(context)!.doctor,
+                  AppLocalizations.of(context)!.nurse,
+                  AppLocalizations.of(context)!.physicianAssistant, 
+                  AppLocalizations.of(context)!.admin
+                ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -57,7 +66,7 @@ class _AdminPageState extends State<AdminPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child:Text(AppLocalizations.of(context)!.cancelButton),
             ),
             TextButton(
               onPressed: () {
@@ -65,7 +74,7 @@ class _AdminPageState extends State<AdminPage> {
                 _uploadAccessCode(_selectedCode, _selectedAccessLevel);
                 Navigator.of(context).pop();
               },
-              child: const Text('Generate'),
+              child: Text(AppLocalizations.of(context)!.generateButton),
             ),
           ],
         );
@@ -85,18 +94,45 @@ class _AdminPageState extends State<AdminPage> {
     }
   }
 
+  Future<void> fetchAccessCodes() async {
+    accessCodes.clear();
+
+    await FirebaseFirestore.instance.collection('access_codes').get().then((QuerySnapshot querySnapshot) {
+      setState(() {
+        querySnapshot.docs.forEach((doc) {
+          accessCodes.add(doc.id);
+        });
+      });
+    });
+  }
+
   // Delete Access Code
   // Pop up a list of access codes and allow deletion of one
-  void deleteAccessCode() {
+  void deleteAccessCode() async {
+    await fetchAccessCodes();
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Delete Access Code'),
+          title: Text(AppLocalizations.of(context)!.deleteButton) ,
           content: Column(
             children: <Widget>[
-              const Text('Select the access code to delete:'),
-              // list of access codes
+              Text(AppLocalizations.of(context)!.deleteButton),
+              DropdownButton<String>(
+                value: _selectedCode,
+                hint: Text(AppLocalizations.of(context)!.selectAccessCodeToDelete),
+                items: accessCodes.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedCode = newValue;
+                  });
+                },
+              ),
             ],
           ),
           actions: <Widget>[
@@ -104,14 +140,15 @@ class _AdminPageState extends State<AdminPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(context)!.cancelButton),
             ),
             TextButton(
               onPressed: () {
                 // delete access code
+                _deleteAccessCode(_selectedCode);
                 Navigator.of(context).pop();
               },
-              child: const Text('Delete'),
+              child: Text(AppLocalizations.of(context)!.delete),
             ),
           ],
         );
@@ -119,23 +156,35 @@ class _AdminPageState extends State<AdminPage> {
     );
   }
 
+  void _deleteAccessCode(String? code) async {
+    try {
+      await FirebaseFirestore.instance.collection('access_codes').doc(code).delete();
+      print('Access code deleted successfully');
+    } catch (e) {
+      print('Failed to delete access code: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor:  const Color.fromARGB(
+            159, 144, 79, 230), // appbar color
         iconTheme: const IconThemeData(color: Colors.white), // back arrow color
-        title: const Padding(
+        title: Padding(
           padding: EdgeInsets.only(left: 75),
-          child: Text('Admin Page', style: TextStyle(color: Colors.white)),
+          //Applocalizations text for Admin page
+          child: Text(
+            AppLocalizations.of(context)!.adminPageTitle
+            , style: TextStyle(color: Colors.white
+            , fontSize: 20
+            , fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
-        backgroundColor: const Color.fromARGB(
-            159, 144, 79, 230), //old: const Color.fromARGB(161, 88, 82, 173),
       ),
-      body: Scaffold(
-        backgroundColor: const Color.fromARGB(
-            246, 244, 236, 255), //old: const Color.fromRGBO(76, 90, 137, 1),
-        body: SafeArea(
+      body: SafeArea(
           minimum: const EdgeInsets.symmetric(horizontal: 10),
           child: Center(
             child: Column(
@@ -148,7 +197,7 @@ class _AdminPageState extends State<AdminPage> {
                   onTap: () {generateAccessCode();},
                   width: 250,
                   height: 120,
-                  mainText: 'Generate Access Code',
+                  mainText: AppLocalizations.of(context)!.generateButton,
                   subText: '',
                 ),
                 const SizedBox(height: 15),
@@ -157,14 +206,14 @@ class _AdminPageState extends State<AdminPage> {
                   onTap: () {deleteAccessCode();},
                   width: 250,
                   height: 60,
-                  mainText: 'Delete Access Code',
+                  mainText: AppLocalizations.of(context)!.deleteButton,
                   subText: '',
                 ),
               ],
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
+

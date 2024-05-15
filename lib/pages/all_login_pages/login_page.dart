@@ -6,6 +6,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:africa_med_app/main.dart';
 
 import '../../components/Login_Page_Comps/forgot_password.dart';
 import '../../components/Login_Page_Comps/logo_comp.dart';
@@ -95,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                     //email text
                     MyTextField(
                         controller: emailController,
-                        hintText: 'Email',
+                        hintText: AppLocalizations.of(context)!.email,
                         obscureText: false,
                         showPassIcon: false,
                         prefix: Icons.person_outline),
@@ -104,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                     //password text
                     MyTextField(
                         controller: passwordController,
-                        hintText: 'Password',
+                        hintText: AppLocalizations.of(context)!.password,
                         obscureText: true,
                         showPassIcon: true,
                         prefix: Icons.lock_outline),
@@ -149,6 +151,27 @@ class _LoginPageState extends State<LoginPage> {
                     //create acc
                     RegisterButton(
                         updateIsUserRegistered: widget.updateIsUserRegistered),
+                    const SizedBox(height: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        TextButton(
+
+                          child: Text('EN'),
+                          style: ButtonStyle(foregroundColor: MaterialStateProperty.all(Colors.black)),
+                          onPressed: () {
+                            MyApp.setLocale(context, Locale('en', ''));
+                          },
+                        ),
+                        TextButton(
+                          child: Text('AR'),
+                          style: ButtonStyle(foregroundColor: MaterialStateProperty.all(Colors.black)),
+                          onPressed: () {
+                            MyApp.setLocale(context, Locale('ar', ''));
+                          },
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),

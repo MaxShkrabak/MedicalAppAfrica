@@ -1,5 +1,6 @@
 {
 
+    
 
     "language": "Language",
     "@language":{
@@ -13,6 +14,11 @@
     "@welcome_back": {
         "description": "Welcome back msg on login page"
     },
+
+    "forgotPassword": "Forgot Password?",
+    "login": "Login",
+    "newToTheApp": "New to the app?",
+    "registerNow": "Register Now",
 
 
 
@@ -85,8 +91,19 @@
     "@admin": {
         "description": ""
     },
+    "adminPageTitle": "Admin Page",
 
-
+    "doctor": "Doctor", 
+    "nurse": "Nurse",
+    "physicianAssistant": "Physician Assistant",
+    
+    "selectAccessCodeToDelete": "Select the access code to delete",
+    "enterAccessCode": "Enter a 6 digit numeric access code",
+    "selectAccessLevel": "Select Access Level",
+    "generateButton": "Generate Access Codes",
+    "cancelButton": "Cancel",
+    "deleteButton": "Delete access codes",
+    "delete": "Delete",
 
     "orders": "Orders",
     "@orders": {
@@ -239,6 +256,10 @@
     },
     "email": "Email",
     "@email": {
+        "description": ""
+    },
+    "password": "Password",
+    "@password": {
         "description": ""
     },
     "change_email": "Change Email",

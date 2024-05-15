@@ -1,5 +1,6 @@
 import 'package:africa_med_app/pages/all_login_pages/registration_page.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class RegisterButton extends StatefulWidget {
@@ -20,8 +21,8 @@ class _RegisterButtonState extends State<RegisterButton> {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: [
-        const Text(
-          'New to the app?',
+        Text(
+          AppLocalizations.of(context)!.newToTheApp,
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -55,8 +56,8 @@ class _RegisterButtonState extends State<RegisterButton> {
             duration: const Duration(
                 milliseconds: 200), // Adjust the duration as needed
             opacity: isPressed ? 0.5 : 1.0, // Lower opacity when pressed
-            child: const Text(
-              '  Register Now',
+            child: Text(
+              AppLocalizations.of(context)!.registerNow,
               style: TextStyle(
                 color: Color.fromARGB(255, 98, 215, 219),
                 fontWeight: FontWeight.bold,

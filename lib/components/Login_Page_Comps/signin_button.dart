@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyButton extends StatelessWidget {
   final Function()? onTap;
@@ -21,7 +22,7 @@ class MyButton extends StatelessWidget {
             color: const Color.fromRGBO(8, 13, 17, 100),
             borderRadius: BorderRadius.circular(35),
           ),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -32,7 +33,7 @@ class MyButton extends StatelessWidget {
               ),
               SizedBox(width: 8),
               Text(
-                "Login",
+                AppLocalizations.of(context)!.login,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24.0,
