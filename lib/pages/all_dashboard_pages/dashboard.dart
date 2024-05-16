@@ -301,7 +301,7 @@ class _DashBoardState extends State<DashBoard> {
                   subText: '',
                   height: 120,
                   width: 170),
-              if (_accessLevel != 'Physician Assistant' ||
+              if (_accessLevel != 'Physician Assistant' &&
                   _accessLevel != 'Nurse')
                 Tiles(
                     onTap: () {
